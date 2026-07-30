@@ -1,0 +1,49 @@
+generated: '2026-07-20'
+method: derived
+source: docs.api.loggi.com public reference
+entities:
+  - name: Company
+    id_field: companyId
+    description: The Loggi customer/seller on whose behalf an integrator acts.
+  - name: Quote
+    description: Price/time estimate for a prospective shipment (shipFrom, shipTo, packages).
+    relationships:
+      - belongs_to: Company
+        via: companyId
+  - name: Shipment
+    id_field: loggiKey
+    description: A created envio (origin + destination + package). Created sync or async.
+    relationships:
+      - belongs_to: Company
+        via: companyId
+      - has_many: Package
+  - name: Package
+    id_field: trackingCode
+    description: An individual package within a shipment; carries dimensions/weight/recipient.
+    relationships:
+      - belongs_to: Shipment
+        via: loggiKey
+      - has_one: Label
+      - has_many: TrackingEvent
+  - name: Label
+    description: Loggi-standard shipping label, generated after successful package creation.
+    relationships:
+      - belongs_to: Shipment
+        via: loggiKey
+  - name: TrackingEvent
+    description: Status update for a package, delivered via TrackingAPI or webhook.
+    relationships:
+      - belongs_to: Package
+        via: trackingCode
+  - name: DropoffLocation
+    description: A Loggi Ponto where packages can be dropped off.
+  - name: Integrator
+    id_field: integration_code
+    description: A platform/integrator enabled to act for a seller via integration_code.
+    relationships:
+      - belongs_to: Company
+        via: integration_code
+notes: >-
+  Entity graph derived from the documented REST operations and their identifier
+  fields (companyId, loggiKey, trackingCode, integration_code). No OpenAPI $refs
+  were available; relationships inferred from documented usage.

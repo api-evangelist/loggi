@@ -1,0 +1,34 @@
+generated: '2026-07-20'
+method: derived
+source: docs.api.loggi.com public reference
+format: http-status
+envelope:
+  notes: >-
+    Loggi's public REST reference documents standard HTTP status codes per
+    operation. No provider-specific error-code registry or
+    application/problem+json envelope was published; this catalog captures the
+    documented HTTP-status semantics rather than fabricated codes.
+problems:
+  - status: 401
+    title: Unauthorized
+    remediation: >-
+      Missing/expired JWT. Re-authenticate at /v2/oauth2/token and send the JWT
+      in the Authorization header.
+  - status: 403
+    title: Forbidden
+    remediation: >-
+      The integrator is not authorized to act for the company. Confirm the
+      seller supplied a valid integration_code and the integrator is enabled.
+  - status: 404
+    title: Not Found
+    remediation: Resource (package/shipment/tracking code) not found for the given companyId.
+  - status: 422
+    title: Unprocessable Entity
+    remediation: Validation error in the request body (address, package dimensions, etc.).
+  - status: 500
+    title: Internal Server Error
+    remediation: Retry later or contact Loggi support with the request and environment.
+notes: >-
+  Statuses derived from the documented REST operations (auth, quote, shipment,
+  label, tracking, package update/cancel). Titles/remediation are honest
+  interpretations of documented behavior, not a verbatim provider error table.

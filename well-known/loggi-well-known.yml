@@ -1,0 +1,27 @@
+generated: '2026-07-20'
+method: searched
+source: live probes of Loggi API + website hosts
+hosts:
+  - host: https://api.loggi.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 403
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+  - host: https://www.loggi.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /llms.txt
+        status: 404
+  - host: https://docs.api.loggi.com
+    documents:
+      - path: /llms.txt
+        status: 200
+        file: ../llms/loggi-llms.txt
+notes: >-
+  No machine-readable /.well-known discovery documents are published on the
+  Loggi API or website hosts. The docs host publishes an llms.txt (saved under
+  llms/). Absence of security.txt / OIDC discovery is recorded, not fabricated.

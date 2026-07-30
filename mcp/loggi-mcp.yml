@@ -1,0 +1,43 @@
+generated: '2026-07-20'
+method: derived
+status: candidate
+source: https://docs.api.loggi.com/
+server:
+  name: loggi
+  transport: http
+  url: null
+notes: >-
+  No official hosted/remote Loggi MCP server was found. This is a candidate tool
+  list derived from Loggi's documented REST operations to seed a future MCP
+  server. Each tool maps to a documented reference endpoint.
+tools:
+  - name: authenticate
+    description: Exchange client_id/client_secret for a JWT (Auth V2).
+    source_operation: https://docs.api.loggi.com/reference/authenticatev2
+  - name: create_quote
+    description: Estimate freight prices and delivery times for a shipment.
+    source_operation: https://docs.api.loggi.com/reference/quote
+  - name: create_async_shipment
+    description: Create a shipment asynchronously from origin, destination and package.
+    source_operation: https://docs.api.loggi.com/reference/createasyncshipment
+  - name: create_label
+    description: Generate a Loggi shipping label for a created shipment (loggiKey).
+    source_operation: https://docs.api.loggi.com/reference/criaretiqueta-1
+  - name: update_package
+    description: Update destination address and recipient data of a package.
+    source_operation: https://docs.api.loggi.com/reference/packageupdate
+  - name: cancel_package
+    description: Cancel a package shipment (return to sender).
+    source_operation: https://docs.api.loggi.com/reference/packagecancel
+  - name: get_package_details
+    description: Retrieve package details from companyId + trackingCode.
+    source_operation: https://docs.api.loggi.com/reference/packagedetailstrackingcode
+  - name: track_package
+    description: Track a package from companyId + trackingCode.
+    source_operation: https://docs.api.loggi.com/reference/trackpackagetrackingcode
+  - name: list_dropoff_locations
+    description: List available Loggi Pontos (dropoff points).
+    source_operation: https://docs.api.loggi.com/reference/listdropofflocations
+  - name: manage_integrator
+    description: Enable/disable an integrator platform for a Loggi seller.
+    source_operation: https://docs.api.loggi.com/reference/createintegratorcompany

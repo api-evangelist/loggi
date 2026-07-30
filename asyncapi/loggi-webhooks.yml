@@ -1,0 +1,29 @@
+generated: '2026-07-20'
+method: searched
+source: https://docs.api.loggi.com/reference/webhook
+type: Webhooks
+spec_type: none
+summary: >-
+  Loggi delivers real-time package tracking updates to an integrator-registered
+  webhook. Whenever a package is moved, Loggi posts the updated tracking status.
+  Loggi documents webhooks as the recommended solution for real-time tracking
+  over polling the TrackingAPI, including a package-creation confirmation
+  webhook used to gate label generation in the asynchronous shipment flow.
+events:
+  - name: package.status_updated
+    description: >-
+      Sent whenever a package is moved / its delivery status changes; carries
+      the updated tracking status in real time.
+    docs: https://docs.api.loggi.com/reference/webhook
+  - name: package.created
+    description: >-
+      Confirmation that an asynchronously-created package (createAsyncShipment)
+      was created; label generation waits on this confirmation.
+    docs: https://docs.api.loggi.com/reference/createasyncshipment
+delivery:
+  transport: https-post
+  registration: integrator-registered endpoint
+notes: >-
+  No published AsyncAPI document was found; this captures the documented webhook
+  surface. Event names are labels for the documented behaviors, not verbatim
+  provider payload types.

@@ -1,0 +1,30 @@
+generated: '2026-07-20'
+method: derived
+source: docs.api.loggi.com public reference
+standards:
+  - id: oauth2
+    conforms: true
+    evidence: >-
+      Authentication V2 exchanges client_id/client_secret at
+      /v2/oauth2/token for a JWT bearer token (client-credentials style).
+  - id: jwt
+    conforms: true
+    evidence: AuthAPI V2 returns a JWT token for the service account.
+  - id: rest
+    conforms: true
+    evidence: API documented as REST with standard HTTP verbs (GET/PUT/POST).
+  - id: webhooks
+    conforms: true
+    evidence: Real-time package status delivered via integrator-registered webhooks.
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: No application/problem+json error contract documented publicly.
+  - id: oidc
+    conforms: false
+  - id: openapi-published
+    conforms: false
+    evidence: No public OpenAPI/Swagger document was discoverable at the docs host.
+notes: >-
+  Standards asserted from the public REST reference. No published compliance
+  certifications (SOC 2 / ISO 27001 / PCI) were found on a trust surface, so no
+  Compliance pointer is emitted.

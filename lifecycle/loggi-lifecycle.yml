@@ -1,0 +1,24 @@
+generated: '2026-07-20'
+method: searched
+source: https://docs.api.loggi.com/reference/authenticatev2
+versioning:
+  scheme: uri-path
+  current: v2
+  docs: https://docs.api.loggi.com/reference/orienta%C3%A7%C3%B5es
+deprecation:
+  policy_url: https://docs.api.loggi.com/reference/authenticatev1
+  notes: >-
+    Authentication V1 (idToken) is explicitly marked deprecated in the docs in
+    favor of Authentication V2 (JWT via /v2/oauth2/token). Loggi documents a
+    Staging and a Production environment.
+  deprecated_surfaces:
+    - Authentication V1 (idToken) — use Authentication V2
+environments:
+  production: https://api.loggi.com
+  staging: https://stg.api.loggi.com
+status_page: null
+sla: null
+notes: >-
+  No public status page or published SLA was found. The documented lifecycle
+  signal is version deprecation (Auth V1 -> V2) and a Staging/Production
+  environment split.

@@ -1,0 +1,23 @@
+# Loggi Platform Documentation
+
+> Aqui você vai encontrar documentações que vão auxiliar a integrar os seus serviços com a Loggi.
+
+## Guides
+- [Getting Started with Loggi Platform](https://docs.api.loggi.com/docs/getting-started.md): This page will help you get started with Loggi Platform. You'll be up and running in a jiffy!
+
+## API Reference
+- [Boas vindas 👋](https://docs.api.loggi.com/reference/nossa-documentação.md): Conheça a nossa API
+- [Sobre a API 🗺️](https://docs.api.loggi.com/reference/orientações.md): Comece por aqui
+- [Autenticação V1](https://docs.api.loggi.com/reference/authenticatev1.md): Solicitação e atualização de token. O campo **idToken** deve ser informado no **Header** _Authorization_ de cada requisição às APIs da Loggi.  ### ATENÇÃO!</h2> <div class="warning-docs">   ⚠️ <em>  Esta api de autenticação está depreciada, por favor utilize a <a href="/reference/authenticatev2">versão 2</a> da api de autenticação.</em> </div>
+- [Autenticação V2](https://docs.api.loggi.com/reference/authenticatev2.md): Solicitação de token para as APIs da Loggi.
+- [Ativar/Desativar Integrador](https://docs.api.loggi.com/reference/createintegratorcompany.md)
+- [Criar Cotação](https://docs.api.loggi.com/reference/quote.md): ### Sobre esta API: Esta API disponibiliza opções de preços e prazos da Loggi nas plataformas parceiras, em tempo real, conforme as características do envio e do parceiro e informações de companyId, shipFrom, shipTo, packages, pickupTypes ou externalServiceIds (SISUs).  ### Mais alguns detalhes: Mesmo com poucas informações preenchidas, a API disponibiliza os preços e os prazos mais adequados ao parceiro. Ainda assim, para obter um retorno de estimativa de preço e prazo mais preciso, recomendamos o preenchimento de todos os campos obrigatórios.  A cotação de preços é feita levando em consideração: - envio - origem e destino; - pacote - pesos, dimensões e características; - perfil do parceiro. - tipo de coleta.
+- [Criar Shipment assíncrono.](https://docs.api.loggi.com/reference/createasyncshipment.md): Cria um Shipment de forma assíncrona. Para iniciar um envio, você precisará de um endereço de origem, outro de destino e um pacote. ### Teste abaixo o endpoint</h2> <div class="warning-docs">   ⚠️ <em>Os campos abaixo precisam ser preenchidos para realização dos testes de endpoint.</em> </div>
+- [Criar Etiqueta](https://docs.api.loggi.com/reference/criaretiqueta-1.md): A geração de etiqueta Loggi só pode ser feita após a resposta de sucesso do serviço de criação de pacotes. Para o serviço de criação de pacotes assíncrono, deve-se aguardar a mensagem de confirmação do webhook de que o pacote foi criado.  A solicitação de geração de uma etiqueta está sempre associada à um envio previamente criado. Para referenciar este(s) envio(s), será necessário informar o(s) loggiKey(s) associado(s).  ### Teste abaixo o endpoint</h2> <div class="warning-docs">   ⚠️ <em>Os campos abaixo precisam ser preenchidos para realização dos testes de endpoint.</em> </div>
+- [Atualizar dados de um pacote](https://docs.api.loggi.com/reference/packageupdate.md): Atualizar as informações de endereço de destino e destinatário.
+- [Cancelar envio](https://docs.api.loggi.com/reference/packagecancel.md): Cancelar o envio de um pacote (retornar para o remetente).
+- [Detalhes do pacote](https://docs.api.loggi.com/reference/packagedetailstrackingcode.md): Recupera detalhes de um pacote a partir das informações de CompanyID e TrackingCode.
+- [TrackingAPI](https://docs.api.loggi.com/reference/trackingapi.md): Recomendamos a API para verificações de status, mas para acompanhamento em tempo real, o Webhook é nossa solução mais robusta.
+- [Rastrear Pacote](https://docs.api.loggi.com/reference/trackpackagetrackingcode.md): Faz o rastreio de pacotes a partir das informações de CompanyID e TrackingCode.  ### Teste abaixo o endpoint</h2> <div class="warning-docs"> ⚠️ <em>Os campos abaixo precisam ser preenchidos para realização dos testes de endpoint.</em> </div>
+- [Receber Webhook](https://docs.api.loggi.com/reference/webhook.md): Sempre que um pacote for movimentado, a Loggi atualizará o rastreio em tempo real.
+- [Listar Loggi Pontos.](https://docs.api.loggi.com/reference/listdropofflocations.md): Lista os Loggi Pontos disponíveis para dropoff. ### Teste abaixo o endpoint</h2> <div class="warning-docs">   ⚠️ <em>Os campos abaixo precisam ser preenchidos para realização dos testes de endpoint.</em> </div>

@@ -1,0 +1,39 @@
+generated: '2026-07-20'
+method: searched
+source: https://docs.api.loggi.com/
+authentication:
+  style: oauth2-client-credentials
+  token: JWT bearer in Authorization header
+  ref: ../authentication/loggi-authentication.yml
+async_operations:
+  supported: true
+  notes: >-
+    Shipment creation is offered as an asynchronous operation
+    (createAsyncShipment). Label generation must wait for the success response
+    of package creation; for the async flow the caller waits for a webhook
+    confirming the package was created.
+webhooks:
+  supported: true
+  model: >-
+    Whenever a package is moved, Loggi updates tracking in real time and posts
+    to the integrator's registered webhook. Webhook is the recommended solution
+    for real-time tracking over polling the TrackingAPI.
+  ref: ../asyncapi/loggi-webhooks.yml
+identifiers:
+  loggiKey: Envio/shipment identifier returned on shipment creation; required to generate labels.
+  companyId: Identifies the Loggi customer/company on quote, package-details and tracking calls.
+  trackingCode: Package tracking code used with companyId on package-details and tracking calls.
+  integration_code: Provided by the seller to authorize an integrator (never share client_id/client_secret).
+versioning:
+  style: uri-path
+  current: v2
+error_envelope:
+  ref: ../errors/loggi-error-codes.yml
+idempotency:
+  supported: unknown
+  notes: No idempotency-key contract is documented in the public reference.
+pagination:
+  style: unknown
+notes: >-
+  Cross-cutting semantics derived from the public REST reference at
+  docs.api.loggi.com. Localized in Portuguese (pt-BR); country focus Brazil.

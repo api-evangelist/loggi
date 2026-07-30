@@ -1,0 +1,34 @@
+generated: '2026-07-20'
+method: searched
+source: https://docs.api.loggi.com/reference/authenticatev2
+docs: https://docs.api.loggi.com/reference/authenticatev2
+summary:
+  types: [oauth2]
+  oauth2_flows: [clientCredentials]
+  token_format: JWT
+  token_header: Authorization
+notes: >-
+  Loggi uses OAuth2 client-credentials style authentication. The integrator
+  exchanges a client_id + client_secret at the AuthAPI token endpoint and
+  receives a JWT that is sent in the Authorization header on every subsequent
+  request to Loggi's APIs. Authentication V1 (idToken in the Authorization
+  header) is deprecated in favor of V2. Developers must never request a third
+  party's client_id/client_secret; sellers provide only an integration_code.
+schemes:
+  - name: OAuth2ClientCredentials
+    type: oauth2
+    flow: clientCredentials
+    token_urls:
+      production: https://api.loggi.com/v2/oauth2/token
+      staging: https://stg.api.loggi.com/v2/oauth2/token
+    request_fields: [client_id, client_secret]
+    returns: JWT bearer token
+    applied_as: Authorization header on all API requests
+    source: https://docs.api.loggi.com/reference/authenticatev2
+  - name: AuthV1Deprecated
+    type: apiKey
+    in: header
+    parameter: Authorization
+    field: idToken
+    deprecated: true
+    source: https://docs.api.loggi.com/reference/authenticatev1
