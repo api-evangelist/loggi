@@ -1,5 +1,5 @@
 generated: '2026-10-14'
-method: derived
+method: none
 source: openapi/loggi-freight-price-quotation-openapi.yml, openapi/loggi-integrator-openapi.yml,
   openapi/loggi-labels-openapi.yml, openapi/loggi-package-details-openapi.yml, openapi/loggi-package-openapi.yml,
   openapi/loggi-pontos-openapi.yml, openapi/loggi-shipments-openapi.yml, openapi/loggi-tracking-openapi.yml
@@ -53,3 +53,5 @@ schemes:
     tokenUrl: https://api.loggi.com/oauth2/token
   description: Autenticação OAuth 2.0 para clientes da API.
 scopes: []
+note: The OAuth2 security scheme(s) in the OpenAPI declare no scopes, and no security requirement
+  references one.
