@@ -1,0 +1,397 @@
+{
+  "@context": {
+    "@vocab": "https://loggi.com/schema#",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "loggi": "https://loggi.com/schema#",
+    "ErrorMessage": "loggi:ErrorMessage",
+    "code": {
+      "@id": "loggi:code",
+      "@type": "xsd:integer"
+    },
+    "message": {
+      "@id": "loggi:message",
+      "@type": "xsd:string"
+    },
+    "details": {
+      "@id": "loggi:details",
+      "@container": "@list"
+    },
+    "ServiceAccountTokenRequest": "loggi:ServiceAccountTokenRequest",
+    "client_id": {
+      "@id": "loggi:client_id",
+      "@type": "xsd:string"
+    },
+    "client_secret": {
+      "@id": "loggi:client_secret",
+      "@type": "xsd:string"
+    },
+    "ServiceAccountTokenResponse": "loggi:ServiceAccountTokenResponse",
+    "idToken": {
+      "@id": "loggi:idToken",
+      "@type": "xsd:string"
+    },
+    "expiresIn": {
+      "@id": "loggi:expiresIn",
+      "@type": "xsd:string"
+    },
+    "Problem": "loggi:Problem",
+    "type": {
+      "@id": "loggi:type",
+      "@type": "xsd:string"
+    },
+    "title": {
+      "@id": "loggi:title",
+      "@type": "xsd:string"
+    },
+    "status": {
+      "@id": "loggi:status",
+      "@type": "xsd:integer"
+    },
+    "detail": {
+      "@id": "loggi:detail",
+      "@type": "xsd:string"
+    },
+    "instance": {
+      "@id": "loggi:instance",
+      "@type": "xsd:string"
+    },
+    "QuoteRequest": "loggi:QuoteRequest",
+    "shipFrom": {
+      "@id": "loggi:shipFrom"
+    },
+    "shipTo": {
+      "@id": "loggi:shipTo"
+    },
+    "packages": {
+      "@id": "loggi:packages",
+      "@container": "@list"
+    },
+    "QuoteResponse": "loggi:QuoteResponse",
+    "packagesQuotations": {
+      "@id": "loggi:packagesQuotations"
+    },
+    "v1IntegratorCompanyResponse": "loggi:v1IntegratorCompanyResponse",
+    "companyId": {
+      "@id": "loggi:companyId",
+      "@type": "xsd:integer"
+    },
+    "v1CreateLabelRequest": "loggi:v1CreateLabelRequest",
+    "loggiKeys": {
+      "@id": "loggi:loggiKeys",
+      "@container": "@list"
+    },
+    "format": {
+      "@id": "loggi:format",
+      "@type": "xsd:string"
+    },
+    "layout": {
+      "@id": "loggi:layout",
+      "@type": "xsd:string"
+    },
+    "labelType": {
+      "@id": "loggi:labelType",
+      "@type": "xsd:string"
+    },
+    "responseType": {
+      "@id": "loggi:responseType",
+      "@type": "xsd:string"
+    },
+    "v1CreateLabelResponse": "loggi:v1CreateLabelResponse",
+    "success": {
+      "@id": "loggi:success"
+    },
+    "failure": {
+      "@id": "loggi:failure",
+      "@container": "@list"
+    },
+    "v1PackageDetailsResponse": "loggi:v1PackageDetailsResponse",
+    "v1PackageUpdateResponse": "loggi:v1PackageUpdateResponse",
+    "warning_type": {
+      "@id": "loggi:warning_type",
+      "@type": "xsd:string"
+    },
+    "warning_message": {
+      "@id": "loggi:warning_message",
+      "@type": "xsd:string"
+    },
+    "v1PackageUpdateRequest": "loggi:v1PackageUpdateRequest",
+    "package": {
+      "@id": "loggi:package"
+    },
+    "v1PackageCancelResponse": "loggi:v1PackageCancelResponse",
+    "ListDropoffLocationsRequest": "loggi:ListDropoffLocationsRequest",
+    "categories": {
+      "@id": "loggi:categories",
+      "@container": "@list"
+    },
+    "limit": {
+      "@id": "loggi:limit",
+      "@type": "xsd:integer"
+    },
+    "offset": {
+      "@id": "loggi:offset",
+      "@type": "xsd:integer"
+    },
+    "location_id": {
+      "@id": "loggi:location_id",
+      "@type": "xsd:string"
+    },
+    "postal_code": {
+      "@id": "loggi:postal_code",
+      "@type": "xsd:string"
+    },
+    "country": {
+      "@id": "loggi:country",
+      "@type": "xsd:string"
+    },
+    "city": {
+      "@id": "loggi:city",
+      "@type": "xsd:string"
+    },
+    "state": {
+      "@id": "loggi:state",
+      "@type": "xsd:string"
+    },
+    "longitude": {
+      "@id": "loggi:longitude",
+      "@type": "xsd:decimal"
+    },
+    "latitude": {
+      "@id": "loggi:latitude",
+      "@type": "xsd:decimal"
+    },
+    "distance": {
+      "@id": "loggi:distance",
+      "@type": "xsd:decimal"
+    },
+    "ListDropoffLocationsResponse": "loggi:ListDropoffLocationsResponse",
+    "ListDropoffLocationsMessage": "loggi:ListDropoffLocationsMessage",
+    "current_page": {
+      "@id": "loggi:current_page",
+      "@type": "xsd:integer"
+    },
+    "total_pages": {
+      "@id": "loggi:total_pages",
+      "@type": "xsd:integer"
+    },
+    "total_locations": {
+      "@id": "loggi:total_locations",
+      "@type": "xsd:integer"
+    },
+    "pagination": {
+      "@id": "loggi:pagination",
+      "@type": "@id"
+    },
+    "DropoffLocation": "loggi:DropoffLocation",
+    "location_name": {
+      "@id": "loggi:location_name",
+      "@type": "xsd:string"
+    },
+    "location_type": {
+      "@id": "loggi:location_type",
+      "@type": "xsd:string"
+    },
+    "available_compartments": {
+      "@id": "loggi:available_compartments"
+    },
+    "district": {
+      "@id": "loggi:district",
+      "@type": "xsd:string"
+    },
+    "address": {
+      "@id": "loggi:address",
+      "@type": "xsd:string"
+    },
+    "neighborhood": {
+      "@id": "loggi:neighborhood",
+      "@type": "xsd:string"
+    },
+    "complement": {
+      "@id": "loggi:complement",
+      "@type": "xsd:string"
+    },
+    "opening_hours": {
+      "@id": "loggi:opening_hours",
+      "@type": "xsd:string"
+    },
+    "opening_hours_detail": {
+      "@id": "loggi:opening_hours_detail",
+      "@type": "xsd:string"
+    },
+    "navigation_link": {
+      "@id": "loggi:navigation_link"
+    },
+    "special_holidays": {
+      "@id": "loggi:special_holidays"
+    },
+    "site_condition": {
+      "@id": "loggi:site_condition"
+    },
+    "opening_hours_details": {
+      "@id": "loggi:opening_hours_details",
+      "@container": "@list"
+    },
+    "OpeningHoursDay": "loggi:OpeningHoursDay",
+    "day": {
+      "@id": "loggi:day",
+      "@type": "xsd:string"
+    },
+    "open": {
+      "@id": "loggi:open",
+      "@type": "xsd:string"
+    },
+    "close": {
+      "@id": "loggi:close",
+      "@type": "xsd:string"
+    },
+    "TmsErrorMessage": "loggi:TmsErrorMessage",
+    "erros": {
+      "@id": "loggi:erros",
+      "@container": "@list"
+    },
+    "v1CreateAsyncShipmentRequest": "loggi:v1CreateAsyncShipmentRequest",
+    "returnTo": {
+      "@id": "loggi:returnTo",
+      "@type": "@id"
+    },
+    "shippingCompany": {
+      "@id": "loggi:shippingCompany",
+      "@type": "@id"
+    },
+    "externalServiceId": {
+      "@id": "loggi:externalServiceId",
+      "@type": "xsd:string"
+    },
+    "v1CreateAsyncShipmentResponse": "loggi:v1CreateAsyncShipmentResponse",
+    "correiosAddress": "loggi:correiosAddress",
+    "logradouro": {
+      "@id": "loggi:logradouro",
+      "@type": "xsd:string"
+    },
+    "numero": {
+      "@id": "loggi:numero",
+      "@type": "xsd:string"
+    },
+    "complemento": {
+      "@id": "loggi:complemento",
+      "@type": "xsd:string"
+    },
+    "bairro": {
+      "@id": "loggi:bairro",
+      "@type": "xsd:string"
+    },
+    "cep": {
+      "@id": "loggi:cep",
+      "@type": "xsd:string"
+    },
+    "cidade": {
+      "@id": "loggi:cidade",
+      "@type": "xsd:string"
+    },
+    "uf": {
+      "@id": "loggi:uf",
+      "@type": "xsd:string"
+    },
+    "lineAddress": "loggi:lineAddress",
+    "addressLine1": {
+      "@id": "loggi:addressLine1",
+      "@type": "xsd:string"
+    },
+    "addressLine2": {
+      "@id": "loggi:addressLine2",
+      "@type": "xsd:string"
+    },
+    "postalCode": {
+      "@id": "loggi:postalCode",
+      "@type": "xsd:string"
+    },
+    "shipper": "loggi:shipper",
+    "name": {
+      "@id": "loggi:name",
+      "@type": "xsd:string"
+    },
+    "nifType": {
+      "@id": "loggi:nifType",
+      "@type": "@id"
+    },
+    "asyncPackage": "loggi:asyncPackage",
+    "trackingCode": {
+      "@id": "loggi:trackingCode",
+      "@type": "xsd:string"
+    },
+    "barcode": {
+      "@id": "loggi:barcode",
+      "@type": "xsd:string"
+    },
+    "freightType": {
+      "@id": "loggi:freightType",
+      "@type": "xsd:string"
+    },
+    "weightG": {
+      "@id": "loggi:weightG",
+      "@type": "xsd:integer"
+    },
+    "lengthCm": {
+      "@id": "loggi:lengthCm",
+      "@type": "xsd:integer"
+    },
+    "widthCm": {
+      "@id": "loggi:widthCm",
+      "@type": "xsd:integer"
+    },
+    "heightCm": {
+      "@id": "loggi:heightCm",
+      "@type": "xsd:integer"
+    },
+    "documentTypes": {
+      "@id": "loggi:documentTypes",
+      "@container": "@list"
+    },
+    "packaged": {
+      "@id": "loggi:packaged",
+      "@type": "xsd:boolean"
+    },
+    "labelled": {
+      "@id": "loggi:labelled",
+      "@type": "xsd:boolean"
+    },
+    "sequence": {
+      "@id": "loggi:sequence",
+      "@type": "xsd:string"
+    },
+    "asyncPackageResponse": "loggi:asyncPackageResponse",
+    "loggiKey": {
+      "@id": "loggi:loggiKey",
+      "@type": "xsd:string"
+    },
+    "nationalNif": "loggi:nationalNif",
+    "federalTaxId": {
+      "@id": "loggi:federalTaxId",
+      "@type": "xsd:string"
+    },
+    "stateTaxId": {
+      "@id": "loggi:stateTaxId",
+      "@type": "xsd:string"
+    },
+    "internationalNif": "loggi:internationalNif",
+    "number": {
+      "@id": "loggi:number",
+      "@type": "xsd:string"
+    },
+    "taker": "loggi:taker",
+    "v1TrackPackageTrackingCodeResponse": "loggi:v1TrackPackageTrackingCodeResponse"
+  },
+  "@type": "schema:Dataset",
+  "schema:name": "Loggi API JSON-LD context",
+  "schema:description": "A JSON-LD @context for the objects Loggi's own API contract declares: one class per component schema, one property per declared field, typed from the contract. Derived by script (derive-json-ld.py, 2026-10-14) from openapi/loggi-authentication-openapi.yml, openapi/loggi-freight-price-quotation-openapi.yml, openapi/loggi-integrator-openapi.yml.",
+  "dcterms:created": "2026-10-14",
+  "dcterms:source": [
+    "openapi/loggi-authentication-openapi.yml",
+    "openapi/loggi-freight-price-quotation-openapi.yml",
+    "openapi/loggi-integrator-openapi.yml",
+    "openapi/loggi-labels-openapi.yml",
+    "openapi/loggi-package-details-openapi.yml"
+  ]
+}

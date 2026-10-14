@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/loggi/main/json-schema/loggi-v1-create-async-shipment-response-schema.json",
+  "title": "v1CreateAsyncShipmentResponse",
+  "description": "Objeto que representa um Shipment aceito.",
+  "x-generated": "2026-10-14",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/loggi-shipments-openapi.yml#/components/schemas/v1CreateAsyncShipmentResponse",
+  "type": "object",
+  "required": [
+    "packages"
+  ],
+  "properties": {
+    "packages": {
+      "type": "array",
+      "description": "Lista de Packages de um Shipment que serão processados.",
+      "items": {
+        "$ref": "#/$defs/asyncPackageResponse"
+      }
+    }
+  },
+  "$defs": {
+    "asyncPackageResponse": {
+      "type": "object",
+      "required": [
+        "trackingCode",
+        "barcode",
+        "sequence",
+        "loggiKey"
+      ],
+      "properties": {
+        "trackingCode": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100,
+          "description": "Código de rastreio de um envio informado pelo cliente. Caso não seja informado, a Loggi irá gerar um valor para este campo. Tamanho mínimo 1 caractere e Tamanho máximo 100 caracteres."
+        },
+        "barcode": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255,
+          "description": "Conteúdo do código de barras informado pelo cliente. Caso não seja informado, a Loggi irá gerar um valor para este campo. Tamanho mínimo 1 caractere e Tamanho máximo 255 caracteres."
+        },
+        "loggiKey": {
+          "type": "string",
+          "description": "Identificador único de um pacote gerado pela Loggi."
+        },
+        "sequence": {
+          "type": "string",
+          "maximum": 100,
+          "minimum": 0,
+          "description": "Valor enviado pelo cliente para identificar um pacote dentro de um Shipment. Este valor será retornado\nna resposta. Tamanho máximo 100."
+        }
+      }
+    }
+  }
+}

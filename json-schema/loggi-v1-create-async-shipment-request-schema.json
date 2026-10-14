@@ -1,0 +1,772 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/loggi/main/json-schema/loggi-v1-create-async-shipment-request-schema.json",
+  "title": "v1CreateAsyncShipmentRequest",
+  "description": "Objeto que representa a criação de um shipment de forma assíncrona.",
+  "x-generated": "2026-10-14",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/loggi-shipments-openapi.yml#/components/schemas/v1CreateAsyncShipmentRequest",
+  "type": "object",
+  "required": [
+    "shipTo",
+    "shipFrom",
+    "packages",
+    "externalServiceId"
+  ],
+  "properties": {
+    "shipFrom": {
+      "$ref": "#/$defs/shipFrom"
+    },
+    "shipTo": {
+      "$ref": "#/$defs/shipTo"
+    },
+    "returnTo": {
+      "$ref": "#/$defs/returnTo"
+    },
+    "shippingCompany": {
+      "$ref": "#/$defs/shippingCompany"
+    },
+    "packages": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "description": "Pacote associado ao envio. A soma das medidas (altura, largura e comprimento) do pacote não podem passar de 200 cm.",
+      "items": {
+        "$ref": "#/$defs/asyncPackage"
+      }
+    },
+    "externalServiceId": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Deverá ser informado pelo Sales Engineering responsável pela sua homologação."
+    }
+  },
+  "$defs": {
+    "address": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": [
+            "instructions"
+          ],
+          "properties": {
+            "instructions": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "minLength": 1,
+              "maxLength": 300,
+              "description": "Mais detalhes sobre a localização do endereço. Tamanho mínimo 1 caractere e tamanho máximo 300 caracteres."
+            },
+            "correiosAddress": {
+              "$ref": "#/$defs/correiosAddress"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "instructions"
+          ],
+          "properties": {
+            "instructions": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "minLength": 1,
+              "maxLength": 300,
+              "description": "Mais detalhes sobre a localização do endereço. Tamanho mínimo 1 caractere e tamanho máximo 300 caracteres."
+            },
+            "lineAddress": {
+              "$ref": "#/$defs/lineAddress"
+            }
+          }
+        }
+      ],
+      "description": "Objeto que representa um endereço nacional em formato dos Correios ou um endereço internacional. Os objetos correiosAddress e lineAddress são mutuamente exclusivos."
+    },
+    "asyncPackage": {
+      "type": "object",
+      "required": [
+        "weightG",
+        "freightType",
+        "lengthCm",
+        "widthCm",
+        "heightCm",
+        "documentTypes"
+      ],
+      "properties": {
+        "trackingCode": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100,
+          "description": "Código de rastreio de um envio informado pelo cliente. Caso não seja informado, a Loggi irá gerar um valor para este campo. Tamanho mínimo 1 caractere e Tamanho máximo 100 caractere."
+        },
+        "barcode": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255,
+          "description": "Conteúdo do código de barras informado pelo cliente. Caso não seja informado, a Loggi irá gerar um valor para este campo. Tamanho mínimo 1 caractere e Tamanho máximo 255 caracteres."
+        },
+        "freightType": {
+          "type": "string",
+          "enum": [
+            "FREIGHT_TYPE_ECONOMIC",
+            "FREIGHT_TYPE_EXPRESS"
+          ],
+          "default": "FREIGHT_TYPE_ECONOMIC",
+          "description": "Tipos de frete do pacote."
+        },
+        "weightG": {
+          "type": "integer",
+          "maximum": 30000,
+          "format": "int32",
+          "description": "Peso do pacote em gramas. Valor máximo 30000."
+        },
+        "lengthCm": {
+          "type": "integer",
+          "maximum": 100,
+          "format": "int32",
+          "description": "Comprimento do pacote em centímetros. Valor máximo 100."
+        },
+        "widthCm": {
+          "type": "integer",
+          "maximum": 100,
+          "format": "int32",
+          "description": "Largura do pacote em centrímetros. Valor máximo 100."
+        },
+        "heightCm": {
+          "type": "integer",
+          "maximum": 100,
+          "format": "int32",
+          "description": "Altura do pacote em centímetros. Valor máximo 100."
+        },
+        "documentTypes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "subPackageNumber": {
+                "type": "string",
+                "maxLength": 50,
+                "description": "Código do subpacote informado pelo cliente associado ao documento. Tamanho máximo de 50 caracteres."
+              },
+              "cte": {
+                "type": "object",
+                "required": [
+                  "key"
+                ],
+                "properties": {
+                  "key": {
+                    "type": "string",
+                    "minLength": 44,
+                    "maxLength": 44,
+                    "description": "Chave de identificação do Cte. Tamanho de 44 caracteres."
+                  }
+                }
+              }
+            },
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "invoice": {
+                    "type": "object",
+                    "required": [
+                      "key",
+                      "series",
+                      "number",
+                      "totalValue",
+                      "icms"
+                    ],
+                    "properties": {
+                      "key": {
+                        "type": "string",
+                        "minLength": 44,
+                        "maxLength": 44,
+                        "description": "Chave de identificação da Nota Fiscal. Tamanho de 44 caracteres."
+                      },
+                      "series": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 3,
+                        "description": "Série da Nota Fiscal. Tamanho mínimo 1 caractere e Tamanho máximo 3 caracteres."
+                      },
+                      "number": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 9,
+                        "description": "Número da Nota Fiscal. Tamanho mínimo 1 caractere e Tamanho máximo 9 caracteres."
+                      },
+                      "totalValue": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 8,
+                        "description": "Valor total da Nota Fiscal. Tamanho mínimo 1 caractere e Tamanho máximo 8 caracteres."
+                      },
+                      "authorizationProtocol": {
+                        "type": "string",
+                        "minLength": 15,
+                        "maxLength": 17,
+                        "description": "Número do protocolo de autorização EPEC. Tamanho mínimo 15 e tamanho máximo 17 caracteres numéricos."
+                      },
+                      "icms": {
+                        "type": "string",
+                        "enum": [
+                          "ICMS_TAXED",
+                          "ICMS_NOT_TAXED",
+                          "ICMS_FREE"
+                        ],
+                        "default": "ICMS_TAXED",
+                        "description": "Constante que representa se um pacote terá tributação de ICMS."
+                      },
+                      "items": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "description": {
+                              "type": "string",
+                              "maxLength": 100,
+                              "description": "Descrição de um dos itens na Nota fiscal"
+                            }
+                          }
+                        }
+                      },
+                      "shipper": {
+                        "$ref": "#/$defs/shipper"
+                      },
+                      "taker": {
+                        "$ref": "#/$defs/taker"
+                      }
+                    },
+                    "description": "Objeto que representa as características da Nota Fiscal de um pacote."
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "contentDeclaration": {
+                    "type": "object",
+                    "required": [
+                      "totalValue"
+                    ],
+                    "properties": {
+                      "totalValue": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 8,
+                        "description": "Valor total da declaração de conteúdo. Tamanho mínimo 1 caractere e Tamanho máximo 8 caracteres."
+                      },
+                      "authorizationProtocol": {
+                        "type": "string",
+                        "minLength": 15,
+                        "maxLength": 17,
+                        "description": "Número do protocolo de autorização EPEC. Tamanho mínimo 15 e tamanho máximo 17 caracteres numéricos."
+                      },
+                      "description": {
+                        "minLength": 1,
+                        "maxLength": 100,
+                        "type": "string",
+                        "description": "Descrição dos itens da declaração de conteúdo. Obrigatório se a chave, a série e o número da Declaração de Conteúdo Eletrônica não forem informadas. Tamanho mínimo 1 caractere e Tamanho máximo 100 caracteres."
+                      },
+                      "key": {
+                        "type": "string",
+                        "minLength": 44,
+                        "maxLength": 44,
+                        "description": "Chave de identificação da Declaração de Conteúdo Eletrônica. Tamanho de 44 caracteres."
+                      },
+                      "series": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 3,
+                        "description": "Série da Declaração de Conteúdo Eletrônica. Tamanho mínimo 1 caractere e Tamanho máximo 3 caracteres."
+                      },
+                      "number": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 9,
+                        "description": "Número da Declaração de Conteúdo Eletrônica. Tamanho mínimo 1 caractere e Tamanho máximo 9 caracteres."
+                      },
+                      "items": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "description": {
+                              "type": "string",
+                              "maxLength": 100,
+                              "description": "Descrição de um dos itens na Declaração de conteúdo"
+                            },
+                            "quantity": {
+                              "type": "integer",
+                              "description": "Quantidade de ocorrência desse item na declaração de conteúdo"
+                            },
+                            "unitaryValue": {
+                              "type": "string",
+                              "maxLength": 8,
+                              "description": "Valor unitário desse item na declaração de conteúdo"
+                            },
+                            "unitaryWeightG": {
+                              "type": "integer",
+                              "maximum": 30000,
+                              "minimum": 0,
+                              "description": "Peso do item na declaração de conteúdo"
+                            }
+                          }
+                        }
+                      },
+                      "shipper": {
+                        "$ref": "#/$defs/shipper"
+                      },
+                      "taker": {
+                        "$ref": "#/$defs/taker"
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "dir": {
+                    "type": "object",
+                    "required": [
+                      "awb",
+                      "number",
+                      "emissionDate",
+                      "totalValue",
+                      "currency"
+                    ],
+                    "properties": {
+                      "awb": {
+                        "type": "string",
+                        "minLength": 11,
+                        "maxLength": 11,
+                        "description": "Air Way Bill da declaração de importação de remessas. Tamanho de 11 caracteres."
+                      },
+                      "number": {
+                        "type": "string",
+                        "minLength": 12,
+                        "maxLength": 12,
+                        "description": "Número da declaração de importação de remessas. Tamanho de 12 caracteres."
+                      },
+                      "emissionDate": {
+                        "type": "string",
+                        "minLength": 12,
+                        "maxLength": 24,
+                        "description": "Data de emissão da declaração de importação de remessas. Formato yyyy-MM-dd'T'HH:mm:ss"
+                      },
+                      "totalValue": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 8,
+                        "description": "Valor total da declaração de conteúdo. Tamanho mínimo 1 caractere e Tamanho máximo 8 caracteres."
+                      },
+                      "currency": {
+                        "type": "string",
+                        "minLength": 3,
+                        "maxLength": 3,
+                        "description": "Moeda do valor total. Tamanho de 3 caracteres."
+                      },
+                      "shippingMethod": {
+                        "type": "string",
+                        "enum": [
+                          "SHIPPING_METHOD_EXPRESS"
+                        ],
+                        "default": "SHIPPING_METHOD_EXPRESS",
+                        "description": "Modalidade da remessa da declaração de importação de remessas."
+                      },
+                      "importTaxValue": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 8,
+                        "description": "Valor da taxa de importação da declaração de conteúdo. Tamanho mínimo 1 caractere e Tamanho máximo 8 caracteres."
+                      },
+                      "items": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "description": {
+                              "type": "string",
+                              "maxLength": 100,
+                              "description": "Descrição de um dos itens na Declaração de importação de remessas"
+                            }
+                          }
+                        }
+                      },
+                      "shipper": {
+                        "$ref": "#/$defs/shipper"
+                      },
+                      "taker": {
+                        "$ref": "#/$defs/taker"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "description": "Tipos de documentos associados ao pacote."
+        },
+        "packaged": {
+          "type": "boolean",
+          "description": "Valor que identifica se o pacote está embalado. Por padrão, o pacote é considerado embalado (true).",
+          "format": "boolean"
+        },
+        "labelled": {
+          "type": "boolean",
+          "description": "Valor que identifica se o pacote está etiquetado. Por padrão, o pacote é considerado etiquetado (true).",
+          "format": "boolean"
+        },
+        "sequence": {
+          "type": "string",
+          "maximum": 100,
+          "minimum": 0,
+          "description": "Valor enviado pelo cliente para identificar um pacote dentro de um Shipment. Este valor será retornado\nna resposta. Tamanho máximo 100."
+        }
+      }
+    },
+    "correiosAddress": {
+      "type": "object",
+      "required": [
+        "logradouro",
+        "cep",
+        "cidade",
+        "uf"
+      ],
+      "properties": {
+        "logradouro": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "description": "Nome da rua. Tamanho mínimo 1 caractere e Tamanho máximo 128 caracteres."
+        },
+        "numero": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 8,
+          "description": "Número do endereço. Tamanho máximo 8 caracteres. Caso não possua número, informar com os valores S/N ou s/n"
+        },
+        "complemento": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 128,
+          "description": "Informações adicionais para facilitar a localização. Tamanho máximo 128 caracteres."
+        },
+        "bairro": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "description": "Para endereços de Brasília, procure mais informações nos Correios. Em casos que seja usado regiões adminstrativas e se existir bairro, informe entre parentêses. Tamanho mínimo 1 caractere e Tamanho máximo 64 caracteres."
+        },
+        "cep": {
+          "type": "string",
+          "minLength": 8,
+          "maxLength": 8,
+          "description": "CEP do endereço com 8 dígitos."
+        },
+        "cidade": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 32,
+          "description": "Cidade do endereço. Tamanho mínimo 1 caractere e Tamanho máximo 32 caracteres."
+        },
+        "uf": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 2,
+          "description": "Unidade federativa com dois caracteres."
+        }
+      },
+      "description": "Objeto que contém informações detalhadas do endereço compatível com o formato da API dos Correios."
+    },
+    "internationalNif": {
+      "type": "object",
+      "required": [
+        "number"
+      ],
+      "properties": {
+        "number": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 20,
+          "description": "Número de identificação fiscal internacional."
+        }
+      },
+      "description": "Contém os dados fiscais internacional."
+    },
+    "lineAddress": {
+      "description": "Objeto que representa um endereço com padrão internacional.",
+      "type": "object",
+      "required": [
+        "addressLine1",
+        "postalCode",
+        "city",
+        "state"
+      ],
+      "properties": {
+        "addressLine1": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "description": "Primeira linha que contempla os dados do endereço. Tamanho mínimo 1 caractere e Tamanho máximo 256 caracteres."
+        },
+        "addressLine2": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 256,
+          "description": "Segunda linha que complementa os dados de endereço. Tamanho máximo 256 caracteres. descritos em addressLine1"
+        },
+        "postalCode": {
+          "type": "string",
+          "minLength": 8,
+          "maxLength": 8,
+          "description": "Código postal do endereço. Tamanho mínimo 8 caractere e Tamanho máximo 8 caracteres."
+        },
+        "city": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 32,
+          "description": "Cidade do endereço. Tamanho mínimo 1 caractere e Tamanho máximo 32 caracteres."
+        },
+        "state": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 32,
+          "description": "Estado do Endereço. Tamanho mínimo 1 caractere e Tamanho máximo 32 caracteres."
+        },
+        "country": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100,
+          "description": "País do endereço.  Tamanho mínimo 1 caractere e Tamanho máximo 100 caracteres."
+        }
+      }
+    },
+    "nationalNif": {
+      "type": "object",
+      "required": [
+        "federalTaxId"
+      ],
+      "properties": {
+        "federalTaxId": {
+          "type": "string",
+          "minLength": 11,
+          "maxLength": 14,
+          "description": "CPF (com 11 dígitos) ou CNPJ (com 14 dígitos numéricos ou alfanuméricos) do embarcador."
+        },
+        "stateTaxId": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 16,
+          "description": "Inscrição Estadual."
+        }
+      },
+      "description": "Contém os dados fiscais nacional."
+    },
+    "nifType": {
+      "description": "Objeto que representa os dados ficais de uma pessoa física ou jurídica podendo ser nacional ou internacional.",
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "national": {
+              "$ref": "#/$defs/nationalNif"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "international": {
+              "$ref": "#/$defs/internationalNif"
+            }
+          }
+        }
+      ]
+    },
+    "returnTo": {
+      "type": "object",
+      "description": "Objeto que representa os dados para a devolução do pacote.",
+      "required": [
+        "address"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "description": "Nome do embarcador. Tamanho mínimo 1 caractere e tamanho máximo 128 caracteres."
+        },
+        "phoneNumber": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 16,
+          "description": "Telefone do embarcador. Caso não informado o código do país, será considerado 55 (Brasil). Tamanho máximo 16 caracteres."
+        },
+        "federalTaxId": {
+          "type": "string",
+          "minLength": 11,
+          "maxLength": 14,
+          "description": "CPF (com 11 dígitos) ou CNPJ (com 14 dígitos numéricos ou alfanuméricos) do embarcador."
+        },
+        "address": {
+          "$ref": "#/$defs/address"
+        }
+      }
+    },
+    "shipFrom": {
+      "type": "object",
+      "description": "Objeto que representa os dados do embarcador.",
+      "required": [
+        "name",
+        "federalTaxId",
+        "address"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "description": "Nome do embarcador. Tamanho mínimo 1 caractere e tamanho máximo 128 caracteres."
+        },
+        "phoneNumber": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 16,
+          "description": "Telefone do embarcador. Caso não informado o código do país, será considerado 55 (Brasil). Tamanho máximo 16 caracteres."
+        },
+        "federalTaxId": {
+          "type": "string",
+          "minLength": 11,
+          "maxLength": 14,
+          "description": "CPF (com 11 dígitos) ou CNPJ (com 14 dígitos numéricos ou alfanuméricos) do embarcador."
+        },
+        "address": {
+          "$ref": "#/$defs/address"
+        }
+      }
+    },
+    "shipTo": {
+      "type": "object",
+      "description": "Objeto que representa os dados do recebedor.",
+      "required": [
+        "name",
+        "federalTaxId",
+        "address"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "description": "Nome do recebedor. Tamanho mínimo 1 caractere e tamanho máximo 128 caracteres."
+        },
+        "email": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 300,
+          "description": "Email do recebedor. Tamanho máximo 300 caracteres."
+        },
+        "phoneNumber": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 16,
+          "description": "Telefone do recebedor. Caso não informado o código do país, será considerado 55 (Brasil). Tamanho máximo 16 caracteres."
+        },
+        "federalTaxId": {
+          "type": "string",
+          "minLength": 11,
+          "maxLength": 14,
+          "description": "CPF (com 11 dígitos) ou CNPJ (com 14 dígitos numéricos ou alfanuméricos) do embarcador."
+        },
+        "stateTaxId": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 16,
+          "description": "Inscrição Estadual do recebedor. Tamanho máximo 16 caracteres."
+        },
+        "address": {
+          "$ref": "#/$defs/address"
+        }
+      }
+    },
+    "shipper": {
+      "description": "Objeto que representa um remetente nacional ou internacional.",
+      "type": "object",
+      "required": [
+        "name",
+        "nifType",
+        "address"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "description": "Nome do remetente."
+        },
+        "nifType": {
+          "$ref": "#/$defs/nifType"
+        },
+        "address": {
+          "$ref": "#/$defs/address"
+        }
+      }
+    },
+    "shippingCompany": {
+      "type": "object",
+      "description": "Identifica a transportadora responsável pelo pacote no fluxo de operação universal.",
+      "required": [
+        "name",
+        "federalTaxId"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "description": "Nome da empresa. Tamanho mínimo 1 caractere e tamanho máximo 128 caracteres."
+        },
+        "federalTaxId": {
+          "type": "string",
+          "minLength": 11,
+          "maxLength": 14,
+          "description": "CPF (com 11 dígitos) ou CNPJ (com 14 dígitos numéricos ou alfanuméricos) do embarcador."
+        }
+      }
+    },
+    "taker": {
+      "description": "Objeto que representa o tomador de serviço.",
+      "type": "object",
+      "required": [
+        "name",
+        "nifType",
+        "address"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "description": "Nome do tomando de serviço."
+        },
+        "nifType": {
+          "$ref": "#/$defs/nifType"
+        },
+        "address": {
+          "$ref": "#/$defs/address"
+        }
+      }
+    }
+  }
+}

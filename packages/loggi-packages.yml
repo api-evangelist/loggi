@@ -1,26 +1,18 @@
 generated: '2026-07-20'
-method: searched
+method: none
 source: npm, Packagist, GitHub search for Loggi API clients
-notes: >-
-  No official first-party Loggi SDK was found. The Loggi GitHub org
-  (github.com/loggi) contains only forks of third-party open-source projects,
-  not an API client. The libraries below are community-maintained; all are
-  marked official:false. No canonical SDKs pointer is emitted because none are
-  first-party.
-packages:
-  - language: php
-    registry: github
-    name: jansenfelipe/loggi-php
-    url: https://github.com/jansenfelipe/loggi-php
-    official: false
-  - language: php
-    registry: packagist
-    name: lojazone/loggi-api-sdk-php
-    url: https://packagist.org/packages/lojazone/loggi-api-sdk-php
-    install: composer require lojazone/loggi-api-sdk-php
-    official: false
-  - language: javascript
-    registry: github
-    name: rodrigovallades/loggi-api-integration
-    url: https://github.com/rodrigovallades/loggi-api-integration
-    official: false
+notes: No official first-party Loggi SDK was found. The Loggi GitHub org (github.com/loggi) contains only forks of third-party open-source projects,
+  not an API client. The libraries below are community-maintained; all are marked official:false. No canonical SDKs pointer is emitted because
+  none are first-party.
+packages: []
+rejected:
+- name: jansenfelipe/loggi-php
+  registry: github
+  reason: 'official: false as written'
+- name: lojazone/loggi-api-sdk-php
+  registry: packagist
+  reason: 'official: false as written'
+- name: rodrigovallades/loggi-api-integration
+  registry: github
+  reason: 'official: false as written'
+note: 'no first-party package: every candidate a model listed was unowned (harvest-packages.py --audit)'

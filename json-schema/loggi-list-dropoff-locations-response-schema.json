@@ -1,0 +1,181 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/loggi/main/json-schema/loggi-list-dropoff-locations-response-schema.json",
+  "title": "ListDropoffLocationsResponse",
+  "description": "Resposta com os Loggi Pontos filtrados.",
+  "x-generated": "2026-10-14",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/loggi-pontos-openapi.yml#/components/schemas/ListDropoffLocationsResponse",
+  "type": "object",
+  "required": [
+    "status"
+  ],
+  "properties": {
+    "status": {
+      "type": "string",
+      "enum": [
+        "success"
+      ],
+      "description": "Informa que houve sucesso na pesquisa."
+    },
+    "message": {
+      "$ref": "#/$defs/ListDropoffLocationsMessage"
+    }
+  },
+  "$defs": {
+    "DropoffLocation": {
+      "description": "Representação de um Loggi Ponto.",
+      "type": "object",
+      "properties": {
+        "location_id": {
+          "type": "string",
+          "description": "Identificador único do Loggi Ponto."
+        },
+        "location_name": {
+          "type": "string",
+          "description": "Nome do Loggi Ponto."
+        },
+        "location_type": {
+          "type": "string",
+          "description": "Tipo do Loggi Ponto."
+        },
+        "categories": {
+          "type": "array",
+          "description": "Categorias do Loggi Ponto.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "available_compartments": {
+          "nullable": true
+        },
+        "longitude": {
+          "type": "number",
+          "description": "Longitude do Loggi Ponto."
+        },
+        "latitude": {
+          "type": "number",
+          "description": "Latitude"
+        },
+        "country": {
+          "type": "string",
+          "description": "Páis do Loggi Ponto."
+        },
+        "city": {
+          "type": "string",
+          "description": "Cidade do Loggi Ponto."
+        },
+        "district": {
+          "type": "string",
+          "description": "Distrito do Loggi Ponto."
+        },
+        "postal_code": {
+          "type": "string",
+          "description": "CEP do Loggi Ponto."
+        },
+        "address": {
+          "type": "string",
+          "description": "Endereço do Loggi Ponto."
+        },
+        "neighborhood": {
+          "type": "string",
+          "description": "Bairro."
+        },
+        "state": {
+          "type": "string",
+          "description": "Estado."
+        },
+        "complement": {
+          "type": "string",
+          "description": "Complemento."
+        },
+        "opening_hours": {
+          "type": "string",
+          "description": "Horário de funcionamento."
+        },
+        "opening_hours_detail": {
+          "type": "string",
+          "description": "Horário de funcionamento."
+        },
+        "navigation_link": {
+          "nullable": true
+        },
+        "special_holidays": {
+          "nullable": true
+        },
+        "site_condition": {
+          "nullable": true
+        },
+        "opening_hours_details": {
+          "type": "array",
+          "description": "Horário de funcionamento.",
+          "items": {
+            "$ref": "#/$defs/OpeningHoursDay"
+          }
+        }
+      }
+    },
+    "ListDropoffLocationsMessage": {
+      "type": "object",
+      "required": [
+        "limit",
+        "offset",
+        "current_page",
+        "total_pages",
+        "total_locations",
+        "pagination"
+      ],
+      "description": "Paginação dos resultados.",
+      "properties": {
+        "limit": {
+          "type": "integer",
+          "description": "Quantidade máxima de Loggi Pontos por página."
+        },
+        "offset": {
+          "type": "integer",
+          "description": "Posição do primeiro Loggi Ponto na página atual."
+        },
+        "current_page": {
+          "type": "integer",
+          "description": "Página atual."
+        },
+        "total_pages": {
+          "type": "integer",
+          "description": "Quantidade total de páginas."
+        },
+        "total_locations": {
+          "type": "integer",
+          "description": "Quantidade total de Loggi Pontos encontrados."
+        },
+        "pagination": {
+          "$ref": "#/$defs/ListDropoffLocationsPagination"
+        }
+      }
+    },
+    "ListDropoffLocationsPagination": {
+      "description": "Lista dos Loggi Pontos presentes na página atual.",
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/DropoffLocation"
+      }
+    },
+    "OpeningHoursDay": {
+      "type": "object",
+      "properties": {
+        "day": {
+          "type": "string",
+          "description": "Dia da semana."
+        },
+        "open": {
+          "type": "string",
+          "description": "Hora de abertura."
+        },
+        "close": {
+          "type": "string",
+          "description": "Hora de fechamento."
+        }
+      }
+    }
+  }
+}

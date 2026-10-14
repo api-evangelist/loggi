@@ -1,0 +1,575 @@
+openapi: 3.0.0
+info:
+  title: Package
+  version: v1
+  description: Disponibiliza serviços para atuar sobre um pacote.
+servers:
+- url: https://stg.api.loggi.com
+- url: https://api.loggi.com
+paths:
+  /v1/companies/{company_id}/packages:
+    patch:
+      summary: Atualizar dados de um pacote
+      description: ''
+      operationId: PackageUpdate
+      security:
+      - OAuth2: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1PackageUpdateResponse'
+        '400':
+          description: Mensagem do cliente não segue a especificação
+          content:
+            application/json:
+              example:
+                code: 3
+                message: Mensagem do cliente não segue a especificação
+                details: []
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '401':
+          description: Falha de autenticação
+          content:
+            application/json:
+              example:
+                code: 16
+                message: Falha de autenticação
+                details: []
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '403':
+          description: Sem autorização para acessar o serviço
+          content:
+            application/json:
+              example:
+                code: 7
+                message: Falha de autenticação
+                details: []
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Recurso não encontrado
+          content:
+            application/json:
+              example:
+                code: 5
+                message: Recurso não encontrado
+                details: []
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Requisições massivas bloqueadas
+          content:
+            application/json:
+              example:
+                code: 8
+                message: Requisições massivas bloqueadas
+                details: []
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '500':
+          description: Erro interno
+          content:
+            application/json:
+              example:
+                code: 13
+                message: Erro interno
+                details: []
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '503':
+          description: Serviço temporariamente indisponível
+          content:
+            application/json:
+              example:
+                code: 14
+                message: Serviço temporariamente indisponível
+                details: []
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      requestBody:
+        content:
+          application/json:
+            examples:
+              Atualizar pacote com destinatário e endereço no formato CorreiosAddress:
+                value:
+                  package:
+                    shipTo:
+                      name: Maria das Dores
+                      email: email@email.com
+                      phoneNumber: '11998765432'
+                      federalTaxId: '12345678911'
+                      address:
+                        correios:
+                          logradouro: Alameda Santos
+                          numero: '2400'
+                          complemento: 10 andar
+                          bairro: Jardim Paulista
+                          cep: '1419100'
+                          cidade: São Paulo
+                          uf: SP
+                    updateMask: shipTo
+              Atualizar pacote com destinatário e endereço no formato LineAddress:
+                value:
+                  package:
+                    shipTo:
+                      name: Maria das Dores
+                      email: email@email.com
+                      phoneNumber: '11998765432'
+                      federalTaxId: '12345678911'
+                      address:
+                        lines:
+                          addressLine1: Alameda Santos, 2400
+                          addressLine2: 10 andar
+                          postalCode: '1419100'
+                          city: São Paulo
+                          state: SP
+                        country: Brasil
+                    updateMask: shipTo
+              Atualizar pacote com destinatário:
+                value:
+                  package:
+                    shipTo:
+                      name: Maria das Dores
+                      email: email@email.com
+                      phoneNumber: '11998765432'
+                      federalTaxId: '12345678911'
+                    updateMask: shipTo.name,shipTo.email,shipTo.phoneNumber,shipTo.federalTaxId
+              Atualizar pacote com endereço no formato CorreiosAddress:
+                value:
+                  package:
+                    shipTo:
+                      address:
+                        correios:
+                          logradouro: Alameda Santos
+                          numero: '2400'
+                          complemento: 10 andar
+                          bairro: Jardim Paulista
+                          cep: '1419100'
+                          cidade: São Paulo
+                          uf: SP
+                    updateMask: shipTo.address
+              Atualizar pacote com endereço no formato LineAddress:
+                value:
+                  package:
+                    shipTo:
+                      address:
+                        lines:
+                          addressLine1: Alameda Santos, 2400
+                          addressLine2: 10 andar
+                          postalCode: '1419100'
+                          city: São Paulo
+                          state: SP
+                          country: Brasil
+                    updateMask: shipTo.address
+              Atualizar endereço de devolução no formato CorreiosAddress:
+                value:
+                  package:
+                    returnTo:
+                      address:
+                        correios:
+                          logradouro: Alameda Santos
+                          numero: '2400'
+                          complemento: 10 andar
+                          bairro: Jardim Paulista
+                          cep: '1419100'
+                          cidade: São Paulo
+                          uf: SP
+                    updateMask: returnTo.address
+              Atualizar endereço de devolução no formato LineAddress:
+                value:
+                  package:
+                    returnTo:
+                      address:
+                        lines:
+                          addressLine1: Alameda Santos, 2400
+                          addressLine2: 10 andar
+                          postalCode: '1419100'
+                          city: São Paulo
+                          state: SP
+                          country: Brasil
+                    updateMask: returnTo.address
+            schema:
+              $ref: '#/components/schemas/v1PackageUpdateRequest'
+        required: true
+      parameters:
+      - name: company_id
+        in: path
+        required: true
+        description: Código numérico fornecido pela Loggi para identificação.
+        schema:
+          type: string
+      - name: loggi_key
+        in: query
+        required: false
+        description: Código único gerado pela Loggi, ou seja, cada pacote deve ter um loggi_key único.
+        schema:
+          type: string
+      - name: tracking_code
+        in: query
+        required: false
+        description: Código de rastreio do pacote, que é gerado pela Loggi ou pelo parceiro por meio da API de envio.
+        schema:
+          type: string
+      tags:
+      - PackageUpdateAPI
+  /v1/companies/{company_id}/packages/cancel:
+    post:
+      summary: Cancelar envio
+      description: ''
+      operationId: PackageCancel
+      security:
+      - OAuth2: []
+      responses:
+        '200':
+          description: Pacote cancelado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1PackageCancelResponse'
+        '400':
+          description: Mensagem do cliente não segue a especificação
+          content:
+            application/json:
+              example:
+                code: 3
+                message: Mensagem do cliente não segue a especificação
+                details: []
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '401':
+          description: Falha de autenticação
+          content:
+            application/json:
+              example:
+                code: 16
+                message: Falha de autenticação
+                details: []
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '403':
+          description: Sem autorização para acessar o serviço
+          content:
+            application/json:
+              example:
+                code: 7
+                message: Acesso não autorizado
+                details: []
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Recurso não encontrado
+          content:
+            application/json:
+              example:
+                code: 5
+                message: Recurso não encontrado
+                details: []
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Requisições massivas bloqueadas
+          content:
+            application/json:
+              example:
+                code: 8
+                message: Requisições massivas bloqueadas
+                details: []
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '500':
+          description: Erro interno
+          content:
+            application/json:
+              example:
+                code: 13
+                message: Erro interno
+                details: []
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '503':
+          description: Serviço temporariamente indisponível
+          content:
+            application/json:
+              example:
+                code: 14
+                message: Serviço temporariamente indisponível
+                details: []
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      parameters:
+      - name: company_id
+        in: path
+        required: true
+        description: Código numérico fornecido pela Loggi para identificação.
+        schema:
+          type: string
+      - name: loggi_key
+        in: query
+        required: false
+        description: Código único gerado pela Loggi, ou seja, cada pacote deve ter um loggi_key único.
+        schema:
+          type: string
+      - name: tracking_code
+        in: query
+        required: false
+        description: Código de rastreio do pacote, que é gerado pela Loggi ou pelo parceiro por meio da API de envio.
+        schema:
+          type: string
+      tags:
+      - PackageCancelAPI
+components:
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      description: Autenticação OAuth 2.0 para clientes da API.
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.loggi.com/oauth2/token
+          scopes: {}
+  schemas:
+    v1PackageUpdateResponse:
+      type: object
+      properties:
+        warning_type:
+          type: string
+          description: Mensagem com a constante que identifica casos em que a atualização dos dados do pacote não pode ser confirmada.
+          example: PACKAGE_DESTINATION_UPDATE_DRIVER_CUSTODY_WARNING_TYPE
+        warning_message:
+          type: string
+          description: Mensagem de alerta para casos em que a atualização dos dados do pacote não pode ser confirmada.
+          example: Package update while package is in drivers custody.
+      description: Objeto que configura a resposta da API de atualizar dados de um pacote.
+    v1PackageUpdateRequest:
+      type: object
+      properties:
+        package:
+          type: object
+          properties:
+            updateMask:
+              type: string
+              description: Identifica o campo do pacote que será atualizado. Os campos shipTo e returnTo não podem ser atualizados na mesma requisição.
+              example: shipTo
+            shipTo:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Nome da pessoa destinatária associada ao pacote.
+                  example: Maria das Dores
+                email:
+                  type: string
+                  description: Email da pessoa destinatária associada ao pacote.
+                  example: email@email.com
+                phoneNumber:
+                  type: string
+                  description: Número de telefone da pessoa destinatária associada ao pacote.
+                  example: 11998765432
+                federalTaxId:
+                  type: string
+                  description: Número de identificação fiscal da pessoa destinatária associada ao pacote. Poder ser o número do CPF ou CNPJ.
+                  example: 12345678911
+                address:
+                  oneOf:
+                  - type: object
+                    properties:
+                      correios:
+                        type: object
+                        properties:
+                          logradouro:
+                            type: string
+                            description: Nome do endereço associado a pessoa destinatária do pacote.
+                            example: Alameda Santos
+                          numero:
+                            type: string
+                            description: Número que identifica o local onde o pacote será entregue para a pessoa destinatária associada ao pacote.
+                            example: 2400
+                          complemento:
+                            type: string
+                            description: Informações complementares associadas ao endereço da pessoa destinatária do pacote.
+                            example: Apto 103, Bloco C
+                          bairro:
+                            type: string
+                            description: Bairro do endereço associado a pessoa destinatária do pacote.
+                            example: Centro
+                          cep:
+                            type: string
+                            description: Código postal do endereço associado a pessoa destinatária do pacote.
+                            example: 12345000
+                          cidade:
+                            type: string
+                            description: Cidade do endereço associado a pessoa destinatária do pacote.
+                            example: São Paulo
+                          uf:
+                            type: string
+                            description: Unidade federativa do endereço associado a pessoa destinatária do pacote.
+                            example: SP
+                    description: Objeto que contém informações detalhadas do endereço compatível com o formato da API dos Correios.
+                  - type: object
+                    properties:
+                      lines:
+                        type: object
+                        properties:
+                          addressLine1:
+                            type: string
+                            description: Representação mais simples do endereço associado a pessoa destinatária do pacote. Comumente associado ao formato inserido pelo usuário.
+                            example: Alameda Santos, 2400
+                          addressLine2:
+                            type: string
+                            description: Informações complementares associadas ao endereço da pessoa destinatária do pacote.
+                            example: Apto 103 - Bloco C
+                          postalCode:
+                            type: string
+                            description: Código postal do endereço associado a pessoa destinatária do pacote. No Brasil, usa-se o CEP.
+                            example: 12345000
+                          city:
+                            type: string
+                            description: Cidade do endereço associado a pessoa destinatária do pacote.
+                            example: São Paulo
+                          state:
+                            type: string
+                            description: Unidade federativa do endereço associado a pessoa destinatária do pacote.
+                            example: SP
+                          country:
+                            type: string
+                            description: País do endereço associado a pessoa destinatária do pacote.
+                            example: Brasil
+                    description: Objeto que representa um endereço com padrão internacional.
+                  description: Objeto que representa um endereço nacional em formato dos Correios ou um endereço internacional. Ambas as representações são mutuamente exclusivas, sendo assim, só é possível utilizar uma delas por request.
+              description: Objeto que configura o formato da requisição de atualização do destinatário. Contém as informações da pessoa destinatária e do endereço de entrega.
+            returnTo:
+              type: object
+              properties:
+                address:
+                  oneOf:
+                  - type: object
+                    properties:
+                      correios:
+                        type: object
+                        properties:
+                          logradouro:
+                            type: string
+                            description: Nome do endereço de devolução associado ao pacote.
+                            example: Alameda Santos
+                          numero:
+                            type: string
+                            description: Número que identifica o local onde o pacote será devolvido.
+                            example: 2400
+                          complemento:
+                            type: string
+                            description: Informações complementares associadas ao endereço de devolução do pacote.
+                            example: Apto 103, Bloco C
+                          bairro:
+                            type: string
+                            description: Bairro do endereço de devolução associado ao pacote.
+                            example: Centro
+                          cep:
+                            type: string
+                            description: Código postal do endereço de devolução associado ao pacote.
+                            example: 12345000
+                          cidade:
+                            type: string
+                            description: Cidade do endereço de devolução associado ao pacote. O endereço não poderá ser alterado para outro município.
+                            example: São Paulo
+                          uf:
+                            type: string
+                            description: Unidade federativa do endereço de devolução associado ao pacote.
+                            example: SP
+                    description: Objeto que contém informações detalhadas do endereço compatível com o formato da API dos Correios.
+                  - type: object
+                    properties:
+                      lines:
+                        type: object
+                        properties:
+                          addressLine1:
+                            type: string
+                            description: Representação mais simples do endereço de devolução associado ao pacote. Comumente associado ao formato inserido pelo usuário.
+                            example: Alameda Santos, 2400
+                          addressLine2:
+                            type: string
+                            description: Informações complementares associadas ao endereço de devolução do pacote.
+                            example: Apto 103 - Bloco C
+                          postalCode:
+                            type: string
+                            description: Código postal do endereço de devolução associado ao pacote. No Brasil, usa-se o CEP.
+                            example: 12345000
+                          city:
+                            type: string
+                            description: Cidade do endereço de devolução associado ao pacote. O endereço não poderá ser alterado para outro município.
+                            example: São Paulo
+                          state:
+                            type: string
+                            description: Unidade federativa do endereço de devolução associado ao pacote.
+                            example: SP
+                          country:
+                            type: string
+                            description: País do endereço de devolução associado ao pacote.
+                            example: Brasil
+                    description: Objeto que representa um endereço com padrão internacional.
+                  description: Objeto que representa um endereço nacional em formato dos Correios ou um endereço internacional. Ambas as representações são mutuamente exclusivas, sendo assim, só é possível utilizar uma delas por request.
+              description: Objeto que configura o formato da requisição de atualização do endereço de devolução. Disponível apenas para pacotes que já estão em processo de devolução. Apenas o campo address pode ser atualizado. Para pacotes com devolução consolidada, a atualização do endereço de devolução não terá efeito.
+      description: Objeto que configura o formato da requisição de atualização de um pacote. Contém as informações a serem atualizadas.
+    ErrorMessage:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+          description: 'Código numérico referente à falha.
+
+            INVALID_ARGUMENT = 3
+
+            NOT_FOUND = 5
+
+            PERMISSION_DENIED = 7
+
+            RESOURCE_EXHAUSTED = 8
+
+            FAILED_PRECONDITION = 9
+
+            INTERNAL = 13
+
+            UNAVAILABLE = 14
+
+            UNAUTHENTICATED = 16'
+          example: 14
+        message:
+          type: string
+          description: Texto pequeno informativo sobre a falha.
+          example: Requisição com credenciais inválidas.
+        details:
+          type: array
+          description: Detalhes sobre a falha. Nesta versão da API ainda não está sendo retornado, mas deve ser considerado um array de objetos de tipos distintos.
+          items: {}
+          example: []
+    v1PackageCancelResponse:
+      type: object
+      properties:
+        warning_type:
+          type: string
+          description: Mensagem com a constante que identifica casos em que o cancelamento não pode ser confirmado.
+          example: REDISPATCH_CANCELLATION
+        warning_message:
+          type: string
+          description: Mensagem de alerta para casos em que o cancelamento não pode ser confirmado.
+          example: O pacote está com os correios. Vamos tentar cancelar e devolver pra você.
+      description: Objeto que configura a resposta da API de cancelamento de pacotes.
+x-provenance:
+  method: searched
+  source: https://docs.api.loggi.com/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://docs.api.loggi.com/reference/packagecancel.md
+  - https://docs.api.loggi.com/reference/packagecancelapi.md
+  - https://docs.api.loggi.com/reference/packageupdate.md
+  - https://docs.api.loggi.com/reference/packageupdateapi.md
+  merge:
+    pages: 4
+    deduped: 11
+    conflicts_kept_first: 0

@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/loggi/main/json-schema/loggi-v1-integrator-company-response-schema.json",
+  "title": "v1IntegratorCompanyResponse",
+  "x-generated": "2026-10-14",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/loggi-integrator-openapi.yml#/components/schemas/v1IntegratorCompanyResponse",
+  "type": "object",
+  "properties": {
+    "companyId": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Código numérico referente ao Id da Company."
+    }
+  }
+}

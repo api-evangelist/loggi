@@ -1,0 +1,71 @@
+generated: '2026-10-14'
+method: derived
+generator: derive-problem-types.py
+source:
+- openapi/loggi-authentication-openapi.yml
+- openapi/loggi-freight-price-quotation-openapi.yml
+- openapi/loggi-integrator-openapi.yml
+- openapi/loggi-labels-openapi.yml
+- openapi/loggi-package-details-openapi.yml
+- openapi/loggi-package-openapi.yml
+- openapi/loggi-pontos-openapi.yml
+- openapi/loggi-shipments-openapi.yml
+- openapi/loggi-tracking-openapi.yml
+format: rfc9457
+envelope:
+  media_type: application/json
+  schema: ErrorMessage
+coverage:
+  operations: 11
+  statuses_declared: 7
+problems:
+- status: 400
+  title: Bad Request
+  description: Mensagem do cliente não segue a especificação
+  operations: 11
+  media_types:
+  - application/json
+  - application/problem+json
+  schema: ErrorMessage
+- status: 401
+  title: Unauthorized
+  description: Falha de autenticação
+  operations: 10
+  media_types:
+  - application/json
+  schema: ErrorMessage
+- status: 403
+  title: Forbidden
+  description: Sem autorização para acessar o serviço
+  operations: 9
+  media_types:
+  - application/json
+  schema: ErrorMessage
+- status: 404
+  title: Not Found
+  description: Recurso não encontrado
+  operations: 8
+  media_types:
+  - application/json
+  schema: ErrorMessage
+- status: 429
+  title: Too Many Requests
+  description: Requisições massivas bloqueadas
+  operations: 10
+  media_types:
+  - application/json
+  schema: ErrorMessage
+- status: 500
+  title: Internal Server Error
+  description: Erro interno
+  operations: 10
+  media_types:
+  - application/json
+  schema: ErrorMessage
+- status: 503
+  title: Service Unavailable
+  description: Serviço temporariamente indisponível
+  operations: 10
+  media_types:
+  - application/json
+  schema: ErrorMessage

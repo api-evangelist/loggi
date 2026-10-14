@@ -1,3 +1,17 @@
+generated: '2026-10-14'
+method: searched
+source:
+- https://zapier.com/apps/loggi/integrations
+- https://n8n.io/integrations/loggi/
+- https://composio.dev/toolkits/loggi
+- https://monid.ai/tools/loggi
+checked:
+- https://composio.dev/toolkits/loggi
+- https://monid.ai/tools/loggi
+- https://n8n.io/integrations/loggi/
+- https://zapier.com/apps/loggi/integrations
+summary: null
+marketplace_apps: []
 edges:
 - partner_name: 17track
   partner: 17track
@@ -10,6 +24,4 @@ edges:
   detected_by: detect-carrier-edges.py
   first_seen: '2026-10-13'
   matched_by: domain:loggi.com
-generated: '2026-10-12'
-method: searched
-checked: []
+templates: []

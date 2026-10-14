@@ -1,0 +1,55 @@
+generated: '2026-10-14'
+method: derived
+source: openapi/loggi-freight-price-quotation-openapi.yml, openapi/loggi-integrator-openapi.yml,
+  openapi/loggi-labels-openapi.yml, openapi/loggi-package-details-openapi.yml, openapi/loggi-package-openapi.yml,
+  openapi/loggi-pontos-openapi.yml, openapi/loggi-shipments-openapi.yml, openapi/loggi-tracking-openapi.yml
+schemes:
+- name: OAuth2
+  source: openapi/loggi-freight-price-quotation-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://api.loggi.com/oauth2/token
+  description: Autenticação OAuth 2.0 para clientes da API.
+- name: OAuth2
+  source: openapi/loggi-integrator-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://api.loggi.com/oauth2/token
+  description: Autenticação OAuth 2.0 para clientes da API.
+- name: OAuth2
+  source: openapi/loggi-labels-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: oauth2/token
+  description: Autenticação OAuth 2.0 para clientes da API.
+- name: OAuth2
+  source: openapi/loggi-package-details-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://api.loggi.com/oauth2/token
+  description: Autenticação OAuth 2.0 para clientes da API.
+- name: OAuth2
+  source: openapi/loggi-package-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://api.loggi.com/oauth2/token
+  description: Autenticação OAuth 2.0 para clientes da API.
+- name: OAuth2
+  source: openapi/loggi-pontos-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://api.loggi.com/oauth2/token
+  description: Autenticação OAuth 2.0 para clientes da API.
+- name: OAuth2
+  source: openapi/loggi-shipments-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://api.loggi.com/oauth2/token
+  description: Autenticação OAuth 2.0 para clientes da API.
+- name: OAuth2
+  source: openapi/loggi-tracking-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://api.loggi.com/oauth2/token
+  description: Autenticação OAuth 2.0 para clientes da API.
+scopes: []

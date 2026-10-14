@@ -1,4 +1,5 @@
 aid: loggi
+
 deliveryModel:
   model: saas
   open_source: false
@@ -10,6 +11,7 @@ deliveryModel:
   - pricing
   generated: '2026-08-28'
   method: derived
+
 accessModel:
   pricing: unknown
   onboarding: self-serve
@@ -22,39 +24,51 @@ accessModel:
   - authentication
   generated: '2026-07-22'
   method: derived
+
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/loggi.png
+
 name: Loggi
-description: >-
-  Loggi is the largest private shipping and last-mile logistics company in
-  Brazil, operating its own delivery network across more than 4,000
-  municipalities. Loggi publishes a REST developer platform (docs.api.loggi.com)
-  that lets partner platforms and integrators estimate freight prices and
-  delivery times, create single or multiple shipments (synchronously or
-  asynchronously), generate Loggi shipping labels, update or cancel packages,
-  retrieve package details, track packages in real time, and receive delivery
-  status updates via webhooks. Authentication is OAuth2 client-credentials style
-  (client_id/client_secret exchanged for a JWT). Backed by Fifth Wall, GGV
-  Capital and SoftBank Vision Fund. Sector: logistics.
+
+description: 'Loggi is the largest private shipping and last-mile logistics company in Brazil, operating its own delivery network across more
+  than 4,000 municipalities. Loggi publishes a REST developer platform (docs.api.loggi.com) that lets partner platforms and integrators estimate
+  freight prices and delivery times, create single or multiple shipments (synchronously or asynchronously), generate Loggi shipping labels, update
+  or cancel packages, retrieve package details, track packages in real time, and receive delivery status updates via webhooks. Authentication
+  is OAuth2 client-credentials style (client_id/client_secret exchanged for a JWT). Backed by Fifth Wall, GGV Capital and SoftBank Vision Fund.
+  Sector: logistics.'
+
 url: https://raw.githubusercontent.com/api-evangelist/loggi/refs/heads/main/apis.yml
+
 x-type: company
+
 x-source: vc-portfolio
+
 x-backed-by:
 - fifth-wall
 - ggv-capital
 - softbank-vision-fund
+
 x-tier: stub
+
 x-tier-reason: portfolio-lead
+
 x-docs-platform: readme
+
 x-docs-platform-confidence: high
+
 x-docs-platform-checked: 2026-10-03
+
 x-enrichment:
   date: '2026-07-20'
   status: enriched
   artifacts_added: 12
   pass: local-v1
+
 specificationVersion: '0.23'
+
 created: '2026-07-17'
+
 modified: '2026-07-20'
+
 tags:
 - Company
 - Logistics
@@ -63,6 +77,7 @@ tags:
 - Freight
 - Tracking
 - Brazil
+
 tags_raw:
 - Company
 - Logistics
@@ -71,12 +86,80 @@ tags_raw:
 - Freight
 - Tracking
 - Brazil
+
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
+- FN: APIs.json
+  email: info@apis.io
+
+common:
+- type: AgenticAccess
+  url: agentic-access/loggi-agentic-access.yml
+- type: Spectral
+  url: rules/loggi-rules.yml
+- type: JSONLD
+  url: json-ld/loggi-context.jsonld
+- type: Vocabulary
+  url: vocabulary/loggi-vocabulary.yml
+- type: ErrorCatalog
+  url: errors/loggi-problem-types.yml
+- type: Hosts
+  url: hosts/loggi-hosts.yml
+- type: IntegrationEdges
+  url: integrations/loggi-integration-edges.yml
+- type: Vendors
+  url: vendors/loggi-vendors.yml
+- type: OAuthScopes
+  url: scopes/loggi-scopes.yml
+- type: Website
+  url: https://www.loggi.com/
+- type: DeveloperPortal
+  url: https://docs.api.loggi.com/
+- type: Documentation
+  url: https://docs.api.loggi.com/
+- type: APIReference
+  url: https://docs.api.loggi.com/reference/nossa-documenta%C3%A7%C3%A3o
+- type: GettingStarted
+  url: https://docs.api.loggi.com/docs/getting-started
+- type: Support
+  url: https://ajuda.loggi.com/
+- type: SignUp
+  url: https://www.loggi.com/contas/criar/
+- type: PrivacyPolicy
+  url: https://www.loggi.com/aviso-privacidade-clientes/
+- type: LLMsTxt
+  url: llms/loggi-llms.txt
+- type: WellKnown
+  url: well-known/loggi-well-known.yml
+- type: Authentication
+  url: authentication/loggi-authentication.yml
+- type: Conventions
+  url: conventions/loggi-conventions.yml
+- type: Lifecycle
+  url: lifecycle/loggi-lifecycle.yml
+- type: Deprecation
+  url: lifecycle/loggi-lifecycle.yml
+- type: Webhooks
+  url: asyncapi/loggi-webhooks.yml
+- type: X-MCPServerCandidate
+  url: mcp/loggi-mcp.yml
+  note: 'Renamed from MCPServer 2026-09-03 (roadmap#247): the manifest self-describes as status: candidate — a tool list derived from the published
+    API contracts, not an existing server. The scorer already read the manifest and reported mcp_server correctly; the MCPServer type was crediting
+    the artifact-type surfaces with a server that does not exist.'
+- type: ErrorCatalog
+  url: errors/loggi-error-codes.yml
+- type: Conformance
+  url: conformance/loggi-conformance.yml
+- type: DataModel
+  url: data-model/loggi-data-model.yml
+- type: DomainSecurity
+  url: security/loggi-domain-security.yml
+
 apis:
 - name: Loggi Platform API
-  description: >-
-    Loggi's REST integration platform for freight quotation, shipment creation
-    (sync/async), label generation, package update/cancel, package details,
-    real-time tracking, webhooks, integrator management and dropoff locations.
+  description: Loggi's REST integration platform for freight quotation, shipment creation (sync/async), label generation, package update/cancel,
+    package details, real-time tracking, webhooks, integrator management and dropoff locations.
   humanURL: https://docs.api.loggi.com/
   baseURL: https://api.loggi.com
   tags:
@@ -96,7 +179,9 @@ apis:
     url: asyncapi/loggi-webhooks.yml
   - type: X-MCPServerCandidate
     url: mcp/loggi-mcp.yml
-    note: 'Renamed from MCPServer 2026-09-03 (roadmap#247): the manifest self-describes as status: candidate — a tool list derived from the published API contracts, not an existing server. The scorer already read the manifest and reported mcp_server correctly; the MCPServer type was crediting the artifact-type surfaces with a server that does not exist.'
+    note: 'Renamed from MCPServer 2026-09-03 (roadmap#247): the manifest self-describes as status: candidate — a tool list derived from the published
+      API contracts, not an existing server. The scorer already read the manifest and reported mcp_server correctly; the MCPServer type was crediting
+      the artifact-type surfaces with a server that does not exist.'
   - type: Conventions
     url: conventions/loggi-conventions.yml
   - type: Lifecycle
@@ -109,54 +194,132 @@ apis:
     url: conformance/loggi-conformance.yml
   - type: DataModel
     url: data-model/loggi-data-model.yml
-maintainers:
-- FN: Kin Lane
-  email: kin@apievangelist.com
-- FN: APIs.json
-  email: info@apis.io
-common:
-- type: Website
-  url: https://www.loggi.com/
-- type: DeveloperPortal
-  url: https://docs.api.loggi.com/
-- type: Documentation
-  url: https://docs.api.loggi.com/
-- type: APIReference
-  url: https://docs.api.loggi.com/reference/nossa-documenta%C3%A7%C3%A3o
-- type: GettingStarted
-  url: https://docs.api.loggi.com/docs/getting-started
-- type: Support
-  url: https://ajuda.loggi.com/
-- type: SignUp
-  url: https://www.loggi.com/contas/criar/
-- type: TermsOfService
-  url: https://www.loggi.com/termos-cliente/
-- type: PrivacyPolicy
-  url: https://www.loggi.com/aviso-privacidade-clientes/
-- type: LLMsTxt
-  url: llms/loggi-llms.txt
-- type: WellKnown
-  url: well-known/loggi-well-known.yml
-- type: Authentication
-  url: authentication/loggi-authentication.yml
-- type: Conventions
-  url: conventions/loggi-conventions.yml
-- type: Lifecycle
-  url: lifecycle/loggi-lifecycle.yml
-- type: Deprecation
-  url: lifecycle/loggi-lifecycle.yml
-- type: Webhooks
-  url: asyncapi/loggi-webhooks.yml
-- type: X-MCPServerCandidate
-  url: mcp/loggi-mcp.yml
-  note: 'Renamed from MCPServer 2026-09-03 (roadmap#247): the manifest self-describes as status: candidate — a tool list derived from the published API contracts, not an existing server. The scorer already read the manifest and reported mcp_server correctly; the MCPServer type was crediting the artifact-type surfaces with a server that does not exist.'
-- type: ErrorCatalog
-  url: errors/loggi-error-codes.yml
-- type: Conformance
-  url: conformance/loggi-conformance.yml
-- type: DataModel
-  url: data-model/loggi-data-model.yml
-- type: Packages
-  url: packages/loggi-packages.yml
-- type: DomainSecurity
-  url: security/loggi-domain-security.yml
+  aid: loggi:loggi-platform-api
+- aid: loggi:loggi-authentication
+  name: Loggi Authentication Openapi.Yml API
+  description: The Authentication Openapi.Yml API from Loggi — 2 operation(s) for authentication openapi.yml.
+  humanURL: https://docs.api.loggi.com/
+  baseURL: https://api.loggi.com
+  tags:
+  - Authentication Openapi.Yml
+  properties:
+  - type: OpenAPI
+    url: openapi/loggi-authentication-openapi.yml
+  - type: JSONSchema
+    url: json-schema/loggi-service-account-token-request-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-service-account-token-response-schema.json
+- aid: loggi:loggi-freight-price-quotation
+  name: Loggi Freight Price Quotation Openapi.Yml API
+  description: The Freight Price Quotation Openapi.Yml API from Loggi — 1 operation(s) for freight price quotation openapi.yml.
+  humanURL: https://docs.api.loggi.com/
+  baseURL: https://api.loggi.com
+  tags:
+  - Freight Price Quotation Openapi.Yml
+  properties:
+  - type: OpenAPI
+    url: openapi/loggi-freight-price-quotation-openapi.yml
+  - type: JSONSchema
+    url: json-schema/loggi-quote-request-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-quote-response-schema.json
+- aid: loggi:loggi-integrator
+  name: Loggi Integrator Openapi.Yml API
+  description: The Integrator Openapi.Yml API from Loggi — 1 operation(s) for integrator openapi.yml.
+  humanURL: https://docs.api.loggi.com/
+  baseURL: https://api.loggi.com
+  tags:
+  - Integrator Openapi.Yml
+  properties:
+  - type: OpenAPI
+    url: openapi/loggi-integrator-openapi.yml
+  - type: JSONSchema
+    url: json-schema/loggi-v1-integrator-company-response-schema.json
+- aid: loggi:loggi-labels
+  name: Loggi Labels Openapi.Yml API
+  description: The Labels Openapi.Yml API from Loggi — 1 operation(s) for labels openapi.yml.
+  humanURL: https://docs.api.loggi.com/
+  baseURL: https://api.loggi.com
+  tags:
+  - Labels Openapi.Yml
+  properties:
+  - type: OpenAPI
+    url: openapi/loggi-labels-openapi.yml
+  - type: JSONSchema
+    url: json-schema/loggi-v1-create-label-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-create-label-request-schema.json
+- aid: loggi:loggi-package-details
+  name: Loggi Package Details Openapi.Yml API
+  description: The Package Details Openapi.Yml API from Loggi — 1 operation(s) for package details openapi.yml.
+  humanURL: https://docs.api.loggi.com/
+  baseURL: https://api.loggi.com
+  tags:
+  - Package Details Openapi.Yml
+  properties:
+  - type: OpenAPI
+    url: openapi/loggi-package-details-openapi.yml
+  - type: JSONSchema
+    url: json-schema/loggi-v1-package-details-response-schema.json
+- aid: loggi:loggi-package
+  name: Loggi Package Openapi.Yml API
+  description: The Package Openapi.Yml API from Loggi — 2 operation(s) for package openapi.yml.
+  humanURL: https://docs.api.loggi.com/
+  baseURL: https://api.loggi.com
+  tags:
+  - Package Openapi.Yml
+  properties:
+  - type: OpenAPI
+    url: openapi/loggi-package-openapi.yml
+  - type: JSONSchema
+    url: json-schema/loggi-v1-package-update-request-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-package-update-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-package-cancel-response-schema.json
+- aid: loggi:loggi-pontos
+  name: Loggi Pontos Openapi.Yml API
+  description: The Pontos Openapi.Yml API from Loggi — 1 operation(s) for pontos openapi.yml.
+  humanURL: https://docs.api.loggi.com/
+  baseURL: https://api.loggi.com
+  tags:
+  - Pontos Openapi.Yml
+  properties:
+  - type: OpenAPI
+    url: openapi/loggi-pontos-openapi.yml
+  - type: JSONSchema
+    url: json-schema/loggi-list-dropoff-locations-request-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-list-dropoff-locations-response-schema.json
+- aid: loggi:loggi-shipments
+  name: Loggi Shipments Openapi.Yml API
+  description: The Shipments Openapi.Yml API from Loggi — 1 operation(s) for shipments openapi.yml.
+  humanURL: https://docs.api.loggi.com/
+  baseURL: https://api.loggi.com
+  tags:
+  - Shipments Openapi.Yml
+  properties:
+  - type: OpenAPI
+    url: openapi/loggi-shipments-openapi.yml
+  - type: JSONSchema
+    url: json-schema/loggi-v1-create-async-shipment-request-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-create-async-shipment-response-schema.json
+- aid: loggi:loggi-tracking
+  name: Loggi Tracking Openapi.Yml API
+  description: The Tracking Openapi.Yml API from Loggi — 1 operation(s) for tracking openapi.yml.
+  humanURL: https://docs.api.loggi.com/
+  baseURL: https://api.loggi.com
+  tags:
+  - Tracking Openapi.Yml
+  properties:
+  - type: OpenAPI
+    url: openapi/loggi-tracking-openapi.yml
+  - type: JSONSchema
+    url: json-schema/loggi-v1-track-package-tracking-code-response-schema.json
+
+x-readme-harvest:
+  date: '2026-10-14'
+  ops: 11
+  tool: harvest-readme-openapi.py
+  portal: https://docs.api.loggi.com

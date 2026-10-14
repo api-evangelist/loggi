@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/loggi/main/json-schema/loggi-v1-create-label-request-schema.json",
+  "title": "v1CreateLabelRequest",
+  "x-generated": "2026-10-14",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/loggi-labels-openapi.yml#/components/schemas/v1CreateLabelRequest",
+  "type": "object",
+  "required": [
+    "loggiKeys",
+    "responseType"
+  ],
+  "properties": {
+    "loggiKeys": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Lista de Loggi Keys."
+    },
+    "format": {
+      "type": "string",
+      "enum": [
+        "LABEL_FORMAT_PDF"
+      ],
+      "default": "LABEL_FORMAT_PDF",
+      "description": "Formato do arquivo gerado que contém a etiqueta. Nesta versão é possível apenas gerar no formato PDF"
+    },
+    "layout": {
+      "type": "string",
+      "enum": [
+        "LABEL_LAYOUT_A4",
+        "LABEL_LAYOUT_A6"
+      ],
+      "default": "LABEL_LAYOUT_A4",
+      "description": "Tamanho da página de um label."
+    },
+    "labelType": {
+      "type": "string",
+      "enum": [
+        "LABEL_TYPE_DEFAULT",
+        "LABEL_TYPE_DROP_QR_CODE"
+      ],
+      "default": "LABEL_TYPE_DEFAULT",
+      "description": "Tipo de etiqueta."
+    },
+    "responseType": {
+      "type": "string",
+      "enum": [
+        "LABEL_RESPONSE_TYPE_URL",
+        "LABEL_RESPONSE_TYPE_BASE_64"
+      ],
+      "default": "LABEL_RESPONSE_TYPE_BASE_64",
+      "description": "Tipo de retorno do label gerado."
+    }
+  }
+}

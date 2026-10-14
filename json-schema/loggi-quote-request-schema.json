@@ -1,0 +1,489 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/loggi/main/json-schema/loggi-quote-request-schema.json",
+  "title": "QuoteRequest",
+  "description": "Objeto que representa a criação de uma cotação.",
+  "x-generated": "2026-10-14",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/loggi-freight-price-quotation-openapi.yml#/components/schemas/QuoteRequest",
+  "type": "object",
+  "required": [
+    "shipFrom",
+    "shipTo"
+  ],
+  "properties": {
+    "shipFrom": {
+      "type": "object",
+      "nullable": false,
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "correios": {
+              "type": "object",
+              "required": [
+                "logradouro",
+                "cep",
+                "cidade",
+                "uf"
+              ],
+              "properties": {
+                "logradouro": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "description": "Nome da rua. Tamanho mínimo 1 caractere e Tamanho máximo 128 caracteres."
+                },
+                "numero": {
+                  "type": "string",
+                  "minLength": 0,
+                  "maxLength": 8,
+                  "description": "Número do endereço. Tamanho máximo 8 caracteres. Caso não possua número, informar com os valores S/N ou s/n"
+                },
+                "complemento": {
+                  "type": "string",
+                  "minLength": 0,
+                  "maxLength": 128,
+                  "description": "Informações adicionais para facilitar a localização. Tamanho máximo 128 caracteres."
+                },
+                "bairro": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 64,
+                  "description": "Para endereços de Brasília, procure mais informações nos Correios. Em casos que seja usado regiões adminstrativas e se existir bairro, informe entre parentêses. Tamanho mínimo 1 caractere e Tamanho máximo 64 caracteres."
+                },
+                "cep": {
+                  "type": "string",
+                  "minLength": 8,
+                  "maxLength": 8,
+                  "description": "CEP do endereço com 8 dígitos."
+                },
+                "cidade": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 32,
+                  "description": "Cidade do endereço. Tamanho mínimo 1 caractere e Tamanho máximo 32 caracteres."
+                },
+                "uf": {
+                  "type": "string",
+                  "minLength": 2,
+                  "maxLength": 2,
+                  "description": "Unidade federativa com dois caracteres."
+                }
+              },
+              "description": "Objeto que contém informações detalhadas do endereço compatível com o formato da API dos Correios."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "lines": {
+              "type": "object",
+              "required": [
+                "addressLine1",
+                "postalCode",
+                "city",
+                "state"
+              ],
+              "properties": {
+                "addressLine1": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256,
+                  "description": "Primeira linha que contempla os dados do endereço. Tamanho mínimo 1 caractere e Tamanho máximo 256 caracteres."
+                },
+                "addressLine2": {
+                  "type": "string",
+                  "minLength": 0,
+                  "maxLength": 256,
+                  "description": "Segunda linha que complementa os dados de endereço descritos em addressLine1. Tamanho máximo 256 caracteres."
+                },
+                "postalCode": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 16,
+                  "description": "Código postal do endereço. Tamanho mínimo 1 caractere e Tamanho máximo 16 caracteres."
+                },
+                "city": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 32,
+                  "description": "Cidade do endereço. Tamanho mínimo 1 caractere e Tamanho máximo 32 caracteres."
+                },
+                "state": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 32,
+                  "description": "Estado do Endereço. Tamanho mínimo 1 caractere e Tamanho máximo 32 caracteres."
+                },
+                "country": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 100,
+                  "description": "País do endereço.  Tamanho mínimo 1 caractere e Tamanho máximo 100 caracteres."
+                }
+              },
+              "description": "Representação alternativa de endereços utilizando duas linhas e outros componentes."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "widget": {
+              "type": "object",
+              "required": [
+                "address"
+              ],
+              "properties": {
+                "address": {
+                  "type": "string",
+                  "minLength": 0,
+                  "maxLength": 256,
+                  "description": "Dados do endereço. Tamanho máximo 256 caracteres."
+                },
+                "complement": {
+                  "type": "string",
+                  "minLength": 0,
+                  "maxLength": 256,
+                  "description": "Complemento do endereço. Tamanho máximo 256 caracteres."
+                },
+                "placesApiInfo": {
+                  "type": "object",
+                  "properties": {
+                    "placeId": {
+                      "type": "string",
+                      "description": "Um place ID é um identificador textual que identifica exclusivamente um local."
+                    },
+                    "sessionId": {
+                      "type": "string",
+                      "description": "Uma string randômica que identifica uma sessão de autocomplete para fins de faturamento."
+                    }
+                  },
+                  "description": "Informações fornecidas pelo Google Maps Place API."
+                },
+                "userContext": {
+                  "type": "object",
+                  "properties": {
+                    "userIp": {
+                      "type": "string",
+                      "description": "O endereço IPv4 ou IPv6 do usuário."
+                    },
+                    "position": {
+                      "type": "object",
+                      "properties": {
+                        "latitude": {
+                          "type": "number",
+                          "description": "A latitude em graus. Deve estar na faixa [-90,0, +90,0]."
+                        },
+                        "longitude": {
+                          "type": "number",
+                          "description": "A longitude em graus. Deve estar na faixa [-180,0, +180,0]."
+                        }
+                      },
+                      "description": "Posição do usuário utilizando LatLng do Google. https://github.com/googleapis/googleapis/blob/master/google/type/latlng.proto"
+                    }
+                  },
+                  "description": "Contexto sobre o usuário."
+                }
+              },
+              "description": "Representação de endereço utilizando Autocomplete UI Widget + context."
+            }
+          }
+        }
+      ],
+      "description": "Objeto que representa um endereço nacional em formato dos Correios ou uma representação alternativa de endereços. Os objetos correios, lines e widget são mutuamente exclusivos."
+    },
+    "shipTo": {
+      "type": "object",
+      "nullable": false,
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "correios": {
+              "type": "object",
+              "required": [
+                "logradouro",
+                "cep",
+                "cidade",
+                "uf"
+              ],
+              "properties": {
+                "logradouro": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "description": "Nome da rua. Tamanho mínimo 1 caractere e Tamanho máximo 128 caracteres."
+                },
+                "numero": {
+                  "type": "string",
+                  "minLength": 0,
+                  "maxLength": 8,
+                  "description": "Número do endereço. Tamanho máximo 8 caracteres. Caso não possua número, informar com os valores S/N ou s/n"
+                },
+                "complemento": {
+                  "type": "string",
+                  "minLength": 0,
+                  "maxLength": 128,
+                  "description": "Informações adicionais para facilitar a localização. Tamanho máximo 128 caracteres."
+                },
+                "bairro": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 64,
+                  "description": "Para endereços de Brasília, procure mais informações nos Correios. Em casos que seja usado regiões adminstrativas e se existir bairro, informe entre parentêses. Tamanho mínimo 1 caractere e Tamanho máximo 64 caracteres."
+                },
+                "cep": {
+                  "type": "string",
+                  "minLength": 8,
+                  "maxLength": 8,
+                  "description": "CEP do endereço com 8 dígitos."
+                },
+                "cidade": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 32,
+                  "description": "Cidade do endereço. Tamanho mínimo 1 caractere e Tamanho máximo 32 caracteres."
+                },
+                "uf": {
+                  "type": "string",
+                  "minLength": 2,
+                  "maxLength": 2,
+                  "description": "Unidade federativa com dois caracteres."
+                }
+              },
+              "description": "Objeto que contém informações detalhadas do endereço compatível com o formato da API dos Correios."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "lines": {
+              "type": "object",
+              "required": [
+                "addressLine1",
+                "postalCode",
+                "city",
+                "state"
+              ],
+              "properties": {
+                "addressLine1": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256,
+                  "description": "Primeira linha que contempla os dados do endereço. Tamanho mínimo 1 caractere e Tamanho máximo 256 caracteres."
+                },
+                "addressLine2": {
+                  "type": "string",
+                  "minLength": 0,
+                  "maxLength": 256,
+                  "description": "Segunda linha que complementa os dados de endereço descritos em addressLine1. Tamanho máximo 256 caracteres."
+                },
+                "postalCode": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 16,
+                  "description": "Código postal do endereço. Tamanho mínimo 1 caractere e Tamanho máximo 16 caracteres."
+                },
+                "city": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 32,
+                  "description": "Cidade do endereço. Tamanho mínimo 1 caractere e Tamanho máximo 32 caracteres."
+                },
+                "state": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 32,
+                  "description": "Estado do Endereço. Tamanho mínimo 1 caractere e Tamanho máximo 32 caracteres."
+                },
+                "country": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 100,
+                  "description": "País do endereço.  Tamanho mínimo 1 caractere e Tamanho máximo 100 caracteres."
+                }
+              },
+              "description": "Representação alternativa de endereços utilizando duas linhas e outros componentes."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "widget": {
+              "type": "object",
+              "required": [
+                "address"
+              ],
+              "properties": {
+                "address": {
+                  "type": "string",
+                  "minLength": 0,
+                  "maxLength": 256,
+                  "description": "Dados do endereço. Tamanho máximo 256 caracteres."
+                },
+                "complement": {
+                  "type": "string",
+                  "minLength": 0,
+                  "maxLength": 256,
+                  "description": "Complemento do endereço. Tamanho máximo 256 caracteres."
+                },
+                "placesApiInfo": {
+                  "type": "object",
+                  "properties": {
+                    "placeId": {
+                      "type": "string",
+                      "description": "Um place ID é um identificador textual que identifica exclusivamente um local."
+                    },
+                    "sessionId": {
+                      "type": "string",
+                      "description": "Uma string randômica que identifica uma sessão de autocomplete para fins de faturamento."
+                    }
+                  },
+                  "description": "Informações fornecidas pelo Google Maps Place API."
+                },
+                "userContext": {
+                  "type": "object",
+                  "properties": {
+                    "userIp": {
+                      "type": "string",
+                      "description": "O endereço IPv4 ou IPv6 do usuário."
+                    },
+                    "position": {
+                      "type": "object",
+                      "properties": {
+                        "latitude": {
+                          "type": "number",
+                          "description": "A latitude em graus. Deve estar na faixa [-90,0, +90,0]."
+                        },
+                        "longitude": {
+                          "type": "number",
+                          "description": "A longitude em graus. Deve estar na faixa [-180,0, +180,0]."
+                        }
+                      },
+                      "description": "Posição do usuário utilizando LatLng do Google. https://github.com/googleapis/googleapis/blob/master/google/type/latlng.proto"
+                    }
+                  },
+                  "description": "Contexto sobre o usuário."
+                }
+              },
+              "description": "Representação de endereço utilizando Autocomplete UI Widget + context."
+            }
+          }
+        }
+      ],
+      "description": "Objeto que representa um endereço nacional em formato dos Correios ou uma representação alternativa de endereços. Os objetos correios, lines e widget são mutuamente exclusivos."
+    },
+    "packages": {
+      "type": "array",
+      "nullable": false,
+      "description": "Lista de pacotes associado à cotação de frete.",
+      "items": {
+        "type": "object",
+        "required": [
+          "weightG",
+          "lengthCm",
+          "widthCm",
+          "heightCm",
+          "goodsValue"
+        ],
+        "properties": {
+          "weightG": {
+            "type": "integer",
+            "maximum": 30000,
+            "format": "int32",
+            "description": "Peso do pacote em gramas. Valor máximo 30000."
+          },
+          "lengthCm": {
+            "type": "integer",
+            "maximum": 100,
+            "format": "int32",
+            "description": "Comprimento do pacote em centímetros. Valor máximo 100."
+          },
+          "widthCm": {
+            "type": "integer",
+            "maximum": 100,
+            "format": "int32",
+            "description": "Largura do pacote em centrímetros. Valor máximo 100."
+          },
+          "heightCm": {
+            "type": "integer",
+            "maximum": 100,
+            "format": "int32",
+            "description": "Altura do pacote em centímetros. Valor máximo 100."
+          },
+          "goodsValue": {
+            "type": "object",
+            "required": [
+              "currencyCode",
+              "units",
+              "nanos"
+            ],
+            "properties": {
+              "currencyCode": {
+                "type": "string",
+                "description": "Código de três letras para as moedas definido no ISO 4217."
+              },
+              "units": {
+                "type": "string",
+                "description": "Todas as unidades do montante.",
+                "format": "int64"
+              },
+              "nanos": {
+                "type": "integer",
+                "description": "Componente fracionário em nanos, i.e., centavos vezes 10 milhões. Ler mais em https://github.com/googleapis/googleapis/blob/master/google/type/money.proto",
+                "format": "int32"
+              }
+            },
+            "description": "Valor total de todos os produtos a serem transportados dentro de um pacote. Há um valor máximo em reais, consulte nosso time de vendas para mais detalhes."
+          }
+        }
+      }
+    }
+  },
+  "oneOf": [
+    {
+      "type": "object",
+      "required": [
+        "externalServiceIds"
+      ],
+      "properties": {
+        "externalServiceIds": {
+          "type": "array",
+          "description": "Lista de identificadores externos do serviço. Preencher este campo ou o campo pickupTypes. Nunca ambos.",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    {
+      "type": "object",
+      "required": [
+        "pickupTypes"
+      ],
+      "properties": {
+        "pickupTypes": {
+          "deprecated": true,
+          "type": "array",
+          "nullable": false,
+          "description": "Lista de tipos de coleta. Preencher este campo ou o campo externalServiceIds. Nunca ambos.",
+          "items": {
+            "type": "string",
+            "enum": [
+              "PICKUP_TYPE_SPOT",
+              "PICKUP_TYPE_DEDICATED",
+              "PICKUP_TYPE_MILK_RUN",
+              "PICKUP_TYPE_DROP_OFF"
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

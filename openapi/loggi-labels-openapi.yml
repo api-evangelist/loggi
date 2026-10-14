@@ -1,0 +1,392 @@
+openapi: 3.0.0
+info:
+  title: Labels
+  version: v1
+servers:
+- url: https://stg.api.loggi.com
+- url: https://api.loggi.com
+paths:
+  /v1/companies/{company_id}/labels:
+    post:
+      summary: Criar Etiqueta
+      description: "A geração de etiqueta Loggi só pode ser feita após a resposta de sucesso do serviço de criação de pacotes.\nPara o serviço de criação de pacotes assíncrono, deve-se aguardar a mensagem de confirmação do webhook de que o pacote foi criado.\n\nA solicitação de geração de uma etiqueta está sempre associada à um envio previamente criado.\nPara referenciar este(s) envio(s), será necessário informar o(s) loggiKey(s) associado(s).\n\n### Teste abaixo o endpoint</h2>\n<div class=\"warning-docs\">\n  ⚠️ <em>Os campos abaixo precisam ser preenchidos para realização dos testes de endpoint.</em>\n</div>"
+      operationId: CriarEtiqueta
+      security:
+      - OAuth2: []
+      responses:
+        '200':
+          description: 'Etiquetas geradas com sucesso para às loggi keys que não apresentaram erro.
+
+
+            Os campos **content** e **url** são **mutuamente exclusivos**.
+
+
+            O campo **content** será retornado quando informado o valor LABEL_RESPONSE_TYPE_BASE_64 para o campo **responseType**
+
+            e o campo **url** será retornado quando informado o valor LABEL_RESPONSE_TYPE_URL para o campo **responseType**.'
+          content:
+            application/json:
+              examples:
+                contentResponse:
+                  value:
+                    success:
+                      content: DAxODQgMDAwMDAgbg0KMDAwMDAwMDA3OCAwMDAwMCBuDQowMDAwMDAwMjQxIDAwMDAwIG
+                      createdTime: '2021-01-13T10:43:17Z'
+                    failure: []
+                urlResponse:
+                  value:
+                    success:
+                      url: http://api.loggi.com.br/labels/label_para_download.pdf
+                      createdTime: '2021-01-13T10:43:17Z'
+                    failure: []
+                partialSuccess:
+                  value:
+                    success:
+                      url: http://api.loggi.com.br/labels/label_para_download.pdf
+                      createdTime: '2021-01-13T10:43:17Z'
+                    failure:
+                    - loggiKey: LJG622MH3UCOB4V9H3JOXFYO65
+                      status:
+                        code: '5'
+                        message: Not Found
+                        details: []
+                    - loggiKey: MKH733NI4CDPC5W0I4KPWGZ174
+                      status:
+                        code: '5'
+                        message: Not Found
+                        details: []
+              schema:
+                $ref: '#/components/schemas/v1CreateLabelResponse'
+        '400':
+          description: Mensagem do cliente não segue a especificação
+          content:
+            application/json:
+              example:
+                code: 9
+                message: Request with invalid data
+                details:
+                - '@type': type.googleapis.com/google.rpc.BadRequest
+                  fieldViolations:
+                  - field: loggi_keys[0]
+                    description: invalid format
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '401':
+          description: Falha de autenticação
+          content:
+            application/json:
+              example:
+                code: 16
+                message: Falha de autenticação
+                details: []
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '403':
+          description: Sem autorização para acessar o serviço
+          content:
+            application/json:
+              example:
+                code: 7
+                message: Falha de autenticação
+                details: []
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Recurso não encontrado
+          content:
+            application/json:
+              example:
+                code: 5
+                message: Recurso não encontrado
+                details: []
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Requisições massivas bloqueadas
+          content:
+            application/json:
+              example:
+                code: 8
+                message: Requisições massivas bloqueadas
+                details: []
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '500':
+          description: Erro interno
+          content:
+            application/json:
+              example:
+                code: 13
+                message: Erro interno
+                details: []
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '503':
+          description: Service temporariamente indisponivel
+          content:
+            application/json:
+              example:
+                code: 14
+                message: Service temporariamente indisponível
+                details: []
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      parameters:
+      - name: company_id
+        in: path
+        required: true
+        description: Identificador do embarcador
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            example:
+              loggiKeys:
+              - KIF511LG3TBNA3U8G2INVEWO32
+              - LJG622LG3TBNB4V9H3JORFYP45
+              format: LABEL_FORMAT_PDF
+              layout: LABEL_LAYOUT_A4
+              responseType: LABEL_RESPONSE_TYPE_BASE_64
+              labelType: LABEL_TYPE_DEFAULT
+            schema:
+              $ref: '#/components/schemas/v1CreateLabelRequest'
+        required: true
+      tags:
+      - LabelAPI
+components:
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      description: Autenticação OAuth 2.0 para clientes da API.
+      flows:
+        clientCredentials:
+          tokenUrl: oauth2/token
+          scopes: {}
+  schemas:
+    v1CreateLabelRequest:
+      type: object
+      required:
+      - loggiKeys
+      - responseType
+      properties:
+        loggiKeys:
+          type: array
+          items:
+            type: string
+          description: Lista de Loggi Keys.
+          example:
+          - KIF511LG3TBNA3U8G2INVEWO32
+          - LJG622LG3TBNB4V9H3JORFYP45
+        format:
+          type: string
+          enum:
+          - LABEL_FORMAT_PDF
+          default: LABEL_FORMAT_PDF
+          description: Formato do arquivo gerado que contém a etiqueta. Nesta versão é possível apenas gerar no formato PDF
+          example: LABEL_FORMAT_PDF
+        layout:
+          type: string
+          enum:
+          - LABEL_LAYOUT_A4
+          - LABEL_LAYOUT_A6
+          default: LABEL_LAYOUT_A4
+          description: Tamanho da página de um label.
+          example: '- LABEL_LAYOUT_A4 formato A4
+
+            - LABEL_LAYOUT_A6 formato A6'
+        labelType:
+          type: string
+          enum:
+          - LABEL_TYPE_DEFAULT
+          - LABEL_TYPE_DROP_QR_CODE
+          default: LABEL_TYPE_DEFAULT
+          description: Tipo de etiqueta.
+        responseType:
+          type: string
+          enum:
+          - LABEL_RESPONSE_TYPE_URL
+          - LABEL_RESPONSE_TYPE_BASE_64
+          default: LABEL_RESPONSE_TYPE_BASE_64
+          description: Tipo de retorno do label gerado.
+          example: '- LABEL_RESPONSE_TYPE_URL: URL para download da etiqueta.
+
+            - LABEL_RESPONSE_TYPE_BASE_64: Bytes do arquivos codificado em base 64.'
+    v1CreateLabelResponse:
+      type: object
+      properties:
+        success:
+          type: object
+          description: Arquivo binário em BASE64 com as etiquetas geradas com sucesso.
+          properties:
+            createdTime:
+              type: string
+              description: Horário de geração da etiqueta em formato UTC.
+              format: date-time
+              example: '2021-01-13T10:43:17Z'
+          oneOf:
+          - type: object
+            properties:
+              content:
+                type: string
+                description: Bytes do arquivo codificado em base 64. Este dado é retornado quando informado o valor LABEL_RESPONSE_TYPE_BASE_64 para o campo **responseType**.
+                example: DAxODQgMDAwMDAgbg0KMDAwMDAwMDA3OCAwMDAwMCBuDQowMDAwMDAwMjQxIDAwMDAwIG
+          - type: object
+            properties:
+              url:
+                type: string
+                description: Link para download da etiqueta gerada. Este dado é retornando quando informado o valor LABEL_RESPONSE_TYPE_URL para o campo **responseType**.
+                example: http://api.loggi.com.br/labels/label_para_download.pdf
+        failure:
+          type: array
+          description: Lista de loggi keys dos pacotes que não puderam ter as etiquetas geradas e seus respectivos erros.
+          items:
+            properties:
+              loggiKey:
+                type: string
+                description: Loggi key não processada durante a geração de uma etiqueta.
+                example: KIF511LG3TBNA3U8G2INVEWO32
+              status:
+                type: object
+                description: Detalhamento do erro na geração da etiqueta.
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                    description: 'Código numérico referente à falha.
+
+
+                      CANCELLED = 1
+
+
+                      UNKNOWN = 2
+
+
+                      INVALID_ARGUMENT = 3
+
+
+                      DEADLINE_EXCEEDED = 4
+
+
+                      NOT_FOUND = 5
+
+
+                      ALREADY_EXISTS = 6
+
+
+                      PERMISSION_DENIED = 7
+
+
+                      RESOURCE_EXHAUSTED = 8
+
+
+                      FAILED_PRECONDITION = 9
+
+
+                      ABORTED = 10
+
+
+                      OUT_OF_RANGE = 11
+
+
+                      UNIMPLEMENTED = 12
+
+
+                      INTERNAL = 13
+
+
+                      UNAVAILABLE = 14
+
+
+                      DATA_LOSS = 15
+
+
+                      UNAUTHENTICATED = 16'
+                    example: 14
+                  message:
+                    type: string
+                    description: Texto pequeno informativo sobre a falha
+                    example: Requisição com credenciais inválidas
+                  details:
+                    type: array
+                    description: Detalhes sobre à falha. Nesta versão da API ainda não está sendo retornado, mas deve ser considerado um array de objetos de tipos distintos.
+                    items: {}
+                    example: []
+    ErrorMessage:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+          description: 'Código numérico referente à falha.
+
+
+            CANCELLED = 1
+
+
+            UNKNOWN = 2
+
+
+            INVALID_ARGUMENT = 3
+
+
+            DEADLINE_EXCEEDED = 4
+
+
+            NOT_FOUND = 5
+
+
+            ALREADY_EXISTS = 6
+
+
+            PERMISSION_DENIED = 7
+
+
+            RESOURCE_EXHAUSTED = 8
+
+
+            FAILED_PRECONDITION = 9
+
+
+            ABORTED = 10
+
+
+            OUT_OF_RANGE = 11
+
+
+            UNIMPLEMENTED = 12
+
+
+            INTERNAL = 13
+
+
+            UNAVAILABLE = 14
+
+
+            DATA_LOSS = 15
+
+
+            UNAUTHENTICATED = 16'
+          example: 14
+        message:
+          type: string
+          description: Texto pequeno informativo sobre a falha
+          example: Requisição com credenciais inválidas
+        details:
+          type: array
+          description: Detalhes sobre à falha. Nesta versão da API ainda não está sendo retornado, mas deve ser considerado um array de objetos de tipos distintos.
+          items: {}
+          example: []
+x-provenance:
+  method: searched
+  source: https://docs.api.loggi.com/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://docs.api.loggi.com/reference/criaretiqueta-1.md
+  - https://docs.api.loggi.com/reference/labelapi-1.md
+  merge:
+    pages: 2
+    deduped: 5
+    conflicts_kept_first: 0

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/loggi/main/json-schema/loggi-v1-package-cancel-response-schema.json",
+  "title": "v1PackageCancelResponse",
+  "description": "Objeto que configura a resposta da API de cancelamento de pacotes.",
+  "x-generated": "2026-10-14",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/loggi-package-openapi.yml#/components/schemas/v1PackageCancelResponse",
+  "type": "object",
+  "properties": {
+    "warning_type": {
+      "type": "string",
+      "description": "Mensagem com a constante que identifica casos em que o cancelamento não pode ser confirmado."
+    },
+    "warning_message": {
+      "type": "string",
+      "description": "Mensagem de alerta para casos em que o cancelamento não pode ser confirmado."
+    }
+  }
+}

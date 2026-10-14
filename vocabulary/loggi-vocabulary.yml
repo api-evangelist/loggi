@@ -1,0 +1,257 @@
+generated: '2026-10-14'
+method: derived
+generator: derive-vocabulary.py
+source:
+- openapi/loggi-authentication-openapi.yml
+- openapi/loggi-freight-price-quotation-openapi.yml
+- openapi/loggi-integrator-openapi.yml
+- openapi/loggi-labels-openapi.yml
+- openapi/loggi-package-details-openapi.yml
+vocabulary:
+  name: Loggi Domain Vocabulary
+  description: 'Terms declared by Loggi''s own API contract: its resource groups, objects and enumerations, with the contract''s definitions.
+    Derived, not authored.'
+  version: '2026-10-14'
+  terms:
+  - term: ErrorMessage
+    definition: 'Object declared by the contract with fields: code, message, details.'
+    tags:
+    - Object
+    source: openapi/loggi-authentication-openapi.yml#/components/schemas/ErrorMessage
+  - term: ServiceAccountTokenRequest
+    definition: 'Object declared by the contract with fields: client_id, client_secret.'
+    tags:
+    - Object
+    source: openapi/loggi-authentication-openapi.yml#/components/schemas/ServiceAccountTokenRequest
+  - term: ServiceAccountTokenResponse
+    definition: 'Object declared by the contract with fields: idToken, expiresIn.'
+    tags:
+    - Object
+    source: openapi/loggi-authentication-openapi.yml#/components/schemas/ServiceAccountTokenResponse
+  - term: Problem
+    definition: 'Object declared by the contract with fields: type, title, status, detail, instance.'
+    tags:
+    - Object
+    source: openapi/loggi-authentication-openapi.yml#/components/schemas/Problem
+  - term: QuoteRequest
+    definition: Objeto que representa a criação de uma cotação.
+    tags:
+    - Object
+    source: openapi/loggi-freight-price-quotation-openapi.yml#/components/schemas/QuoteRequest
+  - term: QuoteResponse
+    definition: 'Object declared by the contract with fields: packagesQuotations.'
+    tags:
+    - Object
+    source: openapi/loggi-freight-price-quotation-openapi.yml#/components/schemas/QuoteResponse
+  - term: v1IntegratorCompanyResponse
+    definition: 'Object declared by the contract with fields: companyId.'
+    tags:
+    - Object
+    source: openapi/loggi-integrator-openapi.yml#/components/schemas/v1IntegratorCompanyResponse
+  - term: v1CreateLabelRequest
+    definition: 'Object declared by the contract with fields: loggiKeys, format, layout, labelType, responseType.'
+    tags:
+    - Object
+    source: openapi/loggi-labels-openapi.yml#/components/schemas/v1CreateLabelRequest
+  - term: v1CreateLabelResponse
+    definition: 'Object declared by the contract with fields: success, failure.'
+    tags:
+    - Object
+    source: openapi/loggi-labels-openapi.yml#/components/schemas/v1CreateLabelResponse
+  - term: v1PackageDetailsResponse
+    definition: Objeto que retorna todos os pacotes que são identificados pelo CompanyID e TrackingCode passados na requisição.
+    tags:
+    - Object
+    source: openapi/loggi-package-details-openapi.yml#/components/schemas/v1PackageDetailsResponse
+  - term: v1PackageUpdateResponse
+    definition: Objeto que configura a resposta da API de atualizar dados de um pacote.
+    tags:
+    - Object
+    source: openapi/loggi-package-openapi.yml#/components/schemas/v1PackageUpdateResponse
+  - term: v1PackageUpdateRequest
+    definition: Objeto que configura o formato da requisição de atualização de um pacote. Contém as informações a serem atualizadas.
+    tags:
+    - Object
+    source: openapi/loggi-package-openapi.yml#/components/schemas/v1PackageUpdateRequest
+  - term: v1PackageCancelResponse
+    definition: Objeto que configura a resposta da API de cancelamento de pacotes.
+    tags:
+    - Object
+    source: openapi/loggi-package-openapi.yml#/components/schemas/v1PackageCancelResponse
+  - term: ListDropoffLocationsRequest
+    definition: Filtros desejados para a listagem de Loggi Pontos.
+    tags:
+    - Object
+    source: openapi/loggi-pontos-openapi.yml#/components/schemas/ListDropoffLocationsRequest
+  - term: ListDropoffLocationsResponse
+    definition: Resposta com os Loggi Pontos filtrados.
+    tags:
+    - Object
+    source: openapi/loggi-pontos-openapi.yml#/components/schemas/ListDropoffLocationsResponse
+  - term: ListDropoffLocationsMessage
+    definition: Paginação dos resultados.
+    tags:
+    - Object
+    source: openapi/loggi-pontos-openapi.yml#/components/schemas/ListDropoffLocationsMessage
+  - term: ListDropoffLocationsPagination
+    definition: Lista dos Loggi Pontos presentes na página atual.
+    tags:
+    - Object
+    source: openapi/loggi-pontos-openapi.yml#/components/schemas/ListDropoffLocationsPagination
+  - term: DropoffLocation
+    definition: Representação de um Loggi Ponto.
+    tags:
+    - Object
+    source: openapi/loggi-pontos-openapi.yml#/components/schemas/DropoffLocation
+  - term: OpeningHoursDay
+    definition: 'Object declared by the contract with fields: day, open, close.'
+    tags:
+    - Object
+    source: openapi/loggi-pontos-openapi.yml#/components/schemas/OpeningHoursDay
+  - term: TmsErrorMessage
+    definition: 'Object declared by the contract with fields: status, erros.'
+    tags:
+    - Object
+    source: openapi/loggi-pontos-openapi.yml#/components/schemas/TmsErrorMessage
+  - term: v1CreateAsyncShipmentRequest
+    definition: Objeto que representa a criação de um shipment de forma assíncrona.
+    tags:
+    - Object
+    source: openapi/loggi-shipments-openapi.yml#/components/schemas/v1CreateAsyncShipmentRequest
+  - term: v1CreateAsyncShipmentResponse
+    definition: Objeto que representa um Shipment aceito.
+    tags:
+    - Object
+    source: openapi/loggi-shipments-openapi.yml#/components/schemas/v1CreateAsyncShipmentResponse
+  - term: shipFrom
+    definition: Objeto que representa os dados do embarcador.
+    tags:
+    - Object
+    source: openapi/loggi-shipments-openapi.yml#/components/schemas/shipFrom
+  - term: shipTo
+    definition: Objeto que representa os dados do recebedor.
+    tags:
+    - Object
+    source: openapi/loggi-shipments-openapi.yml#/components/schemas/shipTo
+  - term: returnTo
+    definition: Objeto que representa os dados para a devolução do pacote.
+    tags:
+    - Object
+    source: openapi/loggi-shipments-openapi.yml#/components/schemas/returnTo
+  - term: shippingCompany
+    definition: Identifica a transportadora responsável pelo pacote no fluxo de operação universal.
+    tags:
+    - Object
+    source: openapi/loggi-shipments-openapi.yml#/components/schemas/shippingCompany
+  - term: address
+    definition: Objeto que representa um endereço nacional em formato dos Correios ou um endereço internacional. Os objetos correiosAddress e
+      lineAddress são mutuamente exclusivos.
+    tags:
+    - Object
+    source: openapi/loggi-shipments-openapi.yml#/components/schemas/address
+  - term: correiosAddress
+    definition: Objeto que contém informações detalhadas do endereço compatível com o formato da API dos Correios.
+    tags:
+    - Object
+    source: openapi/loggi-shipments-openapi.yml#/components/schemas/correiosAddress
+  - term: lineAddress
+    definition: Objeto que representa um endereço com padrão internacional.
+    tags:
+    - Object
+    source: openapi/loggi-shipments-openapi.yml#/components/schemas/lineAddress
+  - term: shipper
+    definition: Objeto que representa um remetente nacional ou internacional.
+    tags:
+    - Object
+    source: openapi/loggi-shipments-openapi.yml#/components/schemas/shipper
+  - term: asyncPackage
+    definition: 'Object declared by the contract with fields: trackingCode, barcode, freightType, weightG, lengthCm, widthCm, heightCm, documentTypes,
+      packaged, labelled, sequence.'
+    tags:
+    - Object
+    source: openapi/loggi-shipments-openapi.yml#/components/schemas/asyncPackage
+  - term: asyncPackageResponse
+    definition: 'Object declared by the contract with fields: trackingCode, barcode, loggiKey, sequence.'
+    tags:
+    - Object
+    source: openapi/loggi-shipments-openapi.yml#/components/schemas/asyncPackageResponse
+  - term: nifType
+    definition: Objeto que representa os dados ficais de uma pessoa física ou jurídica podendo ser nacional ou internacional.
+    tags:
+    - Object
+    source: openapi/loggi-shipments-openapi.yml#/components/schemas/nifType
+  - term: nationalNif
+    definition: Contém os dados fiscais nacional.
+    tags:
+    - Object
+    source: openapi/loggi-shipments-openapi.yml#/components/schemas/nationalNif
+  - term: internationalNif
+    definition: Contém os dados fiscais internacional.
+    tags:
+    - Object
+    source: openapi/loggi-shipments-openapi.yml#/components/schemas/internationalNif
+  - term: taker
+    definition: Objeto que representa o tomador de serviço.
+    tags:
+    - Object
+    source: openapi/loggi-shipments-openapi.yml#/components/schemas/taker
+  - term: v1TrackPackageTrackingCodeResponse
+    definition: Objeto que retorna todos os pacotes que são identificados pelo CompanyID e TrackingCode passados na requisição.
+    tags:
+    - Object
+    source: openapi/loggi-tracking-openapi.yml#/components/schemas/v1TrackPackageTrackingCodeResponse
+  - term: AuthAPI
+    definition: 'Resource group in the contract; its operation POST /oauth2/token: Solicitação e atualização de token.'
+    tags:
+    - Resource Group
+    source: openapi/loggi-authentication-openapi.yml
+  - term: QuotationAPI
+    definition: 'Resource group in the contract; its operation POST /v1/companies/{company_id}/quotations: ### Sobre esta API: Esta API disponibiliza
+      opções de preços e prazos da Loggi nas plataformas parceiras, em tempo real, conforme as características do envio e do parceiro e informações
+      de companyId, shipFrom, shipTo, packages, pickupTypes ou externalServiceIds (SISUs).'
+    tags:
+    - Resource Group
+    source: openapi/loggi-freight-price-quotation-openapi.yml
+  - term: IntegratorCompanyAPI
+    definition: 'Resource group in the contract; its operation POST /v1/integrator/activate: Ativar/Desativar Integrador'
+    tags:
+    - Resource Group
+    source: openapi/loggi-integrator-openapi.yml
+  - term: LabelAPI
+    definition: 'Resource group in the contract; its operation POST /v1/companies/{company_id}/labels: A geração de etiqueta Loggi só pode ser
+      feita após a resposta de sucesso do serviço de criação de pacotes.'
+    tags:
+    - Resource Group
+    source: openapi/loggi-labels-openapi.yml
+  - term: DetailsAPI
+    definition: 'Resource group in the contract; its operation GET /v1/companies/{company_id}/packages/{tracking_code}: Recupera detalhes de um
+      pacote a partir das informações de CompanyID e TrackingCode.'
+    tags:
+    - Resource Group
+    source: openapi/loggi-package-details-openapi.yml
+  - term: PackageUpdateAPI
+    definition: 'Resource group in the contract; its operation PATCH /v1/companies/{company_id}/packages: Atualizar dados de um pacote'
+    tags:
+    - Resource Group
+    source: openapi/loggi-package-openapi.yml
+  - term: PackageCancelAPI
+    definition: 'Resource group in the contract; its operation POST /v1/companies/{company_id}/packages/cancel: Cancelar envio'
+    tags:
+    - Resource Group
+    source: openapi/loggi-package-openapi.yml
+  - term: DropoffLocationsAPI
+    definition: 'Resource group in the contract; its operation POST /dropoff/locations: Lista os Loggi Pontos disponíveis para dropoff.'
+    tags:
+    - Resource Group
+    source: openapi/loggi-pontos-openapi.yml
+  - term: ShipmentAPI
+    definition: 'Resource group in the contract; its operation POST /v1/companies/{company_id}/async-shipments: Cria um Shipment de forma assíncrona.'
+    tags:
+    - Resource Group
+    source: openapi/loggi-shipments-openapi.yml
+  - term: TrackingAPI
+    definition: 'Resource group in the contract; its operation GET /v1/companies/{company_id}/packages/{tracking_code}/tracking: Faz o rastreio
+      de pacotes a partir das informações de CompanyID e TrackingCode.'
+    tags:
+    - Resource Group
+    source: openapi/loggi-tracking-openapi.yml

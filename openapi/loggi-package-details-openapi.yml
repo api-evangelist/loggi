@@ -1,0 +1,584 @@
+openapi: 3.0.0
+info:
+  title: Package Details
+  version: v1
+  description: Disponibiliza os detalhes de um dado pacote dentro do sistema da Loggi.
+servers:
+- url: https://stg.api.loggi.com
+- url: https://api.loggi.com
+paths:
+  /v1/companies/{company_id}/packages/{tracking_code}:
+    get:
+      summary: Detalhes do pacote
+      description: Recupera detalhes de um pacote a partir das informações de CompanyID e TrackingCode.
+      operationId: PackageDetailsTrackingCode
+      security:
+      - OAuth2: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1PackageDetailsResponse'
+        '400':
+          description: Mensagem do cliente não segue a especificação
+          content:
+            application/json:
+              example:
+                code: 3
+                message: Mensagem do cliente não segue a especificação
+                details: []
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '401':
+          description: Falha de autenticação
+          content:
+            application/json:
+              example:
+                code: 16
+                message: Falha de autenticação
+                details: []
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '403':
+          description: Sem autorização para acessar o serviço
+          content:
+            application/json:
+              example:
+                code: 7
+                message: Falha de autenticação
+                details: []
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Recurso não encontrado
+          content:
+            application/json:
+              example:
+                code: 5
+                message: Recurso não encontrado
+                details: []
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Requisições massivas bloqueadas
+          content:
+            application/json:
+              example:
+                code: 8
+                message: Requisições massivas bloqueadas
+                details: []
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '500':
+          description: Erro interno
+          content:
+            application/json:
+              example:
+                code: 13
+                message: Erro interno
+                details: []
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '503':
+          description: Serviço temporariamente indisponível
+          content:
+            application/json:
+              example:
+                code: 14
+                message: Serviço temporariamente indisponível
+                details: []
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      parameters:
+      - name: company_id
+        in: path
+        required: true
+        description: Identificador do embarcador.
+        schema:
+          type: string
+      - name: tracking_code
+        in: path
+        required: true
+        description: Código de rastreio de um pacote.
+        schema:
+          type: string
+      tags:
+      - DetailsAPI
+components:
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      description: Autenticação OAuth 2.0 para clientes da API.
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.loggi.com/oauth2/token
+          scopes: {}
+  schemas:
+    v1PackageDetailsResponse:
+      type: object
+      properties:
+        packages:
+          type: array
+          items:
+            type: object
+            properties:
+              loggiKey:
+                type: string
+                description: Chave que identifica unicamente um pacote dentro da Loggi.
+                example: KIF511LG3LGGA3U8G28B4200NA
+              trackingCode:
+                type: string
+                description: Código de rastreio de um pacote.
+                example: AM1007503594LG
+              barcode:
+                type: string
+                description: Código de barras atual do pacote.
+                example: LG3LGGA3U8G28B4200NA
+              status:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    format: int64
+                    description: Código numérico referente ao estado do pacote.
+                    example: 6
+                  highLevelStatus:
+                    type: string
+                    description: Status geral do pacote em formato legível.
+                    example: Com problema
+                  description:
+                    type: string
+                    description: Breve descrição do status do pacote.
+                    example: Algo deu errado e o pacote está parado. O remetente precisa resolver o problema.
+                  actionRequired:
+                    type: object
+                    properties:
+                      reasonDescription:
+                        type: string
+                        description: Breve descrição da ação que precisa ser tomada pelo embarcador.
+                        example: Confira se está tudo certo com as informações do destinatário. Se tiver errado, corrija ou interrompa o envio.
+                      reasonLabel:
+                        type: string
+                        description: Rótulo da ação que precisa ser tomada pelo embarcador.
+                        example: Aguardando tratativa
+                    description: Objeto que representa uma ação que deve ser tomada pelo embarcador para continuar a entrega.
+                  updatedTime:
+                    type: string
+                    format: date-time
+                    description: Data que o pacote entrou no status atual.
+                  pickupAgency:
+                    type: object
+                    description: Endereço da agência dos Correios onde o pacote está disponível para retirada. Preenchido somente para pacotes redespachados e quando o status é Retirar nos correios.
+                    properties:
+                      address:
+                        type: string
+                        description: Logradouro da agência dos Correios, incluindo número quando informado.
+                        example: RUA ANTONIO LEITE DE GOIS, S/N
+                      city:
+                        type: string
+                        description: Cidade onde a agência dos Correios está localizada.
+                        example: Imaculada
+                      state:
+                        type: string
+                        description: Unidade federativa (UF) onde a agência dos Correios está localizada.
+                        example: PB
+                      postalCode:
+                        type: string
+                        description: CEP da agência dos Correios. No Brasil, usa-se o formato de 8 dígitos, sem hífen.
+                        example: '58745971'
+                description: Objeto que representa as informações do status de um pacote.
+              destination:
+                type: object
+                properties:
+                  recipient:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        description: Nome do destinatário associado ao pacote.
+                        example: Ana Carvalho da Silva
+                      phone:
+                        type: string
+                        description: Número de telefone do desinatário associado ao pacote.
+                        example: '51999897161'
+                      nif:
+                        type: string
+                        description: Número de identificação fiscal do destinatário associado ao pacote.
+                        example: 02628794098
+                  postalAddress:
+                    type: object
+                    properties:
+                      revision:
+                        type: integer
+                        description: Número da versão da resposta de endereço postal do Google. 0 significa que é a versão mais atual.
+                        example: 0
+                      regionCode:
+                        type: string
+                        description: Código da região associado ao endereço postal gerado pelo Google.
+                        example: BR
+                      languageCode:
+                        type: string
+                        description: Código que representa o idioma encontrado no endereço. Não usado pela Loggi no momento.
+                      postalCode:
+                        type: string
+                        description: Código postal do endereço enviado. No Brasil, usa-se o CEP.
+                        example: '01234000'
+                      sortingCode:
+                        type: string
+                        description: Código de ordenação usado para fins postais em alguns países. Não se aplica ao Brasil, e não usado pela Loggi no momento.
+                      administrativeArea:
+                        type: string
+                        description: Área administrativa do endereço. No Brasil, equivale à unidade federativa (UF).
+                      locality:
+                        type: string
+                        description: Localidade do endereço destinatário. No Brasil, equivale à cidade. Retorna vazio na maioria das respostas.
+                      sublocality:
+                        type: string
+                        description: Sublocalidade do endereço destinatário. No Brasil, equivale ao bairro. Retorna vazio na maioria das respostas.
+                      addressLines:
+                        description: Representação mais simples do endereço associado ao destinatário do pacote. Comumente associado ao formato inserido pelo usuário. Retorno obrigatório.
+                        type: array
+                        items:
+                          type: string
+                          example: Rua Monte Sinai, 105 - Jardim do Vale, Vila Velha - ES, 29113-240, Brasil - H 402
+                      recipients:
+                        type: string
+                        description: Não utilizado pela Loggi no momento.
+                      organization:
+                        type: string
+                        description: Nâo utilizado pela Loggi no momento.
+              promisedDate:
+                type: string
+                format: date
+                description: Estimativa de data para a primeira tentativa de entrega.
+              dimension:
+                type: object
+                properties:
+                  weightG:
+                    type: integer
+                    description: Peso do pacote, representado em gramas (g).
+                    example: 100
+                  lengthCm:
+                    type: integer
+                    description: Comprimento do pacote, representado em centímetros (cm).
+                    example: 10
+                  widthCm:
+                    type: integer
+                    description: Largura do pacote, representado em centímetros (cm).
+                    example: 10
+                  heightCm:
+                    type: integer
+                    description: Altura do pacote, representado em centímetros (cm).
+                    example: 10
+              invoice:
+                type: object
+                properties:
+                  series:
+                    type: string
+                    description: Série da Nota Fiscal associada ao pacote.
+                    example: '123'
+                  number:
+                    type: string
+                    description: Número da Nota Fiscal associada ao pacote.
+                    example: '1234'
+                  key:
+                    type: string
+                    description: Chave da Nota Fiscal Eletrônica (NFe) associada ao pacote, formada por 44 dígitos numéricos ou alfanuméricos.
+                    example: '35170412514847000173550000005540001005541769'
+                  totalValue:
+                    type: string
+                    description: Valor total emitido na Nota Fiscal associada ao pacote.
+                    example: '664.20'
+              origin:
+                type: object
+                properties:
+                  postalCode:
+                    type: string
+                    description: Código postal do endereço enviado. No Brasil, usa-se o CEP.
+                    example: '01234000'
+              receiver:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: Nome de quem recebeu o pacote no momento de sua entrega. Não necessariamente é igual ao nome do destinatário.
+                    example: Maria das Dores
+              pricing:
+                type: object
+                description: Objeto que representa as informações de precificação do envio de um pacote.
+                properties:
+                  amount:
+                    type: object
+                    description: Objeto com as informações do preço do envio de pacote.
+                    properties:
+                      currencyCode:
+                        type: string
+                        description: Código de 3 letras que estabelece a moeda da precificação do envio do pacote, definido na ISO4217
+                        example: BRL
+                      units:
+                        type: string
+                        description: Componente inteiro do preço do envio do pacote. Um envio com preço de 7,52 teria "7" units.
+                        example: '7'
+                      nanos:
+                        type: integer
+                        format: int32
+                        description: Componente não inteiro do preço do envio do pacote multiplicado por 10⁹. Um envio com preço de 7,52 teria 520000000 nanos.
+                        example: 520000000
+              slo:
+                type: integer
+                description: Representação númerica do SLO (Service Level Objective) associado ao pacote. Comumente 0 ou 1.
+                example: 0
+              redispatch:
+                type: object
+                properties:
+                  barcode:
+                    type: string
+                    description: Código de barras associado à operação de redespacho do pacote para os Correios.
+                    example: NEW-BARCODE
+              direction:
+                type: object
+                properties:
+                  type:
+                    type: object
+                    properties:
+                      code:
+                        type: integer
+                        description: Código indicando o sentido do pacote.
+                        example: '2'
+                      description:
+                        type: string
+                        description: Mensagem que identifica o sentido do pacote.
+                        example: Pacote em devolução
+                  reason:
+                    type: object
+                    properties:
+                      code:
+                        type: integer
+                        description: Código indicando a razão pela qual o pacote teve o sentido alterado.
+                        example: '3'
+                      description:
+                        type: string
+                        description: Mensagem que descreve a razão pela qual o pacote teve o seu sentido alterado.
+                        example: Endereço errado
+                  returnAddress:
+                    type: object
+                    description: Endereço de devolução relacionado ao pacote. Preenchido somente se o pacote está na direção de devolução.
+                    properties:
+                      revision:
+                        type: integer
+                        description: Número da versão da resposta de endereço postal do Google. 0 significa que é a versão mais atual.
+                        example: 0
+                      regionCode:
+                        type: string
+                        description: Código da região associado ao endereço postal gerado pelo Google.
+                        example: BR
+                      languageCode:
+                        type: string
+                        description: Código que representa o idioma encontrado no endereço. Não usado pela Loggi no momento.
+                      postalCode:
+                        type: string
+                        description: Código postal do endereço de devolução. No Brasil, usa-se o CEP.
+                        example: '01234000'
+                      sortingCode:
+                        type: string
+                        description: Código de ordenação usado para fins postais em alguns países. Não se aplica ao Brasil, e não usado pela Loggi no momento.
+                      administrativeArea:
+                        type: string
+                        description: Área administrativa do endereço de devolução. No Brasil, equivale à unidade federativa (UF).
+                      locality:
+                        type: string
+                        description: Localidade do endereço de devolução. No Brasil, equivale à cidade. Retorna vazio na maioria das respostas.
+                      sublocality:
+                        type: string
+                        description: Sublocalidade do endereço de devolução. No Brasil, equivale ao bairro. Retorna vazio na maioria das respostas.
+                      addressLines:
+                        description: Representação mais simples do endereço associado à devolução do pacote.
+                        type: array
+                        items:
+                          type: string
+                          example: Alameda Santos, 2400 - Jardim Paulista, São Paulo - SP, 01418-200, Brasil - 8 andar
+                      recipients:
+                        type: string
+                        description: Não utilizado pela Loggi no momento.
+                      organization:
+                        type: string
+                        description: Nâo utilizado pela Loggi no momento.
+              deliveryInformation:
+                type: object
+                properties:
+                  receiverName:
+                    type: string
+                    description: Nome de quem recebeu o pacote no momento de sua entrega. Não necessariamente é igual ao nome do destinatário.
+                    example: Maria das Dores
+                  receiverDocument:
+                    type: string
+                    description: Número do documento identificador de quem recebeu o pacote no momento de sua entrega.
+                    example: 123456789-01
+                  locationDescription:
+                    type: string
+                    description: Descrição detalhada do local onde o pacote foi entregue.
+                    example: CONCIERGE
+                  links:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        rel:
+                          type: string
+                          description: Identificador interno para definir a informação fornecida a partir do arquivo.
+                          example: digital_signature
+                        href:
+                          type: string
+                          description: URL com o arquivo referente à descrição da informação fornecida por quem recebeu.
+                          example: http://www.loggi.com
+              pickup_receipt:
+                type: object
+                properties:
+                  driver_name:
+                    type: string
+                    description: Nome da pessoa que fez a coleta.
+                    example: Leonardo Caprio
+                  license_plate:
+                    type: string
+                    description: Placa do veículo de coleta.
+                    example: ABC4E67
+                  pickup_end_time:
+                    type: string
+                    format: date-time
+                    description: Timestamp do momento da coleta.
+                  transport_type:
+                    type: integer
+                    format: int64
+                    description: Código numérico referente ao tipo de veículo que realizou a coleta.
+                    example: 1
+              volumetric_info:
+                type: object
+                description: Informações de volume do pacote.
+                properties:
+                  consideredWeightG:
+                    type: integer
+                    description: Peso que vai ser considerado para o cálculo final da cobrança, representado em gramas (g).
+                    example: 4008
+                  integration_values:
+                    type: object
+                    description: Dados fornecidos pelo embarcador no envio do pacote.
+                    properties:
+                      cubicWeightG:
+                        type: integer
+                        description: Espaço real ocupado pelo pacote, com base na relação entre o peso e o volume da carga, representado em gramas (g).
+                        example: 167
+                      dimensions:
+                        type: object
+                        properties:
+                          weightG:
+                            type: integer
+                            description: Peso do pacote, representado em gramas (g).
+                            example: 100
+                          lengthCm:
+                            type: integer
+                            description: Comprimento do pacote, representado em centímetros (cm).
+                            example: 10
+                          widthCm:
+                            type: integer
+                            description: Largura do pacote, representado em centímetros (cm).
+                            example: 10
+                          heightCm:
+                            type: integer
+                            description: Altura do pacote, representado em centímetros (cm).
+                            example: 10
+                  measured_values:
+                    type: object
+                    description: Dados revisados pela Loggi para pacotes medidos e pesados em nossas bases.
+                    properties:
+                      cubicWeightG:
+                        type: integer
+                        description: Espaço real ocupado pelo pacote, com base na relação entre o peso e o volume da carga, representado em gramas (g).
+                        example: 4008
+                      dimensions:
+                        type: object
+                        properties:
+                          weightG:
+                            type: integer
+                            description: Peso do pacote, representado em gramas (g).
+                            example: 3200
+                          lengthCm:
+                            type: integer
+                            description: Comprimento do pacote, representado em centímetros (cm).
+                            example: 20
+                          widthCm:
+                            type: integer
+                            description: Largura do pacote, representado em centímetros (cm).
+                            example: 30
+                          heightCm:
+                            type: integer
+                            description: Altura do pacote, representado em centímetros (cm).
+                            example: 40
+              requestTime:
+                type: string
+                format: date-time
+                description: Timestamp do momento da requisição.
+            description: Objeto que representa os dados de rastreio de um pacote.
+      description: Objeto que retorna todos os pacotes que são identificados pelo CompanyID e TrackingCode passados na requisição.
+    ErrorMessage:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+          description: 'Código numérico referente à falha.
+
+            CANCELLED = 1
+
+            UNKNOWN = 2
+
+            INVALID_ARGUMENT = 3
+
+            DEADLINE_EXCEEDED = 4
+
+            NOT_FOUND = 5
+
+            ALREADY_EXISTS = 6
+
+            PERMISSION_DENIED = 7
+
+            RESOURCE_EXHAUSTED = 8
+
+            FAILED_PRECONDITION = 9
+
+            ABORTED = 10
+
+            OUT_OF_RANGE = 11
+
+            UNIMPLEMENTED = 12
+
+            INTERNAL = 13
+
+            UNAVAILABLE = 14
+
+            DATA_LOSS = 15
+
+            UNAUTHENTICATED = 16'
+          example: 14
+        message:
+          type: string
+          description: Texto pequeno informativo sobre a falha.
+          example: Requisição com credenciais inválidas.
+        details:
+          type: array
+          description: Detalhes sobre a falha. Nesta versão da API ainda não está sendo retornado, mas deve ser considerado um array de objetos de tipos distintos.
+          items: {}
+          example: []
+x-provenance:
+  method: searched
+  source: https://docs.api.loggi.com/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://docs.api.loggi.com/reference/packagedetailstrackingcode.md
+  merge:
+    pages: 1
+    deduped: 0
+    conflicts_kept_first: 0

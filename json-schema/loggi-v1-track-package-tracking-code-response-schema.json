@@ -1,0 +1,257 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/loggi/main/json-schema/loggi-v1-track-package-tracking-code-response-schema.json",
+  "title": "v1TrackPackageTrackingCodeResponse",
+  "description": "Objeto que retorna todos os pacotes que são identificados pelo CompanyID e TrackingCode passados na requisição.",
+  "x-generated": "2026-10-14",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/loggi-tracking-openapi.yml#/components/schemas/v1TrackPackageTrackingCodeResponse",
+  "type": "object",
+  "properties": {
+    "packages": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "loggiKey": {
+            "type": "string",
+            "description": "Chave que identifica unicamente um pacote dentro da Loggi."
+          },
+          "trackingCode": {
+            "type": "string",
+            "description": "Código de rastreio de um pacote."
+          },
+          "barcode": {
+            "type": "string",
+            "description": "Código de barras atual do pacote."
+          },
+          "status": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "integer",
+                "format": "int64",
+                "description": "Código numérico referente ao estado do pacote."
+              },
+              "highLevelStatus": {
+                "type": "string",
+                "description": "Status geral do pacote em formato legível."
+              },
+              "description": {
+                "type": "string",
+                "description": "Breve descrição do status do pacote."
+              },
+              "actionRequired": {
+                "type": "object",
+                "properties": {
+                  "reasonDescription": {
+                    "type": "string",
+                    "description": "Breve descrição da ação que precisa ser tomada pelo embarcador."
+                  },
+                  "reasonLabel": {
+                    "type": "string",
+                    "description": "Rótulo da ação que precisa ser tomada pelo embarcador."
+                  }
+                },
+                "description": "Objeto que representa uma ação que deve ser tomada pelo embarcador para continuar a entrega."
+              },
+              "updatedTime": {
+                "type": "string",
+                "format": "date-time",
+                "description": "Data que o pacote entrou no status atual."
+              },
+              "pickupAgency": {
+                "type": "object",
+                "description": "Endereço da agência dos Correios onde o pacote está disponível para retirada. Preenchido somente para pacotes redespachados e quando o status é Retirar nos correios.",
+                "properties": {
+                  "address": {
+                    "type": "string",
+                    "description": "Logradouro da agência dos Correios, incluindo número quando informado."
+                  },
+                  "city": {
+                    "type": "string",
+                    "description": "Cidade onde a agência dos Correios está localizada."
+                  },
+                  "state": {
+                    "type": "string",
+                    "description": "Unidade federativa (UF) onde a agência dos Correios está localizada."
+                  },
+                  "postalCode": {
+                    "type": "string",
+                    "description": "CEP da agência dos Correios. No Brasil, usa-se o formato de 8 dígitos, sem hífen."
+                  }
+                }
+              }
+            },
+            "description": "Objeto que representa as informações do status de um pacote."
+          },
+          "promisedDate": {
+            "type": "string",
+            "format": "date",
+            "description": "Estimativa de data para a primeira tentativa de entrega."
+          },
+          "trackingHistory": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "format": "int64",
+                      "description": "Código numérico referente ao estado do pacote."
+                    },
+                    "highLevelStatus": {
+                      "type": "string",
+                      "description": "Status geral do pacote em formato legível."
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "Breve descrição do status do pacote."
+                    },
+                    "actionRequired": {
+                      "type": "object",
+                      "properties": {
+                        "reasonDescription": {
+                          "type": "string",
+                          "description": "Breve descrição da ação que precisa ser tomada pelo embarcador."
+                        },
+                        "reasonLabel": {
+                          "type": "string",
+                          "description": "Rótulo da ação que precisa ser tomada pelo embarcador."
+                        }
+                      },
+                      "description": "Objeto que representa uma ação que deve ser tomada pelo embarcador para continuar a entrega."
+                    },
+                    "updatedTime": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Data que o pacote entrou no status atual."
+                    },
+                    "pickupAgency": {
+                      "type": "object",
+                      "description": "Endereço da agência dos Correios onde o pacote está disponível para retirada. Preenchido somente para pacotes redespachados e quando o status é Retirar nos correios.",
+                      "properties": {
+                        "address": {
+                          "type": "string",
+                          "description": "Logradouro da agência dos Correios, incluindo número quando informado."
+                        },
+                        "city": {
+                          "type": "string",
+                          "description": "Cidade onde a agência dos Correios está localizada."
+                        },
+                        "state": {
+                          "type": "string",
+                          "description": "Unidade federativa (UF) onde a agência dos Correios está localizada."
+                        },
+                        "postalCode": {
+                          "type": "string",
+                          "description": "CEP da agência dos Correios. No Brasil, usa-se o formato de 8 dígitos, sem hífen."
+                        }
+                      }
+                    }
+                  },
+                  "description": "Objeto que representa as informações do status de um pacote."
+                },
+                "location": {
+                  "type": "object",
+                  "properties": {
+                    "city": {
+                      "type": "string",
+                      "description": "Cidade de onde a localização foi inferida para o status."
+                    },
+                    "state": {
+                      "type": "string",
+                      "description": "Estado (UF) de onde a localização foi inferida para o status."
+                    }
+                  },
+                  "description": "Objeto que representa a localização do pacote em um dado status."
+                }
+              }
+            },
+            "description": "Histórico de status de um pacote."
+          },
+          "location": {
+            "type": "object",
+            "properties": {
+              "city": {
+                "type": "string",
+                "description": "Cidade de onde a localização foi inferida para o status."
+              },
+              "state": {
+                "type": "string",
+                "description": "Estado (UF) de onde a localização foi inferida para o status."
+              }
+            },
+            "description": "Objeto que representa a localização do pacote em seu status atual."
+          },
+          "deliveryInformation": {
+            "type": "object",
+            "properties": {
+              "receiverName": {
+                "type": "string",
+                "description": "Nome de quem recebeu o pacote no momento de sua entrega. Não necessariamente é igual ao nome do destinatário."
+              },
+              "receiverDocument": {
+                "type": "string",
+                "description": "Número do documento identificador de quem recebeu o pacote no momento de sua entrega."
+              },
+              "locationDescription": {
+                "type": "string",
+                "description": "Descrição detalhada do local onde o pacote foi entregue."
+              },
+              "links": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "rel": {
+                      "type": "string",
+                      "description": "Identificador interno para definir a informação fornecida a partir do arquivo."
+                    },
+                    "href": {
+                      "type": "string",
+                      "description": "URL com o arquivo referente à descrição da informação fornecida por quem recebeu."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "pickup_receipt": {
+            "type": "object",
+            "properties": {
+              "driver_name": {
+                "type": "string",
+                "description": "Nome da pessoa que fez a coleta."
+              },
+              "license_plate": {
+                "type": "string",
+                "description": "Placa do veículo de coleta."
+              },
+              "pickup_end_time": {
+                "type": "string",
+                "format": "date-time",
+                "description": "Timestamp do momento da coleta."
+              },
+              "transport_type": {
+                "type": "integer",
+                "format": "int64",
+                "description": "Código numérico referente ao tipo de veículo que realizou a coleta."
+              }
+            }
+          },
+          "requestTime": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Timestamp do momento da requisição."
+          }
+        },
+        "description": "Objeto que representa os dados de rastreio de um pacote."
+      }
+    }
+  }
+}

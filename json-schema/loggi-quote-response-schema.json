@@ -1,0 +1,322 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/loggi/main/json-schema/loggi-quote-response-schema.json",
+  "title": "QuoteResponse",
+  "x-generated": "2026-10-14",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/loggi-freight-price-quotation-openapi.yml#/components/schemas/QuoteResponse",
+  "type": "object",
+  "properties": {
+    "packagesQuotations": {
+      "type": "object",
+      "description": "Objeto que representa a cotação de cada pacote.",
+      "properties": {
+        "quotations": {
+          "type": "array",
+          "description": "Opções de frete para um pacote. Um pacote pode ter até duas opções (Loggi Econômico e Loggi Expresso).",
+          "items": {
+            "properties": {
+              "price": {
+                "type": "object",
+                "properties": {
+                  "totalAmount": {
+                    "type": "object",
+                    "required": [
+                      "currencyCode",
+                      "units",
+                      "nanos"
+                    ],
+                    "properties": {
+                      "currencyCode": {
+                        "type": "string",
+                        "description": "Código de três letras para as modedas definido no ISO 4217."
+                      },
+                      "units": {
+                        "type": "string",
+                        "description": "Todas as unidades do montante.",
+                        "format": "int64"
+                      },
+                      "nanos": {
+                        "type": "integer",
+                        "description": "Componente fracionário em nanos, i.e., centavos vezes 10 milhões. Ler mais em https://github.com/googleapis/googleapis/blob/master/google/type/money.proto",
+                        "format": "int32"
+                      }
+                    },
+                    "description": "Preço total do frete com taxas e impostos incluídos."
+                  },
+                  "baseAmount": {
+                    "description": "Preço do frete sem taxas e impostos incluídos.",
+                    "type": "object",
+                    "required": [
+                      "currencyCode",
+                      "units",
+                      "nanos"
+                    ],
+                    "properties": {
+                      "currencyCode": {
+                        "type": "string",
+                        "description": "Código de três letras para as modedas definido no ISO 4217."
+                      },
+                      "units": {
+                        "type": "string",
+                        "description": "Todas as unidades do montante.",
+                        "format": "int64"
+                      },
+                      "nanos": {
+                        "type": "integer",
+                        "description": "Componente fracionário em nanos, i.e., centavos vezes 10 milhões. Ler mais em https://github.com/googleapis/googleapis/blob/master/google/type/money.proto",
+                        "format": "int32"
+                      }
+                    }
+                  },
+                  "taxesAndFees": {
+                    "description": "Taxas e impostos incluídos.",
+                    "type": "object",
+                    "properties": {
+                      "pis": {
+                        "type": "object",
+                        "properties": {
+                          "rate_tax": {
+                            "type": "string",
+                            "description": "Porcentagem aplicada no imposto."
+                          },
+                          "amount": {
+                            "type": "object",
+                            "required": [
+                              "currencyCode",
+                              "units",
+                              "nanos"
+                            ],
+                            "properties": {
+                              "currencyCode": {
+                                "type": "string",
+                                "description": "Código de três letras para as modedas definido no ISO 4217."
+                              },
+                              "units": {
+                                "type": "string",
+                                "description": "Todas as unidades do montante.",
+                                "format": "int64"
+                              },
+                              "nanos": {
+                                "type": "integer",
+                                "description": "Componente fracionário em nanos, i.e., centavos vezes 10 milhões. Ler mais em https://github.com/googleapis/googleapis/blob/master/google/type/money.proto",
+                                "format": "int32"
+                              }
+                            },
+                            "description": "Valor do imposto com a porcentagem do rate_tax."
+                          }
+                        }
+                      },
+                      "cofins": {
+                        "description": "Valor do imposto com a porcentagem do rate_tax.",
+                        "type": "object",
+                        "properties": {
+                          "rate_tax": {
+                            "type": "string",
+                            "description": "Porcentagem aplicada no imposto."
+                          },
+                          "amount": {
+                            "type": "object",
+                            "required": [
+                              "currencyCode",
+                              "units",
+                              "nanos"
+                            ],
+                            "properties": {
+                              "currencyCode": {
+                                "type": "string",
+                                "description": "Código de três letras para as modedas definido no ISO 4217."
+                              },
+                              "units": {
+                                "type": "string",
+                                "description": "Todas as unidades do montante.",
+                                "format": "int64"
+                              },
+                              "nanos": {
+                                "type": "integer",
+                                "description": "Componente fracionário em nanos, i.e., centavos vezes 10 milhões. Ler mais em https://github.com/googleapis/googleapis/blob/master/google/type/money.proto",
+                                "format": "int32"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "gris": {
+                        "type": "object",
+                        "properties": {
+                          "rate_tax": {
+                            "type": "string",
+                            "description": "Porcentagem aplicada no imposto."
+                          },
+                          "amount": {
+                            "type": "object",
+                            "required": [
+                              "currencyCode",
+                              "units",
+                              "nanos"
+                            ],
+                            "properties": {
+                              "currencyCode": {
+                                "type": "string",
+                                "description": "Código de três letras para as modedas definido no ISO 4217."
+                              },
+                              "units": {
+                                "type": "string",
+                                "description": "Todas as unidades do montante.",
+                                "format": "int64"
+                              },
+                              "nanos": {
+                                "type": "integer",
+                                "description": "Componente fracionário em nanos, i.e., centavos vezes 10 milhões. Ler mais em https://github.com/googleapis/googleapis/blob/master/google/type/money.proto",
+                                "format": "int32"
+                              }
+                            },
+                            "description": "Valor do imposto com a porcentagem do rate_tax."
+                          }
+                        }
+                      },
+                      "advalorem": {
+                        "type": "object",
+                        "properties": {
+                          "rate_tax": {
+                            "type": "string",
+                            "description": "Porcentagem aplicada no imposto."
+                          },
+                          "amount": {
+                            "type": "object",
+                            "required": [
+                              "currencyCode",
+                              "units",
+                              "nanos"
+                            ],
+                            "properties": {
+                              "currencyCode": {
+                                "type": "string",
+                                "description": "Código de três letras para as modedas definido no ISO 4217."
+                              },
+                              "units": {
+                                "type": "string",
+                                "description": "Todas as unidades do montante.",
+                                "format": "int64"
+                              },
+                              "nanos": {
+                                "type": "integer",
+                                "description": "Componente fracionário em nanos, i.e., centavos vezes 10 milhões. Ler mais em https://github.com/googleapis/googleapis/blob/master/google/type/money.proto",
+                                "format": "int32"
+                              }
+                            },
+                            "description": "Valor do imposto com a porcentagem do rate_tax."
+                          }
+                        }
+                      },
+                      "icms": {
+                        "type": "object",
+                        "properties": {
+                          "rate_tax": {
+                            "type": "string",
+                            "description": "Porcentagem aplicada no imposto."
+                          },
+                          "amount": {
+                            "type": "object",
+                            "required": [
+                              "currencyCode",
+                              "units",
+                              "nanos"
+                            ],
+                            "properties": {
+                              "currencyCode": {
+                                "type": "string",
+                                "description": "Código de três letras para as modedas definido no ISO 4217."
+                              },
+                              "units": {
+                                "type": "string",
+                                "description": "Todas as unidades do montante.",
+                                "format": "int64"
+                              },
+                              "nanos": {
+                                "type": "integer",
+                                "description": "Componente fracionário em nanos, i.e., centavos vezes 10 milhões. Ler mais em https://github.com/googleapis/googleapis/blob/master/google/type/money.proto",
+                                "format": "int32"
+                              }
+                            },
+                            "description": "Valor do imposto com a porcentagem do rate_tax. Obrigatório quando o frete é intermunicipal ou interestadual"
+                          }
+                        }
+                      },
+                      "iss": {
+                        "type": "object",
+                        "properties": {
+                          "rate_tax": {
+                            "type": "string",
+                            "description": "Porcentagem aplicada no imposto."
+                          },
+                          "amount": {
+                            "type": "object",
+                            "required": [
+                              "currencyCode",
+                              "units",
+                              "nanos"
+                            ],
+                            "properties": {
+                              "currencyCode": {
+                                "type": "string",
+                                "description": "Código de três letras para as modedas definido no ISO 4217."
+                              },
+                              "units": {
+                                "type": "string",
+                                "description": "Todas as unidades do montante.",
+                                "format": "int64"
+                              },
+                              "nanos": {
+                                "type": "integer",
+                                "description": "Componente fracionário em nanos, i.e., centavos vezes 10 milhões. Ler mais em https://github.com/googleapis/googleapis/blob/master/google/type/money.proto",
+                                "format": "int32"
+                              }
+                            },
+                            "description": "Valor do imposto com a porcentagem do rate_tax. Obrigatório quando o frete está dentro da mesma cidade."
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "sloInDays": {
+                "type": "integer",
+                "description": "Tempo de entrega dentro do prazo estipulado em dias.",
+                "format": "int32"
+              },
+              "freightType": {
+                "type": "string",
+                "description": "Tipos de entregas disponíveis.",
+                "enum": [
+                  "FREIGHT_TYPE_EXPRESS",
+                  "FREIGHT_TYPE_ECONOMIC"
+                ]
+              },
+              "freightTypeLabel": {
+                "type": "string",
+                "description": "Label do tipo de entrega. Poderá ser usado como output na UI."
+              },
+              "pickup_type": {
+                "type": "string",
+                "description": "Tipos de coletas disponíveis.",
+                "enum": [
+                  "PICKUP_TYPE_SPOT",
+                  "PICKUP_TYPE_DEDICATED",
+                  "PICKUP_TYPE_MILK_RUN",
+                  "PICKUP_TYPE_DROP_OFF"
+                ]
+              },
+              "externalServiceIds": {
+                "type": "string",
+                "description": "Identificador externo do serviço."
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

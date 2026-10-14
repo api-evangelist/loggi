@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/loggi/main/json-schema/loggi-v1-create-label-response-schema.json",
+  "title": "v1CreateLabelResponse",
+  "x-generated": "2026-10-14",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/loggi-labels-openapi.yml#/components/schemas/v1CreateLabelResponse",
+  "type": "object",
+  "properties": {
+    "success": {
+      "type": "object",
+      "description": "Arquivo binário em BASE64 com as etiquetas geradas com sucesso.",
+      "properties": {
+        "createdTime": {
+          "type": "string",
+          "description": "Horário de geração da etiqueta em formato UTC.",
+          "format": "date-time"
+        }
+      },
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "content": {
+              "type": "string",
+              "description": "Bytes do arquivo codificado em base 64. Este dado é retornado quando informado o valor LABEL_RESPONSE_TYPE_BASE_64 para o campo **responseType**."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "url": {
+              "type": "string",
+              "description": "Link para download da etiqueta gerada. Este dado é retornando quando informado o valor LABEL_RESPONSE_TYPE_URL para o campo **responseType**."
+            }
+          }
+        }
+      ]
+    },
+    "failure": {
+      "type": "array",
+      "description": "Lista de loggi keys dos pacotes que não puderam ter as etiquetas geradas e seus respectivos erros.",
+      "items": {
+        "properties": {
+          "loggiKey": {
+            "type": "string",
+            "description": "Loggi key não processada durante a geração de uma etiqueta."
+          },
+          "status": {
+            "type": "object",
+            "description": "Detalhamento do erro na geração da etiqueta.",
+            "properties": {
+              "code": {
+                "type": "integer",
+                "format": "int32",
+                "description": "Código numérico referente à falha.\n\nCANCELLED = 1\n\nUNKNOWN = 2\n\nINVALID_ARGUMENT = 3\n\nDEADLINE_EXCEEDED = 4\n\nNOT_FOUND = 5\n\nALREADY_EXISTS = 6\n\nPERMISSION_DENIED = 7\n\nRESOURCE_EXHAUSTED = 8\n\nFAILED_PRECONDITION = 9\n\nABORTED = 10\n\nOUT_OF_RANGE = 11\n\nUNIMPLEMENTED = 12\n\nINTERNAL = 13\n\nUNAVAILABLE = 14\n\nDATA_LOSS = 15\n\nUNAUTHENTICATED = 16"
+              },
+              "message": {
+                "type": "string",
+                "description": "Texto pequeno informativo sobre a falha"
+              },
+              "details": {
+                "type": "array",
+                "description": "Detalhes sobre à falha. Nesta versão da API ainda não está sendo retornado, mas deve ser considerado um array de objetos de tipos distintos.",
+                "items": {}
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

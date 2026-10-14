@@ -1,0 +1,3970 @@
+[
+ {
+  "page": "https://docs.api.loggi.com/reference/quote.md",
+  "definition": {
+   "openapi": "3.0.1",
+   "info": {
+    "title": "Freight Price Quotation",
+    "version": "v1",
+    "description": "Cotação de preços e prazos de frete."
+   },
+   "servers": [
+    {
+     "url": "https://stg.api.loggi.com"
+    },
+    {
+     "url": "https://api.loggi.com"
+    }
+   ],
+   "paths": {
+    "/v1/companies/{company_id}/quotations": {
+     "post": {
+      "tags": [
+       "QuotationAPI"
+      ],
+      "summary": "Criar Cotação",
+      "description": "### Sobre esta API:\nEsta API disponibiliza opções de preços e prazos da Loggi nas plataformas parceiras, em tempo real, conforme as características do envio e do parceiro e informações de companyId, shipFrom, shipTo, packages, pickupTypes ou externalServiceIds (SISUs).\n\n### Mais alguns detalhes:\nMesmo com poucas informações preenchidas, a API disponibiliza os preços e os prazos mais adequados ao parceiro. Ainda assim, para obter um retorno de estimativa de preço e prazo mais preciso, recomendamos o preenchimento de todos os campos obrigatórios.\n\nA cotação de preços é feita levando em consideração:\n- envio - origem e destino;\n- pacote - pesos, dimensões e características;\n- perfil do parceiro.\n- tipo de coleta.",
+      "operationId": "Quote",
+      "security": [
+       {
+        "OAuth2": []
+       }
+      ],
+      "parameters": [
+       {
+        "name": "company_id",
+        "in": "path",
+        "required": true,
+        "description": "Código numérico fornecido pela Loggi para identificar o cliente.",
+        "schema": {
+         "type": "string"
+        }
+       }
+      ],
+      "requestBody": {
+       "content": {
+        "application/json": {
+         "examples": {
+          "correios": {
+           "value": {
+            "shipFrom": {
+             "correios": {
+              "logradouro": "Alameda Santos",
+              "numero": "2400",
+              "complemento": "10 andar",
+              "bairro": "Jardim Paulista",
+              "cep": "1419100",
+              "cidade": "São Paulo",
+              "uf": "SP"
+             }
+            },
+            "shipTo": {
+             "correios": {
+              "logradouro": "Alameda Santos",
+              "numero": "2400",
+              "complemento": "11 Andar",
+              "bairro": "Jardim Paulista",
+              "cep": "01418200",
+              "cidade": "São Paulo",
+              "uf": "SP"
+             }
+            },
+            "packages": [
+             {
+              "weightG": 12000,
+              "lengthCm": 55,
+              "widthCm": 55,
+              "heightCm": 100,
+              "goodsValue": {
+               "currencyCode": "BRL",
+               "units": 87,
+               "nanos": 350000000
+              }
+             },
+             {
+              "weightG": 12500,
+              "lengthCm": 50,
+              "widthCm": 100,
+              "heightCm": 100,
+              "goodsValue": {
+               "currencyCode": "BRL",
+               "units": 105,
+               "nanos": 350000000
+              }
+             }
+            ],
+            "pickupTypes": [
+             "PICKUP_TYPE_SPOT"
+            ],
+            "externalServiceIds": [
+             "PDEL-DTED-LEXP-CDOR-0001"
+            ]
+           }
+          },
+          "lines": {
+           "value": {
+            "shipFrom": {
+             "lines": {
+              "addressLine1": "Alameda Santos, 2400 - Jardim Paulista",
+              "addressLine2": "Bela Vista",
+              "postalCode": "01418200",
+              "city": "São Paulo",
+              "state": "SP",
+              "country": "Brasil"
+             }
+            },
+            "shipTo": {
+             "lines": {
+              "addressLine1": "Alameda Santos, 2500 - Jardim Paulista",
+              "addressLine2": "Bela Vista",
+              "postalCode": "01418200",
+              "city": "São Paulo",
+              "state": "SP",
+              "country": "Brasil"
+             }
+            },
+            "packages": [
+             {
+              "weightG": 12000,
+              "lengthCm": 55,
+              "widthCm": 55,
+              "heightCm": 100,
+              "goodsValue": {
+               "currencyCode": "BRL",
+               "units": 87,
+               "nanos": 350000000
+              }
+             },
+             {
+              "weightG": 12500,
+              "lengthCm": 50,
+              "widthCm": 100,
+              "heightCm": 100,
+              "goodsValue": {
+               "currencyCode": "BRL",
+               "units": 105,
+               "nanos": 350000000
+              }
+             }
+            ],
+            "pickupTypes": [
+             "PICKUP_TYPE_SPOT"
+            ],
+            "externalServiceIds": [
+             "PDEL-DTED-LEXP-CDOR-0001"
+            ]
+           }
+          },
+          "widget": {
+           "value": {
+            "shipFrom": {
+             "widget": {
+              "address": "Alameda Santos, 2400 - Jardim Paulista",
+              "complement": "8º andar",
+              "placesApiInfo": {
+               "placeId": "ChIJgUbEo8cfqokR5lP9_Wh_DaM",
+               "sessionId": "442d443e-0163-4ca8-a907-7319825548d8"
+              },
+              "userContext": {
+               "userIp": "127.0.0.1",
+               "position": {
+                "latitude": -23.557,
+                "longitude": -46.662
+               }
+              }
+             }
+            },
+            "shipTo": {
+             "widget": {
+              "address": "Alameda Santos, 2400 - Jardim Paulista",
+              "complement": "8º andar",
+              "placesApiInfo": {
+               "placeId": "ChIJgUbEo8cfqokR5lP9_Wh_DaM",
+               "sessionId": "442d443e-0163-4ca8-a907-7319825548d8"
+              },
+              "userContext": {
+               "userIp": "127.0.0.1",
+               "position": {
+                "latitude": -23.557,
+                "longitude": -46.662
+               }
+              }
+             }
+            },
+            "packages": [
+             {
+              "weightG": 12000,
+              "lengthCm": 55,
+              "widthCm": 55,
+              "heightCm": 100,
+              "goodsValue": {
+               "currencyCode": "BRL",
+               "units": 87,
+               "nanos": 350000000
+              }
+             },
+             {
+              "weightG": 12500,
+              "lengthCm": 50,
+              "widthCm": 100,
+              "heightCm": 100,
+              "goodsValue": {
+               "currencyCode": "BRL",
+               "units": 105,
+               "nanos": 350000000
+              }
+             }
+            ],
+            "pickupTypes": [
+             "PICKUP_TYPE_SPOT"
+            ],
+            "externalServiceIds": [
+             "PDEL-DTED-LEXP-CDOR-0001"
+            ]
+           }
+          }
+         },
+         "schema": {
+          "$ref": "#/components/schemas/QuoteRequest"
+         }
+        }
+       },
+       "required": true
+      },
+      "responses": {
+       "200": {
+        "description": "Quotation criada com sucesso.\n\nPara cada pacote fornecido na requisição, uma lista de \"quotations\" é retornada no response.\nCaso a Loggi não seja capaz de realizar o serviço para um dos pacotes informados, uma lista de \"quotations\" vazia será retornada.",
+        "content": {
+         "application/json": {
+          "examples": {
+           "sucesso passando pickup types": {
+            "value": {
+             "packagesQuotations": [
+              {
+               "quotations": [
+                {
+                 "price": {
+                  "totalAmount": {
+                   "currencyCode": "BRL",
+                   "units": 7,
+                   "nanos": 150000000
+                  },
+                  "baseAmount": {
+                   "currencyCode": "BRL",
+                   "units": "3",
+                   "nanos": 590000000
+                  },
+                  "taxesAndFees": {
+                   "pis": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "0",
+                     "nanos": 410000000
+                    },
+                    "rateTax": "0.0165"
+                   },
+                   "cofins": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "1",
+                     "nanos": 880000000
+                    },
+                    "rateTax": "0.0760"
+                   },
+                   "gris": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "5",
+                     "nanos": 10000000
+                    },
+                    "rateTax": "0.002500134589502018842530282638"
+                   },
+                   "advalorem": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "5",
+                     "nanos": 10000000
+                    },
+                    "rateTax": "0.002500134589502018842530282638"
+                   },
+                   "icms": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "2",
+                     "nanos": 970000000
+                    },
+                    "rateTax": "0.12"
+                   }
+                  }
+                 },
+                 "sloInDays": 3,
+                 "freightType": "FREIGHT_TYPE_ECONOMIC",
+                 "freightTypeLabel": "Loggi Econômico",
+                 "pickupType": "PICKUP_TYPE_SPOT",
+                 "externalServiceId": ""
+                },
+                {
+                 "price": {
+                  "totalAmount": {
+                   "currencyCode": "BRL",
+                   "units": 12,
+                   "nanos": 450000000
+                  },
+                  "baseAmount": {
+                   "currencyCode": "BRL",
+                   "units": "3",
+                   "nanos": 590000000
+                  },
+                  "taxesAndFees": {
+                   "pis": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "1",
+                     "nanos": 410000000
+                    },
+                    "rateTax": "0.0165"
+                   },
+                   "cofins": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "1",
+                     "nanos": 880000000
+                    },
+                    "rateTax": "0.0760"
+                   },
+                   "gris": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "2",
+                     "nanos": 10000000
+                    },
+                    "rateTax": "0.025"
+                   },
+                   "advalorem": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "3",
+                     "nanos": 10000000
+                    },
+                    "rateTax": "0.30"
+                   },
+                   "iss": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "2",
+                     "nanos": 970000000
+                    },
+                    "rateTax": "0.12"
+                   }
+                  }
+                 },
+                 "sloInDays": 1,
+                 "freightType": "FREIGHT_TYPE_EXPRESS",
+                 "freightTypeLabel": "Loggi Expresso",
+                 "pickupType": "PICKUP_TYPE_SPOT",
+                 "externalServiceId": ""
+                }
+               ]
+              },
+              {
+               "quotations": [
+                {
+                 "price": {
+                  "totalAmount": {
+                   "currencyCode": "BRL",
+                   "units": 8,
+                   "nanos": 330000000
+                  },
+                  "baseAmount": {
+                   "currencyCode": "BRL",
+                   "units": "3",
+                   "nanos": 590000000
+                  },
+                  "taxesAndFees": {
+                   "pis": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "0",
+                     "nanos": 410000000
+                    },
+                    "rateTax": "0.0165"
+                   },
+                   "cofins": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "1",
+                     "nanos": 880000000
+                    },
+                    "rateTax": "0.0760"
+                   },
+                   "gris": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "5",
+                     "nanos": 10000000
+                    },
+                    "rateTax": "0.002500134589502018842530282638"
+                   },
+                   "advalorem": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "5",
+                     "nanos": 10000000
+                    },
+                    "rateTax": "0.002500134589502018842530282638"
+                   },
+                   "iss": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "2",
+                     "nanos": 970000000
+                    },
+                    "rateTax": "0.12"
+                   }
+                  }
+                 },
+                 "sloInDays": 3,
+                 "freightType": "FREIGHT_TYPE_ECONOMIC",
+                 "freightTypeLabel": "Loggi Econômico",
+                 "pickupType": "PICKUP_TYPE_SPOT",
+                 "externalServiceId": ""
+                },
+                {
+                 "price": {
+                  "totalAmount": {
+                   "currencyCode": "BRL",
+                   "units": 13,
+                   "nanos": 770000000
+                  },
+                  "baseAmount": {
+                   "currencyCode": "BRL",
+                   "units": "3",
+                   "nanos": 590000000
+                  },
+                  "taxesAndFees": {
+                   "pis": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "0",
+                     "nanos": 410000000
+                    },
+                    "rateTax": "0.0165"
+                   },
+                   "cofins": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "1",
+                     "nanos": 880000000
+                    },
+                    "rateTax": "0.0760"
+                   },
+                   "gris": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "5",
+                     "nanos": 10000000
+                    },
+                    "rateTax": "0.002"
+                   },
+                   "advalorem": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "5",
+                     "nanos": 10000000
+                    },
+                    "rateTax": "0.00"
+                   },
+                   "icms": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "2",
+                     "nanos": 970000000
+                    },
+                    "rateTax": "0.12"
+                   }
+                  }
+                 },
+                 "sloInDays": 1,
+                 "freightType": "FREIGHT_TYPE_EXPRESS",
+                 "freightTypeLabel": "Loggi Expresso",
+                 "pickupType": "PICKUP_TYPE_SPOT",
+                 "externalServiceId": ""
+                }
+               ]
+              }
+             ]
+            }
+           },
+           "sucesso passando externalServiceIds": {
+            "value": {
+             "packagesQuotations": [
+              {
+               "quotations": [
+                {
+                 "price": {
+                  "totalAmount": {
+                   "currencyCode": "BRL",
+                   "units": 7,
+                   "nanos": 150000000
+                  },
+                  "baseAmount": {
+                   "currencyCode": "BRL",
+                   "units": "3",
+                   "nanos": 590000000
+                  },
+                  "taxesAndFees": {
+                   "pis": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "0",
+                     "nanos": 410000000
+                    },
+                    "rateTax": "0.0165"
+                   },
+                   "cofins": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "1",
+                     "nanos": 880000000
+                    },
+                    "rateTax": "0.0760"
+                   },
+                   "gris": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "5",
+                     "nanos": 10000000
+                    },
+                    "rateTax": "0.002500134589502018842530282638"
+                   },
+                   "advalorem": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "5",
+                     "nanos": 10000000
+                    },
+                    "rateTax": "0.002500134589502018842530282638"
+                   },
+                   "icms": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "2",
+                     "nanos": 970000000
+                    },
+                    "rateTax": "0.12"
+                   }
+                  }
+                 },
+                 "sloInDays": 3,
+                 "freightType": "FREIGHT_TYPE_ECONOMIC",
+                 "freightTypeLabel": "Loggi Econômico",
+                 "pickupType": "PICKUP_TYPE_SPOT",
+                 "externalServiceId": "PDEL-DTED-LEXP-CDOR-0001"
+                },
+                {
+                 "price": {
+                  "totalAmount": {
+                   "currencyCode": "BRL",
+                   "units": 12,
+                   "nanos": 450000000
+                  },
+                  "baseAmount": {
+                   "currencyCode": "BRL",
+                   "units": "3",
+                   "nanos": 590000000
+                  },
+                  "taxesAndFees": {
+                   "pis": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "1",
+                     "nanos": 410000000
+                    },
+                    "rateTax": "0.0165"
+                   },
+                   "cofins": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "1",
+                     "nanos": 880000000
+                    },
+                    "rateTax": "0.0760"
+                   },
+                   "gris": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "2",
+                     "nanos": 10000000
+                    },
+                    "rateTax": "0.025"
+                   },
+                   "advalorem": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "3",
+                     "nanos": 10000000
+                    },
+                    "rateTax": "0.30"
+                   },
+                   "iss": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "2",
+                     "nanos": 970000000
+                    },
+                    "rateTax": "0.12"
+                   }
+                  }
+                 },
+                 "sloInDays": 1,
+                 "freightType": "FREIGHT_TYPE_EXPRESS",
+                 "freightTypeLabel": "Loggi Expresso",
+                 "pickupType": "PICKUP_TYPE_SPOT",
+                 "externalServiceId": "PDEL-DTED-LEXP-CDOR-0001"
+                }
+               ]
+              },
+              {
+               "quotations": [
+                {
+                 "price": {
+                  "totalAmount": {
+                   "currencyCode": "BRL",
+                   "units": 8,
+                   "nanos": 330000000
+                  },
+                  "baseAmount": {
+                   "currencyCode": "BRL",
+                   "units": "3",
+                   "nanos": 590000000
+                  },
+                  "taxesAndFees": {
+                   "pis": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "0",
+                     "nanos": 410000000
+                    },
+                    "rateTax": "0.0165"
+                   },
+                   "cofins": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "1",
+                     "nanos": 880000000
+                    },
+                    "rateTax": "0.0760"
+                   },
+                   "gris": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "5",
+                     "nanos": 10000000
+                    },
+                    "rateTax": "0.002500134589502018842530282638"
+                   },
+                   "advalorem": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "5",
+                     "nanos": 10000000
+                    },
+                    "rateTax": "0.002500134589502018842530282638"
+                   },
+                   "iss": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "2",
+                     "nanos": 970000000
+                    },
+                    "rateTax": "0.12"
+                   }
+                  }
+                 },
+                 "sloInDays": 3,
+                 "freightType": "FREIGHT_TYPE_ECONOMIC",
+                 "freightTypeLabel": "Loggi Econômico",
+                 "pickupType": "PICKUP_TYPE_SPOT",
+                 "externalServiceId": "PDEL-DTED-LEXP-CDOR-0001"
+                },
+                {
+                 "price": {
+                  "totalAmount": {
+                   "currencyCode": "BRL",
+                   "units": 13,
+                   "nanos": 770000000
+                  },
+                  "baseAmount": {
+                   "currencyCode": "BRL",
+                   "units": "3",
+                   "nanos": 590000000
+                  },
+                  "taxesAndFees": {
+                   "pis": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "0",
+                     "nanos": 410000000
+                    },
+                    "rateTax": "0.0165"
+                   },
+                   "cofins": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "1",
+                     "nanos": 880000000
+                    },
+                    "rateTax": "0.0760"
+                   },
+                   "gris": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "5",
+                     "nanos": 10000000
+                    },
+                    "rateTax": "0.002"
+                   },
+                   "advalorem": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "5",
+                     "nanos": 10000000
+                    },
+                    "rateTax": "0.00"
+                   },
+                   "icms": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "2",
+                     "nanos": 970000000
+                    },
+                    "rateTax": "0.12"
+                   }
+                  }
+                 },
+                 "sloInDays": 1,
+                 "freightType": "FREIGHT_TYPE_EXPRESS",
+                 "freightTypeLabel": "Loggi Expresso",
+                 "pickupType": "PICKUP_TYPE_SPOT",
+                 "externalServiceId": "PDEL-DTED-LEXP-CDOR-0001"
+                }
+               ]
+              }
+             ]
+            }
+           },
+           "sucesso parcial": {
+            "value": {
+             "packagesQuotations": [
+              {
+               "quotations": []
+              },
+              {
+               "quotations": [
+                {
+                 "price": {
+                  "totalAmount": {
+                   "currencyCode": "BRL",
+                   "units": 8,
+                   "nanos": 330000000
+                  },
+                  "baseAmount": {
+                   "currencyCode": "BRL",
+                   "units": "3",
+                   "nanos": 590000000
+                  },
+                  "taxesAndFees": {
+                   "pis": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "0",
+                     "nanos": 410000000
+                    },
+                    "rateTax": "0.0165"
+                   },
+                   "cofins": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "1",
+                     "nanos": 880000000
+                    },
+                    "rateTax": "0.0760"
+                   },
+                   "gris": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "5",
+                     "nanos": 10000000
+                    },
+                    "rateTax": "0.002500134589502018842530282638"
+                   },
+                   "advalorem": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "5",
+                     "nanos": 10000000
+                    },
+                    "rateTax": "0.002500134589502018842530282638"
+                   },
+                   "icms": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "2",
+                     "nanos": 970000000
+                    },
+                    "rateTax": "0.12"
+                   }
+                  }
+                 },
+                 "sloInDays": 3,
+                 "freightType": "FREIGHT_TYPE_ECONOMIC",
+                 "freightTypeLabel": "Loggi Econômico",
+                 "pickupType": "PICKUP_TYPE_SPOT",
+                 "externalServiceIds": "PDEL-DTED-LEXP-CDOR-0001"
+                },
+                {
+                 "price": {
+                  "totalAmount": {
+                   "currencyCode": "BRL",
+                   "units": 13,
+                   "nanos": 770000000
+                  },
+                  "baseAmount": {
+                   "currencyCode": "BRL",
+                   "units": "3",
+                   "nanos": 590000000
+                  },
+                  "taxesAndFees": {
+                   "pis": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "0",
+                     "nanos": 410000000
+                    },
+                    "rateTax": "0.0165"
+                   },
+                   "cofins": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "1",
+                     "nanos": 880000000
+                    },
+                    "rateTax": "0.0760"
+                   },
+                   "gris": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "5",
+                     "nanos": 10000000
+                    },
+                    "rateTax": "0.002500134589502018842530282638"
+                   },
+                   "advalorem": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "5",
+                     "nanos": 10000000
+                    },
+                    "rateTax": "0.002500134589502018842530282638"
+                   },
+                   "icms": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "2",
+                     "nanos": 970000000
+                    },
+                    "rateTax": "0.12"
+                   }
+                  }
+                 },
+                 "sloInDays": 1,
+                 "freightType": "FREIGHT_TYPE_EXPRESS",
+                 "freightTypeLabel": "Loggi Expresso",
+                 "pickupType": "PICKUP_TYPE_SPOT",
+                 "externalServiceId": ""
+                }
+               ]
+              }
+             ]
+            }
+           },
+           "sem cotação": {
+            "value": {
+             "packagesQuotations": [
+              {
+               "quotations": []
+              },
+              {
+               "quotations": []
+              }
+             ]
+            }
+           }
+          },
+          "schema": {
+           "$ref": "#/components/schemas/QuoteResponse"
+          }
+         }
+        }
+       },
+       "400": {
+        "description": "Mensagem do cliente não segue a especificação",
+        "content": {
+         "application/json": {
+          "example": {
+           "code": 3,
+           "message": "Request with invalid data",
+           "details": [
+            {
+             "@type": "type.googleapis.com/google.rpc.BadRequest",
+             "fieldViolations": [
+              {
+               "field": "shipFrom",
+               "description": "QUOTATION_ERROR_SHIP_FROM_NOT_PROVIDED"
+              }
+             ]
+            }
+           ]
+          },
+          "schema": {
+           "$ref": "#/components/schemas/ErrorMessage"
+          }
+         }
+        }
+       },
+       "401": {
+        "description": "Falha de autenticação",
+        "content": {
+         "application/json": {
+          "example": {
+           "code": 16,
+           "message": "Falha de autenticação",
+           "details": []
+          },
+          "schema": {
+           "$ref": "#/components/schemas/ErrorMessage"
+          }
+         }
+        }
+       },
+       "403": {
+        "description": "Sem autorização para acessar o serviço",
+        "content": {
+         "application/json": {
+          "example": {
+           "code": 7,
+           "message": "Falha de autorização",
+           "details": []
+          },
+          "schema": {
+           "$ref": "#/components/schemas/ErrorMessage"
+          }
+         }
+        }
+       },
+       "404": {
+        "description": "Recurso não encontrado",
+        "content": {
+         "application/json": {
+          "example": {
+           "code": 5,
+           "message": "Recurso não encontrado",
+           "details": []
+          },
+          "schema": {
+           "$ref": "#/components/schemas/ErrorMessage"
+          }
+         }
+        }
+       },
+       "429": {
+        "description": "Requisições massivas bloqueadas",
+        "content": {
+         "application/json": {
+          "example": {
+           "code": 8,
+           "message": "Requisições massivas bloqueadas",
+           "details": []
+          },
+          "schema": {
+           "$ref": "#/components/schemas/ErrorMessage"
+          }
+         }
+        }
+       },
+       "500": {
+        "description": "Erro interno",
+        "content": {
+         "application/json": {
+          "example": {
+           "code": 13,
+           "message": "Erro interno",
+           "details": []
+          },
+          "schema": {
+           "$ref": "#/components/schemas/ErrorMessage"
+          }
+         }
+        }
+       },
+       "503": {
+        "description": "Serviço temporariamente indisponivel",
+        "content": {
+         "application/json": {
+          "example": {
+           "code": 14,
+           "message": "Serviço temporariamente indisponivel",
+           "details": []
+          },
+          "schema": {
+           "$ref": "#/components/schemas/ErrorMessage"
+          }
+         }
+        }
+       }
+      }
+     }
+    }
+   },
+   "components": {
+    "securitySchemes": {
+     "OAuth2": {
+      "type": "oauth2",
+      "description": "Autenticação OAuth 2.0 para clientes da API.",
+      "flows": {
+       "clientCredentials": {
+        "tokenUrl": "https://api.loggi.com/oauth2/token",
+        "scopes": {}
+       }
+      }
+     }
+    },
+    "schemas": {
+     "QuoteRequest": {
+      "type": "object",
+      "required": [
+       "shipFrom",
+       "shipTo"
+      ],
+      "properties": {
+       "shipFrom": {
+        "type": "object",
+        "nullable": false,
+        "oneOf": [
+         {
+          "type": "object",
+          "properties": {
+           "correios": {
+            "type": "object",
+            "required": [
+             "logradouro",
+             "cep",
+             "cidade",
+             "uf"
+            ],
+            "properties": {
+             "logradouro": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "description": "Nome da rua. Tamanho mínimo 1 caractere e Tamanho máximo 128 caracteres.",
+              "example": "R. Liberdade"
+             },
+             "numero": {
+              "type": "string",
+              "minLength": 0,
+              "maxLength": 8,
+              "description": "Número do endereço. Tamanho máximo 8 caracteres. Caso não possua número, informar com os valores S/N ou s/n",
+              "example": [
+               2400,
+               "S/N",
+               "s/n"
+              ]
+             },
+             "complemento": {
+              "type": "string",
+              "minLength": 0,
+              "maxLength": 128,
+              "description": "Informações adicionais para facilitar a localização. Tamanho máximo 128 caracteres.",
+              "example": "apto 42, em frente ao lava-jato"
+             },
+             "bairro": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 64,
+              "description": "Para endereços de Brasília, procure mais informações nos Correios. Em casos que seja usado regiões adminstrativas e se existir bairro, informe entre parentêses. Tamanho mínimo 1 caractere e Tamanho máximo 64 caracteres.",
+              "example": "Bonsucesso"
+             },
+             "cep": {
+              "type": "string",
+              "minLength": 8,
+              "maxLength": 8,
+              "description": "CEP do endereço com 8 dígitos.",
+              "example": 30622580
+             },
+             "cidade": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 32,
+              "description": "Cidade do endereço. Tamanho mínimo 1 caractere e Tamanho máximo 32 caracteres.",
+              "example": "Belo Horizonte"
+             },
+             "uf": {
+              "type": "string",
+              "minLength": 2,
+              "maxLength": 2,
+              "description": "Unidade federativa com dois caracteres.",
+              "example": "MG"
+             }
+            },
+            "description": "Objeto que contém informações detalhadas do endereço compatível com o formato da API dos Correios."
+           }
+          }
+         },
+         {
+          "type": "object",
+          "properties": {
+           "lines": {
+            "type": "object",
+            "required": [
+             "addressLine1",
+             "postalCode",
+             "city",
+             "state"
+            ],
+            "properties": {
+             "addressLine1": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "description": "Primeira linha que contempla os dados do endereço. Tamanho mínimo 1 caractere e Tamanho máximo 256 caracteres.",
+              "example": "Alameda Santos, 2400 - Jardim Paulista"
+             },
+             "addressLine2": {
+              "type": "string",
+              "minLength": 0,
+              "maxLength": 256,
+              "description": "Segunda linha que complementa os dados de endereço descritos em addressLine1. Tamanho máximo 256 caracteres.",
+              "example": "Bela Vista"
+             },
+             "postalCode": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 16,
+              "description": "Código postal do endereço. Tamanho mínimo 1 caractere e Tamanho máximo 16 caracteres.",
+              "example": 1100651
+             },
+             "city": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 32,
+              "description": "Cidade do endereço. Tamanho mínimo 1 caractere e Tamanho máximo 32 caracteres.",
+              "example": "São Paulo"
+             },
+             "state": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 32,
+              "description": "Estado do Endereço. Tamanho mínimo 1 caractere e Tamanho máximo 32 caracteres.",
+              "example": "São Paulo"
+             },
+             "country": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100,
+              "description": "País do endereço.  Tamanho mínimo 1 caractere e Tamanho máximo 100 caracteres.",
+              "example": "Brasil"
+             }
+            },
+            "description": "Representação alternativa de endereços utilizando duas linhas e outros componentes."
+           }
+          }
+         },
+         {
+          "type": "object",
+          "properties": {
+           "widget": {
+            "type": "object",
+            "required": [
+             "address"
+            ],
+            "properties": {
+             "address": {
+              "type": "string",
+              "minLength": 0,
+              "maxLength": 256,
+              "description": "Dados do endereço. Tamanho máximo 256 caracteres.",
+              "example": "Alameda Santos, 2400 - Jardim Paulista"
+             },
+             "complement": {
+              "type": "string",
+              "minLength": 0,
+              "maxLength": 256,
+              "description": "Complemento do endereço. Tamanho máximo 256 caracteres.",
+              "example": "Bela Vista"
+             },
+             "placesApiInfo": {
+              "type": "object",
+              "properties": {
+               "placeId": {
+                "type": "string",
+                "description": "Um place ID é um identificador textual que identifica exclusivamente um local.",
+                "example": "ChIJgUbEo8cfqokR5lP9_Wh_DaM"
+               },
+               "sessionId": {
+                "type": "string",
+                "description": "Uma string randômica que identifica uma sessão de autocomplete para fins de faturamento.",
+                "example": "442d443e-0163-4ca8-a907-7319825548d8"
+               }
+              },
+              "description": "Informações fornecidas pelo Google Maps Place API."
+             },
+             "userContext": {
+              "type": "object",
+              "properties": {
+               "userIp": {
+                "type": "string",
+                "description": "O endereço IPv4 ou IPv6 do usuário.",
+                "example": "127.0.0.1"
+               },
+               "position": {
+                "type": "object",
+                "properties": {
+                 "latitude": {
+                  "type": "number",
+                  "description": "A latitude em graus. Deve estar na faixa [-90,0, +90,0].",
+                  "example": -23.557
+                 },
+                 "longitude": {
+                  "type": "number",
+                  "description": "A longitude em graus. Deve estar na faixa [-180,0, +180,0].",
+                  "example": -46.662
+                 }
+                },
+                "description": "Posição do usuário utilizando LatLng do Google. https://github.com/googleapis/googleapis/blob/master/google/type/latlng.proto"
+               }
+              },
+              "description": "Contexto sobre o usuário."
+             }
+            },
+            "description": "Representação de endereço utilizando Autocomplete UI Widget + context."
+           }
+          }
+         }
+        ],
+        "description": "Objeto que representa um endereço nacional em formato dos Correios ou uma representação alternativa de endereços. Os objetos correios, lines e widget são mutuamente exclusivos."
+       },
+       "shipTo": {
+        "type": "object",
+        "nullable": false,
+        "oneOf": [
+         {
+          "type": "object",
+          "properties": {
+           "correios": {
+            "type": "object",
+            "required": [
+             "logradouro",
+             "cep",
+             "cidade",
+             "uf"
+            ],
+            "properties": {
+             "logradouro": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "description": "Nome da rua. Tamanho mínimo 1 caractere e Tamanho máximo 128 caracteres.",
+              "example": "R. Liberdade"
+             },
+             "numero": {
+              "type": "string",
+              "minLength": 0,
+              "maxLength": 8,
+              "description": "Número do endereço. Tamanho máximo 8 caracteres. Caso não possua número, informar com os valores S/N ou s/n",
+              "example": [
+               2400,
+               "S/N",
+               "s/n"
+              ]
+             },
+             "complemento": {
+              "type": "string",
+              "minLength": 0,
+              "maxLength": 128,
+              "description": "Informações adicionais para facilitar a localização. Tamanho máximo 128 caracteres.",
+              "example": "apto 42, em frente ao lava-jato"
+             },
+             "bairro": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 64,
+              "description": "Para endereços de Brasília, procure mais informações nos Correios. Em casos que seja usado regiões adminstrativas e se existir bairro, informe entre parentêses. Tamanho mínimo 1 caractere e Tamanho máximo 64 caracteres.",
+              "example": "Bonsucesso"
+             },
+             "cep": {
+              "type": "string",
+              "minLength": 8,
+              "maxLength": 8,
+              "description": "CEP do endereço com 8 dígitos.",
+              "example": 30622580
+             },
+             "cidade": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 32,
+              "description": "Cidade do endereço. Tamanho mínimo 1 caractere e Tamanho máximo 32 caracteres.",
+              "example": "Belo Horizonte"
+             },
+             "uf": {
+              "type": "string",
+              "minLength": 2,
+              "maxLength": 2,
+              "description": "Unidade federativa com dois caracteres.",
+              "example": "MG"
+             }
+            },
+            "description": "Objeto que contém informações detalhadas do endereço compatível com o formato da API dos Correios."
+           }
+          }
+         },
+         {
+          "type": "object",
+          "properties": {
+           "lines": {
+            "type": "object",
+            "required": [
+             "addressLine1",
+             "postalCode",
+             "city",
+             "state"
+            ],
+            "properties": {
+             "addressLine1": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "description": "Primeira linha que contempla os dados do endereço. Tamanho mínimo 1 caractere e Tamanho máximo 256 caracteres.",
+              "example": "Alameda Santos, 2400 - Jardim Paulista"
+             },
+             "addressLine2": {
+              "type": "string",
+              "minLength": 0,
+              "maxLength": 256,
+              "description": "Segunda linha que complementa os dados de endereço descritos em addressLine1. Tamanho máximo 256 caracteres.",
+              "example": "Bela Vista"
+             },
+             "postalCode": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 16,
+              "description": "Código postal do endereço. Tamanho mínimo 1 caractere e Tamanho máximo 16 caracteres.",
+              "example": 1100651
+             },
+             "city": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 32,
+              "description": "Cidade do endereço. Tamanho mínimo 1 caractere e Tamanho máximo 32 caracteres.",
+              "example": "São Paulo"
+             },
+             "state": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 32,
+              "description": "Estado do Endereço. Tamanho mínimo 1 caractere e Tamanho máximo 32 caracteres.",
+              "example": "São Paulo"
+             },
+             "country": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100,
+              "description": "País do endereço.  Tamanho mínimo 1 caractere e Tamanho máximo 100 caracteres.",
+              "example": "Brasil"
+             }
+            },
+            "description": "Representação alternativa de endereços utilizando duas linhas e outros componentes."
+           }
+          }
+         },
+         {
+          "type": "object",
+          "properties": {
+           "widget": {
+            "type": "object",
+            "required": [
+             "address"
+            ],
+            "properties": {
+             "address": {
+              "type": "string",
+              "minLength": 0,
+              "maxLength": 256,
+              "description": "Dados do endereço. Tamanho máximo 256 caracteres.",
+              "example": "Alameda Santos, 2400 - Jardim Paulista"
+             },
+             "complement": {
+              "type": "string",
+              "minLength": 0,
+              "maxLength": 256,
+              "description": "Complemento do endereço. Tamanho máximo 256 caracteres.",
+              "example": "Bela Vista"
+             },
+             "placesApiInfo": {
+              "type": "object",
+              "properties": {
+               "placeId": {
+                "type": "string",
+                "description": "Um place ID é um identificador textual que identifica exclusivamente um local.",
+                "example": "ChIJgUbEo8cfqokR5lP9_Wh_DaM"
+               },
+               "sessionId": {
+                "type": "string",
+                "description": "Uma string randômica que identifica uma sessão de autocomplete para fins de faturamento.",
+                "example": "442d443e-0163-4ca8-a907-7319825548d8"
+               }
+              },
+              "description": "Informações fornecidas pelo Google Maps Place API."
+             },
+             "userContext": {
+              "type": "object",
+              "properties": {
+               "userIp": {
+                "type": "string",
+                "description": "O endereço IPv4 ou IPv6 do usuário.",
+                "example": "127.0.0.1"
+               },
+               "position": {
+                "type": "object",
+                "properties": {
+                 "latitude": {
+                  "type": "number",
+                  "description": "A latitude em graus. Deve estar na faixa [-90,0, +90,0].",
+                  "example": -23.557
+                 },
+                 "longitude": {
+                  "type": "number",
+                  "description": "A longitude em graus. Deve estar na faixa [-180,0, +180,0].",
+                  "example": -46.662
+                 }
+                },
+                "description": "Posição do usuário utilizando LatLng do Google. https://github.com/googleapis/googleapis/blob/master/google/type/latlng.proto"
+               }
+              },
+              "description": "Contexto sobre o usuário."
+             }
+            },
+            "description": "Representação de endereço utilizando Autocomplete UI Widget + context."
+           }
+          }
+         }
+        ],
+        "description": "Objeto que representa um endereço nacional em formato dos Correios ou uma representação alternativa de endereços. Os objetos correios, lines e widget são mutuamente exclusivos."
+       },
+       "packages": {
+        "type": "array",
+        "nullable": false,
+        "description": "Lista de pacotes associado à cotação de frete.",
+        "items": {
+         "type": "object",
+         "required": [
+          "weightG",
+          "lengthCm",
+          "widthCm",
+          "heightCm",
+          "goodsValue"
+         ],
+         "properties": {
+          "weightG": {
+           "type": "integer",
+           "maximum": 30000,
+           "format": "int32",
+           "description": "Peso do pacote em gramas. Valor máximo 30000.",
+           "example": 12000
+          },
+          "lengthCm": {
+           "type": "integer",
+           "maximum": 100,
+           "format": "int32",
+           "description": "Comprimento do pacote em centímetros. Valor máximo 100.",
+           "example": 55
+          },
+          "widthCm": {
+           "type": "integer",
+           "maximum": 100,
+           "format": "int32",
+           "description": "Largura do pacote em centrímetros. Valor máximo 100.",
+           "example": 55
+          },
+          "heightCm": {
+           "type": "integer",
+           "maximum": 100,
+           "format": "int32",
+           "description": "Altura do pacote em centímetros. Valor máximo 100.",
+           "example": 100
+          },
+          "goodsValue": {
+           "type": "object",
+           "required": [
+            "currencyCode",
+            "units",
+            "nanos"
+           ],
+           "properties": {
+            "currencyCode": {
+             "type": "string",
+             "description": "Código de três letras para as moedas definido no ISO 4217.",
+             "example": "BRL"
+            },
+            "units": {
+             "type": "string",
+             "description": "Todas as unidades do montante.",
+             "format": "int64",
+             "example": 87
+            },
+            "nanos": {
+             "type": "integer",
+             "description": "Componente fracionário em nanos, i.e., centavos vezes 10 milhões. Ler mais em https://github.com/googleapis/googleapis/blob/master/google/type/money.proto",
+             "format": "int32",
+             "example": 350000000
+            }
+           },
+           "description": "Valor total de todos os produtos a serem transportados dentro de um pacote. Há um valor máximo em reais, consulte nosso time de vendas para mais detalhes.",
+           "example": "R$ 87,35 é representado como { currencyCode: \"BRL\", units: \"87\", nanos: 350000000 }"
+          }
+         }
+        }
+       }
+      },
+      "oneOf": [
+       {
+        "type": "object",
+        "required": [
+         "externalServiceIds"
+        ],
+        "properties": {
+         "externalServiceIds": {
+          "type": "array",
+          "description": "Lista de identificadores externos do serviço. Preencher este campo ou o campo pickupTypes. Nunca ambos.",
+          "items": {
+           "type": "string",
+           "example": "PDEL-DTED-LEXP-CDOR-0001"
+          }
+         }
+        }
+       },
+       {
+        "type": "object",
+        "required": [
+         "pickupTypes"
+        ],
+        "properties": {
+         "pickupTypes": {
+          "deprecated": true,
+          "type": "array",
+          "nullable": false,
+          "description": "Lista de tipos de coleta. Preencher este campo ou o campo externalServiceIds. Nunca ambos.",
+          "items": {
+           "type": "string",
+           "enum": [
+            "PICKUP_TYPE_SPOT",
+            "PICKUP_TYPE_DEDICATED",
+            "PICKUP_TYPE_MILK_RUN",
+            "PICKUP_TYPE_DROP_OFF"
+           ]
+          }
+         }
+        }
+       }
+      ],
+      "description": "Objeto que representa a criação de uma cotação."
+     },
+     "QuoteResponse": {
+      "type": "object",
+      "properties": {
+       "packagesQuotations": {
+        "type": "object",
+        "description": "Objeto que representa a cotação de cada pacote.",
+        "properties": {
+         "quotations": {
+          "type": "array",
+          "description": "Opções de frete para um pacote. Um pacote pode ter até duas opções (Loggi Econômico e Loggi Expresso).",
+          "items": {
+           "properties": {
+            "price": {
+             "type": "object",
+             "properties": {
+              "totalAmount": {
+               "type": "object",
+               "required": [
+                "currencyCode",
+                "units",
+                "nanos"
+               ],
+               "properties": {
+                "currencyCode": {
+                 "type": "string",
+                 "description": "Código de três letras para as modedas definido no ISO 4217.",
+                 "example": "BRL"
+                },
+                "units": {
+                 "type": "string",
+                 "description": "Todas as unidades do montante.",
+                 "format": "int64",
+                 "example": 87
+                },
+                "nanos": {
+                 "type": "integer",
+                 "description": "Componente fracionário em nanos, i.e., centavos vezes 10 milhões. Ler mais em https://github.com/googleapis/googleapis/blob/master/google/type/money.proto",
+                 "format": "int32",
+                 "example": 350000000
+                }
+               },
+               "description": "Preço total do frete com taxas e impostos incluídos.",
+               "example": "R$ 87,35 é representado como { currencyCode: \"BRL\", units: \"87\", nanos: 350000000 }"
+              },
+              "baseAmount": {
+               "description": "Preço do frete sem taxas e impostos incluídos.",
+               "example": "R$ 50,25 é representado como { currencyCode: \"BRL\", units: \"50\", nanos: 250000000 }",
+               "type": "object",
+               "required": [
+                "currencyCode",
+                "units",
+                "nanos"
+               ],
+               "properties": {
+                "currencyCode": {
+                 "type": "string",
+                 "description": "Código de três letras para as modedas definido no ISO 4217.",
+                 "example": "BRL"
+                },
+                "units": {
+                 "type": "string",
+                 "description": "Todas as unidades do montante.",
+                 "format": "int64",
+                 "example": 50
+                },
+                "nanos": {
+                 "type": "integer",
+                 "description": "Componente fracionário em nanos, i.e., centavos vezes 10 milhões. Ler mais em https://github.com/googleapis/googleapis/blob/master/google/type/money.proto",
+                 "format": "int32",
+                 "example": 250000000
+                }
+               }
+              },
+              "taxesAndFees": {
+               "description": "Taxas e impostos incluídos.",
+               "type": "object",
+               "properties": {
+                "pis": {
+                 "type": "object",
+                 "properties": {
+                  "rate_tax": {
+                   "type": "string",
+                   "description": "Porcentagem aplicada no imposto.",
+                   "example": "5.4"
+                  },
+                  "amount": {
+                   "type": "object",
+                   "required": [
+                    "currencyCode",
+                    "units",
+                    "nanos"
+                   ],
+                   "properties": {
+                    "currencyCode": {
+                     "type": "string",
+                     "description": "Código de três letras para as modedas definido no ISO 4217.",
+                     "example": "BRL"
+                    },
+                    "units": {
+                     "type": "string",
+                     "description": "Todas as unidades do montante.",
+                     "format": "int64",
+                     "example": 25
+                    },
+                    "nanos": {
+                     "type": "integer",
+                     "description": "Componente fracionário em nanos, i.e., centavos vezes 10 milhões. Ler mais em https://github.com/googleapis/googleapis/blob/master/google/type/money.proto",
+                     "format": "int32",
+                     "example": 350000000
+                    }
+                   },
+                   "description": "Valor do imposto com a porcentagem do rate_tax.",
+                   "example": "R$ 25,35 é representado como { currencyCode: \"BRL\", units: \"25\", nanos: 350000000 }"
+                  }
+                 }
+                },
+                "cofins": {
+                 "description": "Valor do imposto com a porcentagem do rate_tax.",
+                 "type": "object",
+                 "properties": {
+                  "rate_tax": {
+                   "type": "string",
+                   "description": "Porcentagem aplicada no imposto.",
+                   "example": "5.4"
+                  },
+                  "amount": {
+                   "type": "object",
+                   "required": [
+                    "currencyCode",
+                    "units",
+                    "nanos"
+                   ],
+                   "properties": {
+                    "currencyCode": {
+                     "type": "string",
+                     "description": "Código de três letras para as modedas definido no ISO 4217.",
+                     "example": "BRL"
+                    },
+                    "units": {
+                     "type": "string",
+                     "description": "Todas as unidades do montante.",
+                     "format": "int64",
+                     "example": 25
+                    },
+                    "nanos": {
+                     "type": "integer",
+                     "description": "Componente fracionário em nanos, i.e., centavos vezes 10 milhões. Ler mais em https://github.com/googleapis/googleapis/blob/master/google/type/money.proto",
+                     "format": "int32",
+                     "example": 350000000
+                    }
+                   },
+                   "example": "R$ 25,35 é representado como { currencyCode: \"BRL\", units: \"25\", nanos: 350000000 }"
+                  }
+                 }
+                },
+                "gris": {
+                 "type": "object",
+                 "properties": {
+                  "rate_tax": {
+                   "type": "string",
+                   "description": "Porcentagem aplicada no imposto.",
+                   "example": "5.4"
+                  },
+                  "amount": {
+                   "type": "object",
+                   "required": [
+                    "currencyCode",
+                    "units",
+                    "nanos"
+                   ],
+                   "properties": {
+                    "currencyCode": {
+                     "type": "string",
+                     "description": "Código de três letras para as modedas definido no ISO 4217.",
+                     "example": "BRL"
+                    },
+                    "units": {
+                     "type": "string",
+                     "description": "Todas as unidades do montante.",
+                     "format": "int64",
+                     "example": 25
+                    },
+                    "nanos": {
+                     "type": "integer",
+                     "description": "Componente fracionário em nanos, i.e., centavos vezes 10 milhões. Ler mais em https://github.com/googleapis/googleapis/blob/master/google/type/money.proto",
+                     "format": "int32",
+                     "example": 350000000
+                    }
+                   },
+                   "description": "Valor do imposto com a porcentagem do rate_tax.",
+                   "example": "R$ 25,35 é representado como { currencyCode: \"BRL\", units: \"25\", nanos: 350000000 }"
+                  }
+                 }
+                },
+                "advalorem": {
+                 "type": "object",
+                 "properties": {
+                  "rate_tax": {
+                   "type": "string",
+                   "description": "Porcentagem aplicada no imposto.",
+                   "example": "5.4"
+                  },
+                  "amount": {
+                   "type": "object",
+                   "required": [
+                    "currencyCode",
+                    "units",
+                    "nanos"
+                   ],
+                   "properties": {
+                    "currencyCode": {
+                     "type": "string",
+                     "description": "Código de três letras para as modedas definido no ISO 4217.",
+                     "example": "BRL"
+                    },
+                    "units": {
+                     "type": "string",
+                     "description": "Todas as unidades do montante.",
+                     "format": "int64",
+                     "example": 25
+                    },
+                    "nanos": {
+                     "type": "integer",
+                     "description": "Componente fracionário em nanos, i.e., centavos vezes 10 milhões. Ler mais em https://github.com/googleapis/googleapis/blob/master/google/type/money.proto",
+                     "format": "int32",
+                     "example": 350000000
+                    }
+                   },
+                   "description": "Valor do imposto com a porcentagem do rate_tax.",
+                   "example": "R$ 25,35 é representado como { currencyCode: \"BRL\", units: \"25\", nanos: 350000000 }"
+                  }
+                 }
+                },
+                "icms": {
+                 "type": "object",
+                 "properties": {
+                  "rate_tax": {
+                   "type": "string",
+                   "description": "Porcentagem aplicada no imposto.",
+                   "example": "5.4"
+                  },
+                  "amount": {
+                   "type": "object",
+                   "required": [
+                    "currencyCode",
+                    "units",
+                    "nanos"
+                   ],
+                   "properties": {
+                    "currencyCode": {
+                     "type": "string",
+                     "description": "Código de três letras para as modedas definido no ISO 4217.",
+                     "example": "BRL"
+                    },
+                    "units": {
+                     "type": "string",
+                     "description": "Todas as unidades do montante.",
+                     "format": "int64",
+                     "example": 25
+                    },
+                    "nanos": {
+                     "type": "integer",
+                     "description": "Componente fracionário em nanos, i.e., centavos vezes 10 milhões. Ler mais em https://github.com/googleapis/googleapis/blob/master/google/type/money.proto",
+                     "format": "int32",
+                     "example": 350000000
+                    }
+                   },
+                   "description": "Valor do imposto com a porcentagem do rate_tax. Obrigatório quando o frete é intermunicipal ou interestadual",
+                   "example": "R$ 25,35 é representado como { currencyCode: \"BRL\", units: \"25\", nanos: 350000000 }"
+                  }
+                 }
+                },
+                "iss": {
+                 "type": "object",
+                 "properties": {
+                  "rate_tax": {
+                   "type": "string",
+                   "description": "Porcentagem aplicada no imposto.",
+                   "example": "5.4"
+                  },
+                  "amount": {
+                   "type": "object",
+                   "required": [
+                    "currencyCode",
+                    "units",
+                    "nanos"
+                   ],
+                   "properties": {
+                    "currencyCode": {
+                     "type": "string",
+                     "description": "Código de três letras para as modedas definido no ISO 4217.",
+                     "example": "BRL"
+                    },
+                    "units": {
+                     "type": "string",
+                     "description": "Todas as unidades do montante.",
+                     "format": "int64",
+                     "example": 25
+                    },
+                    "nanos": {
+                     "type": "integer",
+                     "description": "Componente fracionário em nanos, i.e., centavos vezes 10 milhões. Ler mais em https://github.com/googleapis/googleapis/blob/master/google/type/money.proto",
+                     "format": "int32",
+                     "example": 350000000
+                    }
+                   },
+                   "description": "Valor do imposto com a porcentagem do rate_tax. Obrigatório quando o frete está dentro da mesma cidade.",
+                   "example": "R$ 25,35 é representado como { currencyCode: \"BRL\", units: \"25\", nanos: 350000000 }"
+                  }
+                 }
+                }
+               }
+              }
+             }
+            },
+            "sloInDays": {
+             "type": "integer",
+             "description": "Tempo de entrega dentro do prazo estipulado em dias.",
+             "format": "int32",
+             "example": 0
+            },
+            "freightType": {
+             "type": "string",
+             "description": "Tipos de entregas disponíveis.",
+             "enum": [
+              "FREIGHT_TYPE_EXPRESS",
+              "FREIGHT_TYPE_ECONOMIC"
+             ],
+             "example": "FREIGHT_TYPE_ECONOMIC"
+            },
+            "freightTypeLabel": {
+             "type": "string",
+             "description": "Label do tipo de entrega. Poderá ser usado como output na UI.",
+             "example": "Loggi Econômico"
+            },
+            "pickup_type": {
+             "type": "string",
+             "description": "Tipos de coletas disponíveis.",
+             "enum": [
+              "PICKUP_TYPE_SPOT",
+              "PICKUP_TYPE_DEDICATED",
+              "PICKUP_TYPE_MILK_RUN",
+              "PICKUP_TYPE_DROP_OFF"
+             ],
+             "example": "PICKUP_TYPE_SPOT"
+            },
+            "externalServiceIds": {
+             "type": "string",
+             "description": "Identificador externo do serviço.",
+             "example": "PDEL-DTED-LEXP-CDOR-0001"
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     },
+     "ErrorMessage": {
+      "type": "object",
+      "properties": {
+       "code": {
+        "type": "integer",
+        "format": "int32",
+        "description": "Código numérico referente à falha.\n\nCANCELLED = 1\n\nUNKNOWN = 2\n\nINVALID_ARGUMENT = 3\n\nDEADLINE_EXCEEDED = 4\n\nNOT_FOUND = 5\n\nALREADY_EXISTS = 6\n\nPERMISSION_DENIED = 7\n\nRESOURCE_EXHAUSTED = 8\n\nFAILED_PRECONDITION = 9\n\nABORTED = 10\n\nOUT_OF_RANGE = 11\n\nUNIMPLEMENTED = 12\n\nINTERNAL = 13\n\nUNAVAILABLE = 14\n\nDATA_LOSS = 15\n\nUNAUTHENTICATED = 16",
+        "example": 14
+       },
+       "message": {
+        "type": "string",
+        "description": "Texto pequeno informativo sobre a falha",
+        "example": "Requisição com credenciais inválidas"
+       },
+       "details": {
+        "type": "array",
+        "description": "Detalhes sobre à falha. Nesta versão da API ainda não está sendo retornado, mas deve ser considerado um array de objetos de tipos distintos.",
+        "items": {},
+        "example": []
+       }
+      }
+     }
+    }
+   },
+   "x-readme": {
+    "explorer-enabled": true,
+    "proxy-enabled": true
+   },
+   "_id": {
+    "buffer": {
+     "0": 106,
+     "1": 85,
+     "2": 76,
+     "3": 133,
+     "4": 81,
+     "5": 74,
+     "6": 83,
+     "7": 189,
+     "8": 15,
+     "9": 148,
+     "10": 170,
+     "11": 176
+    }
+   }
+  }
+ },
+ {
+  "page": "https://docs.api.loggi.com/reference/quotationapi.md",
+  "definition": {
+   "openapi": "3.0.1",
+   "info": {
+    "title": "Freight Price Quotation",
+    "version": "v1",
+    "description": "Cotação de preços e prazos de frete."
+   },
+   "servers": [
+    {
+     "url": "https://stg.api.loggi.com"
+    },
+    {
+     "url": "https://api.loggi.com"
+    }
+   ],
+   "paths": {
+    "/v1/companies/{company_id}/quotations": {
+     "post": {
+      "tags": [
+       "QuotationAPI"
+      ],
+      "summary": "Criar Cotação",
+      "description": "### Sobre esta API:\nEsta API disponibiliza opções de preços e prazos da Loggi nas plataformas parceiras, em tempo real, conforme as características do envio e do parceiro e informações de companyId, shipFrom, shipTo, packages, pickupTypes ou externalServiceIds (SISUs).\n\n### Mais alguns detalhes:\nMesmo com poucas informações preenchidas, a API disponibiliza os preços e os prazos mais adequados ao parceiro. Ainda assim, para obter um retorno de estimativa de preço e prazo mais preciso, recomendamos o preenchimento de todos os campos obrigatórios.\n\nA cotação de preços é feita levando em consideração:\n- envio - origem e destino;\n- pacote - pesos, dimensões e características;\n- perfil do parceiro.\n- tipo de coleta.",
+      "operationId": "Quote",
+      "security": [
+       {
+        "OAuth2": []
+       }
+      ],
+      "parameters": [
+       {
+        "name": "company_id",
+        "in": "path",
+        "required": true,
+        "description": "Código numérico fornecido pela Loggi para identificar o cliente.",
+        "schema": {
+         "type": "string"
+        }
+       }
+      ],
+      "requestBody": {
+       "content": {
+        "application/json": {
+         "examples": {
+          "correios": {
+           "value": {
+            "shipFrom": {
+             "correios": {
+              "logradouro": "Alameda Santos",
+              "numero": "2400",
+              "complemento": "10 andar",
+              "bairro": "Jardim Paulista",
+              "cep": "1419100",
+              "cidade": "São Paulo",
+              "uf": "SP"
+             }
+            },
+            "shipTo": {
+             "correios": {
+              "logradouro": "Alameda Santos",
+              "numero": "2400",
+              "complemento": "11 Andar",
+              "bairro": "Jardim Paulista",
+              "cep": "01418200",
+              "cidade": "São Paulo",
+              "uf": "SP"
+             }
+            },
+            "packages": [
+             {
+              "weightG": 12000,
+              "lengthCm": 55,
+              "widthCm": 55,
+              "heightCm": 100,
+              "goodsValue": {
+               "currencyCode": "BRL",
+               "units": 87,
+               "nanos": 350000000
+              }
+             },
+             {
+              "weightG": 12500,
+              "lengthCm": 50,
+              "widthCm": 100,
+              "heightCm": 100,
+              "goodsValue": {
+               "currencyCode": "BRL",
+               "units": 105,
+               "nanos": 350000000
+              }
+             }
+            ],
+            "pickupTypes": [
+             "PICKUP_TYPE_SPOT"
+            ],
+            "externalServiceIds": [
+             "PDEL-DTED-LEXP-CDOR-0001"
+            ]
+           }
+          },
+          "lines": {
+           "value": {
+            "shipFrom": {
+             "lines": {
+              "addressLine1": "Alameda Santos, 2400 - Jardim Paulista",
+              "addressLine2": "Bela Vista",
+              "postalCode": "01418200",
+              "city": "São Paulo",
+              "state": "SP",
+              "country": "Brasil"
+             }
+            },
+            "shipTo": {
+             "lines": {
+              "addressLine1": "Alameda Santos, 2500 - Jardim Paulista",
+              "addressLine2": "Bela Vista",
+              "postalCode": "01418200",
+              "city": "São Paulo",
+              "state": "SP",
+              "country": "Brasil"
+             }
+            },
+            "packages": [
+             {
+              "weightG": 12000,
+              "lengthCm": 55,
+              "widthCm": 55,
+              "heightCm": 100,
+              "goodsValue": {
+               "currencyCode": "BRL",
+               "units": 87,
+               "nanos": 350000000
+              }
+             },
+             {
+              "weightG": 12500,
+              "lengthCm": 50,
+              "widthCm": 100,
+              "heightCm": 100,
+              "goodsValue": {
+               "currencyCode": "BRL",
+               "units": 105,
+               "nanos": 350000000
+              }
+             }
+            ],
+            "pickupTypes": [
+             "PICKUP_TYPE_SPOT"
+            ],
+            "externalServiceIds": [
+             "PDEL-DTED-LEXP-CDOR-0001"
+            ]
+           }
+          },
+          "widget": {
+           "value": {
+            "shipFrom": {
+             "widget": {
+              "address": "Alameda Santos, 2400 - Jardim Paulista",
+              "complement": "8º andar",
+              "placesApiInfo": {
+               "placeId": "ChIJgUbEo8cfqokR5lP9_Wh_DaM",
+               "sessionId": "442d443e-0163-4ca8-a907-7319825548d8"
+              },
+              "userContext": {
+               "userIp": "127.0.0.1",
+               "position": {
+                "latitude": -23.557,
+                "longitude": -46.662
+               }
+              }
+             }
+            },
+            "shipTo": {
+             "widget": {
+              "address": "Alameda Santos, 2400 - Jardim Paulista",
+              "complement": "8º andar",
+              "placesApiInfo": {
+               "placeId": "ChIJgUbEo8cfqokR5lP9_Wh_DaM",
+               "sessionId": "442d443e-0163-4ca8-a907-7319825548d8"
+              },
+              "userContext": {
+               "userIp": "127.0.0.1",
+               "position": {
+                "latitude": -23.557,
+                "longitude": -46.662
+               }
+              }
+             }
+            },
+            "packages": [
+             {
+              "weightG": 12000,
+              "lengthCm": 55,
+              "widthCm": 55,
+              "heightCm": 100,
+              "goodsValue": {
+               "currencyCode": "BRL",
+               "units": 87,
+               "nanos": 350000000
+              }
+             },
+             {
+              "weightG": 12500,
+              "lengthCm": 50,
+              "widthCm": 100,
+              "heightCm": 100,
+              "goodsValue": {
+               "currencyCode": "BRL",
+               "units": 105,
+               "nanos": 350000000
+              }
+             }
+            ],
+            "pickupTypes": [
+             "PICKUP_TYPE_SPOT"
+            ],
+            "externalServiceIds": [
+             "PDEL-DTED-LEXP-CDOR-0001"
+            ]
+           }
+          }
+         },
+         "schema": {
+          "$ref": "#/components/schemas/QuoteRequest"
+         }
+        }
+       },
+       "required": true
+      },
+      "responses": {
+       "200": {
+        "description": "Quotation criada com sucesso.\n\nPara cada pacote fornecido na requisição, uma lista de \"quotations\" é retornada no response.\nCaso a Loggi não seja capaz de realizar o serviço para um dos pacotes informados, uma lista de \"quotations\" vazia será retornada.",
+        "content": {
+         "application/json": {
+          "examples": {
+           "sucesso passando pickup types": {
+            "value": {
+             "packagesQuotations": [
+              {
+               "quotations": [
+                {
+                 "price": {
+                  "totalAmount": {
+                   "currencyCode": "BRL",
+                   "units": 7,
+                   "nanos": 150000000
+                  },
+                  "baseAmount": {
+                   "currencyCode": "BRL",
+                   "units": "3",
+                   "nanos": 590000000
+                  },
+                  "taxesAndFees": {
+                   "pis": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "0",
+                     "nanos": 410000000
+                    },
+                    "rateTax": "0.0165"
+                   },
+                   "cofins": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "1",
+                     "nanos": 880000000
+                    },
+                    "rateTax": "0.0760"
+                   },
+                   "gris": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "5",
+                     "nanos": 10000000
+                    },
+                    "rateTax": "0.002500134589502018842530282638"
+                   },
+                   "advalorem": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "5",
+                     "nanos": 10000000
+                    },
+                    "rateTax": "0.002500134589502018842530282638"
+                   },
+                   "icms": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "2",
+                     "nanos": 970000000
+                    },
+                    "rateTax": "0.12"
+                   }
+                  }
+                 },
+                 "sloInDays": 3,
+                 "freightType": "FREIGHT_TYPE_ECONOMIC",
+                 "freightTypeLabel": "Loggi Econômico",
+                 "pickupType": "PICKUP_TYPE_SPOT",
+                 "externalServiceId": ""
+                },
+                {
+                 "price": {
+                  "totalAmount": {
+                   "currencyCode": "BRL",
+                   "units": 12,
+                   "nanos": 450000000
+                  },
+                  "baseAmount": {
+                   "currencyCode": "BRL",
+                   "units": "3",
+                   "nanos": 590000000
+                  },
+                  "taxesAndFees": {
+                   "pis": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "1",
+                     "nanos": 410000000
+                    },
+                    "rateTax": "0.0165"
+                   },
+                   "cofins": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "1",
+                     "nanos": 880000000
+                    },
+                    "rateTax": "0.0760"
+                   },
+                   "gris": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "2",
+                     "nanos": 10000000
+                    },
+                    "rateTax": "0.025"
+                   },
+                   "advalorem": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "3",
+                     "nanos": 10000000
+                    },
+                    "rateTax": "0.30"
+                   },
+                   "iss": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "2",
+                     "nanos": 970000000
+                    },
+                    "rateTax": "0.12"
+                   }
+                  }
+                 },
+                 "sloInDays": 1,
+                 "freightType": "FREIGHT_TYPE_EXPRESS",
+                 "freightTypeLabel": "Loggi Expresso",
+                 "pickupType": "PICKUP_TYPE_SPOT",
+                 "externalServiceId": ""
+                }
+               ]
+              },
+              {
+               "quotations": [
+                {
+                 "price": {
+                  "totalAmount": {
+                   "currencyCode": "BRL",
+                   "units": 8,
+                   "nanos": 330000000
+                  },
+                  "baseAmount": {
+                   "currencyCode": "BRL",
+                   "units": "3",
+                   "nanos": 590000000
+                  },
+                  "taxesAndFees": {
+                   "pis": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "0",
+                     "nanos": 410000000
+                    },
+                    "rateTax": "0.0165"
+                   },
+                   "cofins": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "1",
+                     "nanos": 880000000
+                    },
+                    "rateTax": "0.0760"
+                   },
+                   "gris": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "5",
+                     "nanos": 10000000
+                    },
+                    "rateTax": "0.002500134589502018842530282638"
+                   },
+                   "advalorem": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "5",
+                     "nanos": 10000000
+                    },
+                    "rateTax": "0.002500134589502018842530282638"
+                   },
+                   "iss": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "2",
+                     "nanos": 970000000
+                    },
+                    "rateTax": "0.12"
+                   }
+                  }
+                 },
+                 "sloInDays": 3,
+                 "freightType": "FREIGHT_TYPE_ECONOMIC",
+                 "freightTypeLabel": "Loggi Econômico",
+                 "pickupType": "PICKUP_TYPE_SPOT",
+                 "externalServiceId": ""
+                },
+                {
+                 "price": {
+                  "totalAmount": {
+                   "currencyCode": "BRL",
+                   "units": 13,
+                   "nanos": 770000000
+                  },
+                  "baseAmount": {
+                   "currencyCode": "BRL",
+                   "units": "3",
+                   "nanos": 590000000
+                  },
+                  "taxesAndFees": {
+                   "pis": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "0",
+                     "nanos": 410000000
+                    },
+                    "rateTax": "0.0165"
+                   },
+                   "cofins": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "1",
+                     "nanos": 880000000
+                    },
+                    "rateTax": "0.0760"
+                   },
+                   "gris": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "5",
+                     "nanos": 10000000
+                    },
+                    "rateTax": "0.002"
+                   },
+                   "advalorem": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "5",
+                     "nanos": 10000000
+                    },
+                    "rateTax": "0.00"
+                   },
+                   "icms": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "2",
+                     "nanos": 970000000
+                    },
+                    "rateTax": "0.12"
+                   }
+                  }
+                 },
+                 "sloInDays": 1,
+                 "freightType": "FREIGHT_TYPE_EXPRESS",
+                 "freightTypeLabel": "Loggi Expresso",
+                 "pickupType": "PICKUP_TYPE_SPOT",
+                 "externalServiceId": ""
+                }
+               ]
+              }
+             ]
+            }
+           },
+           "sucesso passando externalServiceIds": {
+            "value": {
+             "packagesQuotations": [
+              {
+               "quotations": [
+                {
+                 "price": {
+                  "totalAmount": {
+                   "currencyCode": "BRL",
+                   "units": 7,
+                   "nanos": 150000000
+                  },
+                  "baseAmount": {
+                   "currencyCode": "BRL",
+                   "units": "3",
+                   "nanos": 590000000
+                  },
+                  "taxesAndFees": {
+                   "pis": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "0",
+                     "nanos": 410000000
+                    },
+                    "rateTax": "0.0165"
+                   },
+                   "cofins": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "1",
+                     "nanos": 880000000
+                    },
+                    "rateTax": "0.0760"
+                   },
+                   "gris": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "5",
+                     "nanos": 10000000
+                    },
+                    "rateTax": "0.002500134589502018842530282638"
+                   },
+                   "advalorem": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "5",
+                     "nanos": 10000000
+                    },
+                    "rateTax": "0.002500134589502018842530282638"
+                   },
+                   "icms": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "2",
+                     "nanos": 970000000
+                    },
+                    "rateTax": "0.12"
+                   }
+                  }
+                 },
+                 "sloInDays": 3,
+                 "freightType": "FREIGHT_TYPE_ECONOMIC",
+                 "freightTypeLabel": "Loggi Econômico",
+                 "pickupType": "PICKUP_TYPE_SPOT",
+                 "externalServiceId": "PDEL-DTED-LEXP-CDOR-0001"
+                },
+                {
+                 "price": {
+                  "totalAmount": {
+                   "currencyCode": "BRL",
+                   "units": 12,
+                   "nanos": 450000000
+                  },
+                  "baseAmount": {
+                   "currencyCode": "BRL",
+                   "units": "3",
+                   "nanos": 590000000
+                  },
+                  "taxesAndFees": {
+                   "pis": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "1",
+                     "nanos": 410000000
+                    },
+                    "rateTax": "0.0165"
+                   },
+                   "cofins": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "1",
+                     "nanos": 880000000
+                    },
+                    "rateTax": "0.0760"
+                   },
+                   "gris": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "2",
+                     "nanos": 10000000
+                    },
+                    "rateTax": "0.025"
+                   },
+                   "advalorem": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "3",
+                     "nanos": 10000000
+                    },
+                    "rateTax": "0.30"
+                   },
+                   "iss": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "2",
+                     "nanos": 970000000
+                    },
+                    "rateTax": "0.12"
+                   }
+                  }
+                 },
+                 "sloInDays": 1,
+                 "freightType": "FREIGHT_TYPE_EXPRESS",
+                 "freightTypeLabel": "Loggi Expresso",
+                 "pickupType": "PICKUP_TYPE_SPOT",
+                 "externalServiceId": "PDEL-DTED-LEXP-CDOR-0001"
+                }
+               ]
+              },
+              {
+               "quotations": [
+                {
+                 "price": {
+                  "totalAmount": {
+                   "currencyCode": "BRL",
+                   "units": 8,
+                   "nanos": 330000000
+                  },
+                  "baseAmount": {
+                   "currencyCode": "BRL",
+                   "units": "3",
+                   "nanos": 590000000
+                  },
+                  "taxesAndFees": {
+                   "pis": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "0",
+                     "nanos": 410000000
+                    },
+                    "rateTax": "0.0165"
+                   },
+                   "cofins": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "1",
+                     "nanos": 880000000
+                    },
+                    "rateTax": "0.0760"
+                   },
+                   "gris": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "5",
+                     "nanos": 10000000
+                    },
+                    "rateTax": "0.002500134589502018842530282638"
+                   },
+                   "advalorem": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "5",
+                     "nanos": 10000000
+                    },
+                    "rateTax": "0.002500134589502018842530282638"
+                   },
+                   "iss": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "2",
+                     "nanos": 970000000
+                    },
+                    "rateTax": "0.12"
+                   }
+                  }
+                 },
+                 "sloInDays": 3,
+                 "freightType": "FREIGHT_TYPE_ECONOMIC",
+                 "freightTypeLabel": "Loggi Econômico",
+                 "pickupType": "PICKUP_TYPE_SPOT",
+                 "externalServiceId": "PDEL-DTED-LEXP-CDOR-0001"
+                },
+                {
+                 "price": {
+                  "totalAmount": {
+                   "currencyCode": "BRL",
+                   "units": 13,
+                   "nanos": 770000000
+                  },
+                  "baseAmount": {
+                   "currencyCode": "BRL",
+                   "units": "3",
+                   "nanos": 590000000
+                  },
+                  "taxesAndFees": {
+                   "pis": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "0",
+                     "nanos": 410000000
+                    },
+                    "rateTax": "0.0165"
+                   },
+                   "cofins": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "1",
+                     "nanos": 880000000
+                    },
+                    "rateTax": "0.0760"
+                   },
+                   "gris": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "5",
+                     "nanos": 10000000
+                    },
+                    "rateTax": "0.002"
+                   },
+                   "advalorem": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "5",
+                     "nanos": 10000000
+                    },
+                    "rateTax": "0.00"
+                   },
+                   "icms": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "2",
+                     "nanos": 970000000
+                    },
+                    "rateTax": "0.12"
+                   }
+                  }
+                 },
+                 "sloInDays": 1,
+                 "freightType": "FREIGHT_TYPE_EXPRESS",
+                 "freightTypeLabel": "Loggi Expresso",
+                 "pickupType": "PICKUP_TYPE_SPOT",
+                 "externalServiceId": "PDEL-DTED-LEXP-CDOR-0001"
+                }
+               ]
+              }
+             ]
+            }
+           },
+           "sucesso parcial": {
+            "value": {
+             "packagesQuotations": [
+              {
+               "quotations": []
+              },
+              {
+               "quotations": [
+                {
+                 "price": {
+                  "totalAmount": {
+                   "currencyCode": "BRL",
+                   "units": 8,
+                   "nanos": 330000000
+                  },
+                  "baseAmount": {
+                   "currencyCode": "BRL",
+                   "units": "3",
+                   "nanos": 590000000
+                  },
+                  "taxesAndFees": {
+                   "pis": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "0",
+                     "nanos": 410000000
+                    },
+                    "rateTax": "0.0165"
+                   },
+                   "cofins": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "1",
+                     "nanos": 880000000
+                    },
+                    "rateTax": "0.0760"
+                   },
+                   "gris": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "5",
+                     "nanos": 10000000
+                    },
+                    "rateTax": "0.002500134589502018842530282638"
+                   },
+                   "advalorem": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "5",
+                     "nanos": 10000000
+                    },
+                    "rateTax": "0.002500134589502018842530282638"
+                   },
+                   "icms": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "2",
+                     "nanos": 970000000
+                    },
+                    "rateTax": "0.12"
+                   }
+                  }
+                 },
+                 "sloInDays": 3,
+                 "freightType": "FREIGHT_TYPE_ECONOMIC",
+                 "freightTypeLabel": "Loggi Econômico",
+                 "pickupType": "PICKUP_TYPE_SPOT",
+                 "externalServiceIds": "PDEL-DTED-LEXP-CDOR-0001"
+                },
+                {
+                 "price": {
+                  "totalAmount": {
+                   "currencyCode": "BRL",
+                   "units": 13,
+                   "nanos": 770000000
+                  },
+                  "baseAmount": {
+                   "currencyCode": "BRL",
+                   "units": "3",
+                   "nanos": 590000000
+                  },
+                  "taxesAndFees": {
+                   "pis": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "0",
+                     "nanos": 410000000
+                    },
+                    "rateTax": "0.0165"
+                   },
+                   "cofins": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "1",
+                     "nanos": 880000000
+                    },
+                    "rateTax": "0.0760"
+                   },
+                   "gris": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "5",
+                     "nanos": 10000000
+                    },
+                    "rateTax": "0.002500134589502018842530282638"
+                   },
+                   "advalorem": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "5",
+                     "nanos": 10000000
+                    },
+                    "rateTax": "0.002500134589502018842530282638"
+                   },
+                   "icms": {
+                    "amount": {
+                     "currencyCode": "BRL",
+                     "units": "2",
+                     "nanos": 970000000
+                    },
+                    "rateTax": "0.12"
+                   }
+                  }
+                 },
+                 "sloInDays": 1,
+                 "freightType": "FREIGHT_TYPE_EXPRESS",
+                 "freightTypeLabel": "Loggi Expresso",
+                 "pickupType": "PICKUP_TYPE_SPOT",
+                 "externalServiceId": ""
+                }
+               ]
+              }
+             ]
+            }
+           },
+           "sem cotação": {
+            "value": {
+             "packagesQuotations": [
+              {
+               "quotations": []
+              },
+              {
+               "quotations": []
+              }
+             ]
+            }
+           }
+          },
+          "schema": {
+           "$ref": "#/components/schemas/QuoteResponse"
+          }
+         }
+        }
+       },
+       "400": {
+        "description": "Mensagem do cliente não segue a especificação",
+        "content": {
+         "application/json": {
+          "example": {
+           "code": 3,
+           "message": "Request with invalid data",
+           "details": [
+            {
+             "@type": "type.googleapis.com/google.rpc.BadRequest",
+             "fieldViolations": [
+              {
+               "field": "shipFrom",
+               "description": "QUOTATION_ERROR_SHIP_FROM_NOT_PROVIDED"
+              }
+             ]
+            }
+           ]
+          },
+          "schema": {
+           "$ref": "#/components/schemas/ErrorMessage"
+          }
+         }
+        }
+       },
+       "401": {
+        "description": "Falha de autenticação",
+        "content": {
+         "application/json": {
+          "example": {
+           "code": 16,
+           "message": "Falha de autenticação",
+           "details": []
+          },
+          "schema": {
+           "$ref": "#/components/schemas/ErrorMessage"
+          }
+         }
+        }
+       },
+       "403": {
+        "description": "Sem autorização para acessar o serviço",
+        "content": {
+         "application/json": {
+          "example": {
+           "code": 7,
+           "message": "Falha de autorização",
+           "details": []
+          },
+          "schema": {
+           "$ref": "#/components/schemas/ErrorMessage"
+          }
+         }
+        }
+       },
+       "404": {
+        "description": "Recurso não encontrado",
+        "content": {
+         "application/json": {
+          "example": {
+           "code": 5,
+           "message": "Recurso não encontrado",
+           "details": []
+          },
+          "schema": {
+           "$ref": "#/components/schemas/ErrorMessage"
+          }
+         }
+        }
+       },
+       "429": {
+        "description": "Requisições massivas bloqueadas",
+        "content": {
+         "application/json": {
+          "example": {
+           "code": 8,
+           "message": "Requisições massivas bloqueadas",
+           "details": []
+          },
+          "schema": {
+           "$ref": "#/components/schemas/ErrorMessage"
+          }
+         }
+        }
+       },
+       "500": {
+        "description": "Erro interno",
+        "content": {
+         "application/json": {
+          "example": {
+           "code": 13,
+           "message": "Erro interno",
+           "details": []
+          },
+          "schema": {
+           "$ref": "#/components/schemas/ErrorMessage"
+          }
+         }
+        }
+       },
+       "503": {
+        "description": "Serviço temporariamente indisponivel",
+        "content": {
+         "application/json": {
+          "example": {
+           "code": 14,
+           "message": "Serviço temporariamente indisponivel",
+           "details": []
+          },
+          "schema": {
+           "$ref": "#/components/schemas/ErrorMessage"
+          }
+         }
+        }
+       }
+      }
+     }
+    }
+   },
+   "components": {
+    "securitySchemes": {
+     "OAuth2": {
+      "type": "oauth2",
+      "description": "Autenticação OAuth 2.0 para clientes da API.",
+      "flows": {
+       "clientCredentials": {
+        "tokenUrl": "https://api.loggi.com/oauth2/token",
+        "scopes": {}
+       }
+      }
+     }
+    },
+    "schemas": {
+     "QuoteRequest": {
+      "type": "object",
+      "required": [
+       "shipFrom",
+       "shipTo"
+      ],
+      "properties": {
+       "shipFrom": {
+        "type": "object",
+        "nullable": false,
+        "oneOf": [
+         {
+          "type": "object",
+          "properties": {
+           "correios": {
+            "type": "object",
+            "required": [
+             "logradouro",
+             "cep",
+             "cidade",
+             "uf"
+            ],
+            "properties": {
+             "logradouro": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "description": "Nome da rua. Tamanho mínimo 1 caractere e Tamanho máximo 128 caracteres.",
+              "example": "R. Liberdade"
+             },
+             "numero": {
+              "type": "string",
+              "minLength": 0,
+              "maxLength": 8,
+              "description": "Número do endereço. Tamanho máximo 8 caracteres. Caso não possua número, informar com os valores S/N ou s/n",
+              "example": [
+               2400,
+               "S/N",
+               "s/n"
+              ]
+             },
+             "complemento": {
+              "type": "string",
+              "minLength": 0,
+              "maxLength": 128,
+              "description": "Informações adicionais para facilitar a localização. Tamanho máximo 128 caracteres.",
+              "example": "apto 42, em frente ao lava-jato"
+             },
+             "bairro": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 64,
+              "description": "Para endereços de Brasília, procure mais informações nos Correios. Em casos que seja usado regiões adminstrativas e se existir bairro, informe entre parentêses. Tamanho mínimo 1 caractere e Tamanho máximo 64 caracteres.",
+              "example": "Bonsucesso"
+             },
+             "cep": {
+              "type": "string",
+              "minLength": 8,
+              "maxLength": 8,
+              "description": "CEP do endereço com 8 dígitos.",
+              "example": 30622580
+             },
+             "cidade": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 32,
+              "description": "Cidade do endereço. Tamanho mínimo 1 caractere e Tamanho máximo 32 caracteres.",
+              "example": "Belo Horizonte"
+             },
+             "uf": {
+              "type": "string",
+              "minLength": 2,
+              "maxLength": 2,
+              "description": "Unidade federativa com dois caracteres.",
+              "example": "MG"
+             }
+            },
+            "description": "Objeto que contém informações detalhadas do endereço compatível com o formato da API dos Correios."
+           }
+          }
+         },
+         {
+          "type": "object",
+          "properties": {
+           "lines": {
+            "type": "object",
+            "required": [
+             "addressLine1",
+             "postalCode",
+             "city",
+             "state"
+            ],
+            "properties": {
+             "addressLine1": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "description": "Primeira linha que contempla os dados do endereço. Tamanho mínimo 1 caractere e Tamanho máximo 256 caracteres.",
+              "example": "Alameda Santos, 2400 - Jardim Paulista"
+             },
+             "addressLine2": {
+              "type": "string",
+              "minLength": 0,
+              "maxLength": 256,
+              "description": "Segunda linha que complementa os dados de endereço descritos em addressLine1. Tamanho máximo 256 caracteres.",
+              "example": "Bela Vista"
+             },
+             "postalCode": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 16,
+              "description": "Código postal do endereço. Tamanho mínimo 1 caractere e Tamanho máximo 16 caracteres.",
+              "example": 1100651
+             },
+             "city": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 32,
+              "description": "Cidade do endereço. Tamanho mínimo 1 caractere e Tamanho máximo 32 caracteres.",
+              "example": "São Paulo"
+             },
+             "state": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 32,
+              "description": "Estado do Endereço. Tamanho mínimo 1 caractere e Tamanho máximo 32 caracteres.",
+              "example": "São Paulo"
+             },
+             "country": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100,
+              "description": "País do endereço.  Tamanho mínimo 1 caractere e Tamanho máximo 100 caracteres.",
+              "example": "Brasil"
+             }
+            },
+            "description": "Representação alternativa de endereços utilizando duas linhas e outros componentes."
+           }
+          }
+         },
+         {
+          "type": "object",
+          "properties": {
+           "widget": {
+            "type": "object",
+            "required": [
+             "address"
+            ],
+            "properties": {
+             "address": {
+              "type": "string",
+              "minLength": 0,
+              "maxLength": 256,
+              "description": "Dados do endereço. Tamanho máximo 256 caracteres.",
+              "example": "Alameda Santos, 2400 - Jardim Paulista"
+             },
+             "complement": {
+              "type": "string",
+              "minLength": 0,
+              "maxLength": 256,
+              "description": "Complemento do endereço. Tamanho máximo 256 caracteres.",
+              "example": "Bela Vista"
+             },
+             "placesApiInfo": {
+              "type": "object",
+              "properties": {
+               "placeId": {
+                "type": "string",
+                "description": "Um place ID é um identificador textual que identifica exclusivamente um local.",
+                "example": "ChIJgUbEo8cfqokR5lP9_Wh_DaM"
+               },
+               "sessionId": {
+                "type": "string",
+                "description": "Uma string randômica que identifica uma sessão de autocomplete para fins de faturamento.",
+                "example": "442d443e-0163-4ca8-a907-7319825548d8"
+               }
+              },
+              "description": "Informações fornecidas pelo Google Maps Place API."
+             },
+             "userContext": {
+              "type": "object",
+              "properties": {
+               "userIp": {
+                "type": "string",
+                "description": "O endereço IPv4 ou IPv6 do usuário.",
+                "example": "127.0.0.1"
+               },
+               "position": {
+                "type": "object",
+                "properties": {
+                 "latitude": {
+                  "type": "number",
+                  "description": "A latitude em graus. Deve estar na faixa [-90,0, +90,0].",
+                  "example": -23.557
+                 },
+                 "longitude": {
+                  "type": "number",
+                  "description": "A longitude em graus. Deve estar na faixa [-180,0, +180,0].",
+                  "example": -46.662
+                 }
+                },
+                "description": "Posição do usuário utilizando LatLng do Google. https://github.com/googleapis/googleapis/blob/master/google/type/latlng.proto"
+               }
+              },
+              "description": "Contexto sobre o usuário."
+             }
+            },
+            "description": "Representação de endereço utilizando Autocomplete UI Widget + context."
+           }
+          }
+         }
+        ],
+        "description": "Objeto que representa um endereço nacional em formato dos Correios ou uma representação alternativa de endereços. Os objetos correios, lines e widget são mutuamente exclusivos."
+       },
+       "shipTo": {
+        "type": "object",
+        "nullable": false,
+        "oneOf": [
+         {
+          "type": "object",
+          "properties": {
+           "correios": {
+            "type": "object",
+            "required": [
+             "logradouro",
+             "cep",
+             "cidade",
+             "uf"
+            ],
+            "properties": {
+             "logradouro": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "description": "Nome da rua. Tamanho mínimo 1 caractere e Tamanho máximo 128 caracteres.",
+              "example": "R. Liberdade"
+             },
+             "numero": {
+              "type": "string",
+              "minLength": 0,
+              "maxLength": 8,
+              "description": "Número do endereço. Tamanho máximo 8 caracteres. Caso não possua número, informar com os valores S/N ou s/n",
+              "example": [
+               2400,
+               "S/N",
+               "s/n"
+              ]
+             },
+             "complemento": {
+              "type": "string",
+              "minLength": 0,
+              "maxLength": 128,
+              "description": "Informações adicionais para facilitar a localização. Tamanho máximo 128 caracteres.",
+              "example": "apto 42, em frente ao lava-jato"
+             },
+             "bairro": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 64,
+              "description": "Para endereços de Brasília, procure mais informações nos Correios. Em casos que seja usado regiões adminstrativas e se existir bairro, informe entre parentêses. Tamanho mínimo 1 caractere e Tamanho máximo 64 caracteres.",
+              "example": "Bonsucesso"
+             },
+             "cep": {
+              "type": "string",
+              "minLength": 8,
+              "maxLength": 8,
+              "description": "CEP do endereço com 8 dígitos.",
+              "example": 30622580
+             },
+             "cidade": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 32,
+              "description": "Cidade do endereço. Tamanho mínimo 1 caractere e Tamanho máximo 32 caracteres.",
+              "example": "Belo Horizonte"
+             },
+             "uf": {
+              "type": "string",
+              "minLength": 2,
+              "maxLength": 2,
+              "description": "Unidade federativa com dois caracteres.",
+              "example": "MG"
+             }
+            },
+            "description": "Objeto que contém informações detalhadas do endereço compatível com o formato da API dos Correios."
+           }
+          }
+         },
+         {
+          "type": "object",
+          "properties": {
+           "lines": {
+            "type": "object",
+            "required": [
+             "addressLine1",
+             "postalCode",
+             "city",
+             "state"
+            ],
+            "properties": {
+             "addressLine1": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "description": "Primeira linha que contempla os dados do endereço. Tamanho mínimo 1 caractere e Tamanho máximo 256 caracteres.",
+              "example": "Alameda Santos, 2400 - Jardim Paulista"
+             },
+             "addressLine2": {
+              "type": "string",
+              "minLength": 0,
+              "maxLength": 256,
+              "description": "Segunda linha que complementa os dados de endereço descritos em addressLine1. Tamanho máximo 256 caracteres.",
+              "example": "Bela Vista"
+             },
+             "postalCode": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 16,
+              "description": "Código postal do endereço. Tamanho mínimo 1 caractere e Tamanho máximo 16 caracteres.",
+              "example": 1100651
+             },
+             "city": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 32,
+              "description": "Cidade do endereço. Tamanho mínimo 1 caractere e Tamanho máximo 32 caracteres.",
+              "example": "São Paulo"
+             },
+             "state": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 32,
+              "description": "Estado do Endereço. Tamanho mínimo 1 caractere e Tamanho máximo 32 caracteres.",
+              "example": "São Paulo"
+             },
+             "country": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100,
+              "description": "País do endereço.  Tamanho mínimo 1 caractere e Tamanho máximo 100 caracteres.",
+              "example": "Brasil"
+             }
+            },
+            "description": "Representação alternativa de endereços utilizando duas linhas e outros componentes."
+           }
+          }
+         },
+         {
+          "type": "object",
+          "properties": {
+           "widget": {
+            "type": "object",
+            "required": [
+             "address"
+            ],
+            "properties": {
+             "address": {
+              "type": "string",
+              "minLength": 0,
+              "maxLength": 256,
+              "description": "Dados do endereço. Tamanho máximo 256 caracteres.",
+              "example": "Alameda Santos, 2400 - Jardim Paulista"
+             },
+             "complement": {
+              "type": "string",
+              "minLength": 0,
+              "maxLength": 256,
+              "description": "Complemento do endereço. Tamanho máximo 256 caracteres.",
+              "example": "Bela Vista"
+             },
+             "placesApiInfo": {
+              "type": "object",
+              "properties": {
+               "placeId": {
+                "type": "string",
+                "description": "Um place ID é um identificador textual que identifica exclusivamente um local.",
+                "example": "ChIJgUbEo8cfqokR5lP9_Wh_DaM"
+               },
+               "sessionId": {
+                "type": "string",
+                "description": "Uma string randômica que identifica uma sessão de autocomplete para fins de faturamento.",
+                "example": "442d443e-0163-4ca8-a907-7319825548d8"
+               }
+              },
+              "description": "Informações fornecidas pelo Google Maps Place API."
+             },
+             "userContext": {
+              "type": "object",
+              "properties": {
+               "userIp": {
+                "type": "string",
+                "description": "O endereço IPv4 ou IPv6 do usuário.",
+                "example": "127.0.0.1"
+               },
+               "position": {
+                "type": "object",
+                "properties": {
+                 "latitude": {
+                  "type": "number",
+                  "description": "A latitude em graus. Deve estar na faixa [-90,0, +90,0].",
+                  "example": -23.557
+                 },
+                 "longitude": {
+                  "type": "number",
+                  "description": "A longitude em graus. Deve estar na faixa [-180,0, +180,0].",
+                  "example": -46.662
+                 }
+                },
+                "description": "Posição do usuário utilizando LatLng do Google. https://github.com/googleapis/googleapis/blob/master/google/type/latlng.proto"
+               }
+              },
+              "description": "Contexto sobre o usuário."
+             }
+            },
+            "description": "Representação de endereço utilizando Autocomplete UI Widget + context."
+           }
+          }
+         }
+        ],
+        "description": "Objeto que representa um endereço nacional em formato dos Correios ou uma representação alternativa de endereços. Os objetos correios, lines e widget são mutuamente exclusivos."
+       },
+       "packages": {
+        "type": "array",
+        "nullable": false,
+        "description": "Lista de pacotes associado à cotação de frete.",
+        "items": {
+         "type": "object",
+         "required": [
+          "weightG",
+          "lengthCm",
+          "widthCm",
+          "heightCm",
+          "goodsValue"
+         ],
+         "properties": {
+          "weightG": {
+           "type": "integer",
+           "maximum": 30000,
+           "format": "int32",
+           "description": "Peso do pacote em gramas. Valor máximo 30000.",
+           "example": 12000
+          },
+          "lengthCm": {
+           "type": "integer",
+           "maximum": 100,
+           "format": "int32",
+           "description": "Comprimento do pacote em centímetros. Valor máximo 100.",
+           "example": 55
+          },
+          "widthCm": {
+           "type": "integer",
+           "maximum": 100,
+           "format": "int32",
+           "description": "Largura do pacote em centrímetros. Valor máximo 100.",
+           "example": 55
+          },
+          "heightCm": {
+           "type": "integer",
+           "maximum": 100,
+           "format": "int32",
+           "description": "Altura do pacote em centímetros. Valor máximo 100.",
+           "example": 100
+          },
+          "goodsValue": {
+           "type": "object",
+           "required": [
+            "currencyCode",
+            "units",
+            "nanos"
+           ],
+           "properties": {
+            "currencyCode": {
+             "type": "string",
+             "description": "Código de três letras para as moedas definido no ISO 4217.",
+             "example": "BRL"
+            },
+            "units": {
+             "type": "string",
+             "description": "Todas as unidades do montante.",
+             "format": "int64",
+             "example": 87
+            },
+            "nanos": {
+             "type": "integer",
+             "description": "Componente fracionário em nanos, i.e., centavos vezes 10 milhões. Ler mais em https://github.com/googleapis/googleapis/blob/master/google/type/money.proto",
+             "format": "int32",
+             "example": 350000000
+            }
+           },
+           "description": "Valor total de todos os produtos a serem transportados dentro de um pacote. Há um valor máximo em reais, consulte nosso time de vendas para mais detalhes.",
+           "example": "R$ 87,35 é representado como { currencyCode: \"BRL\", units: \"87\", nanos: 350000000 }"
+          }
+         }
+        }
+       }
+      },
+      "oneOf": [
+       {
+        "type": "object",
+        "required": [
+         "externalServiceIds"
+        ],
+        "properties": {
+         "externalServiceIds": {
+          "type": "array",
+          "description": "Lista de identificadores externos do serviço. Preencher este campo ou o campo pickupTypes. Nunca ambos.",
+          "items": {
+           "type": "string",
+           "example": "PDEL-DTED-LEXP-CDOR-0001"
+          }
+         }
+        }
+       },
+       {
+        "type": "object",
+        "required": [
+         "pickupTypes"
+        ],
+        "properties": {
+         "pickupTypes": {
+          "deprecated": true,
+          "type": "array",
+          "nullable": false,
+          "description": "Lista de tipos de coleta. Preencher este campo ou o campo externalServiceIds. Nunca ambos.",
+          "items": {
+           "type": "string",
+           "enum": [
+            "PICKUP_TYPE_SPOT",
+            "PICKUP_TYPE_DEDICATED",
+            "PICKUP_TYPE_MILK_RUN",
+            "PICKUP_TYPE_DROP_OFF"
+           ]
+          }
+         }
+        }
+       }
+      ],
+      "description": "Objeto que representa a criação de uma cotação."
+     },
+     "QuoteResponse": {
+      "type": "object",
+      "properties": {
+       "packagesQuotations": {
+        "type": "object",
+        "description": "Objeto que representa a cotação de cada pacote.",
+        "properties": {
+         "quotations": {
+          "type": "array",
+          "description": "Opções de frete para um pacote. Um pacote pode ter até duas opções (Loggi Econômico e Loggi Expresso).",
+          "items": {
+           "properties": {
+            "price": {
+             "type": "object",
+             "properties": {
+              "totalAmount": {
+               "type": "object",
+               "required": [
+                "currencyCode",
+                "units",
+                "nanos"
+               ],
+               "properties": {
+                "currencyCode": {
+                 "type": "string",
+                 "description": "Código de três letras para as modedas definido no ISO 4217.",
+                 "example": "BRL"
+                },
+                "units": {
+                 "type": "string",
+                 "description": "Todas as unidades do montante.",
+                 "format": "int64",
+                 "example": 87
+                },
+                "nanos": {
+                 "type": "integer",
+                 "description": "Componente fracionário em nanos, i.e., centavos vezes 10 milhões. Ler mais em https://github.com/googleapis/googleapis/blob/master/google/type/money.proto",
+                 "format": "int32",
+                 "example": 350000000
+                }
+               },
+               "description": "Preço total do frete com taxas e impostos incluídos.",
+               "example": "R$ 87,35 é representado como { currencyCode: \"BRL\", units: \"87\", nanos: 350000000 }"
+              },
+              "baseAmount": {
+               "description": "Preço do frete sem taxas e impostos incluídos.",
+               "example": "R$ 50,25 é representado como { currencyCode: \"BRL\", units: \"50\", nanos: 250000000 }",
+               "type": "object",
+               "required": [
+                "currencyCode",
+                "units",
+                "nanos"
+               ],
+               "properties": {
+                "currencyCode": {
+                 "type": "string",
+                 "description": "Código de três letras para as modedas definido no ISO 4217.",
+                 "example": "BRL"
+                },
+                "units": {
+                 "type": "string",
+                 "description": "Todas as unidades do montante.",
+                 "format": "int64",
+                 "example": 50
+                },
+                "nanos": {
+                 "type": "integer",
+                 "description": "Componente fracionário em nanos, i.e., centavos vezes 10 milhões. Ler mais em https://github.com/googleapis/googleapis/blob/master/google/type/money.proto",
+                 "format": "int32",
+                 "example": 250000000
+                }
+               }
+              },
+              "taxesAndFees": {
+               "description": "Taxas e impostos incluídos.",
+               "type": "object",
+               "properties": {
+                "pis": {
+                 "type": "object",
+                 "properties": {
+                  "rate_tax": {
+                   "type": "string",
+                   "description": "Porcentagem aplicada no imposto.",
+                   "example": "5.4"
+                  },
+                  "amount": {
+                   "type": "object",
+                   "required": [
+                    "currencyCode",
+                    "units",
+                    "nanos"
+                   ],
+                   "properties": {
+                    "currencyCode": {
+                     "type": "string",
+                     "description": "Código de três letras para as modedas definido no ISO 4217.",
+                     "example": "BRL"
+                    },
+                    "units": {
+                     "type": "string",
+                     "description": "Todas as unidades do montante.",
+                     "format": "int64",
+                     "example": 25
+                    },
+                    "nanos": {
+                     "type": "integer",
+                     "description": "Componente fracionário em nanos, i.e., centavos vezes 10 milhões. Ler mais em https://github.com/googleapis/googleapis/blob/master/google/type/money.proto",
+                     "format": "int32",
+                     "example": 350000000
+                    }
+                   },
+                   "description": "Valor do imposto com a porcentagem do rate_tax.",
+                   "example": "R$ 25,35 é representado como { currencyCode: \"BRL\", units: \"25\", nanos: 350000000 }"
+                  }
+                 }
+                },
+                "cofins": {
+                 "description": "Valor do imposto com a porcentagem do rate_tax.",
+                 "type": "object",
+                 "properties": {
+                  "rate_tax": {
+                   "type": "string",
+                   "description": "Porcentagem aplicada no imposto.",
+                   "example": "5.4"
+                  },
+                  "amount": {
+                   "type": "object",
+                   "required": [
+                    "currencyCode",
+                    "units",
+                    "nanos"
+                   ],
+                   "properties": {
+                    "currencyCode": {
+                     "type": "string",
+                     "description": "Código de três letras para as modedas definido no ISO 4217.",
+                     "example": "BRL"
+                    },
+                    "units": {
+                     "type": "string",
+                     "description": "Todas as unidades do montante.",
+                     "format": "int64",
+                     "example": 25
+                    },
+                    "nanos": {
+                     "type": "integer",
+                     "description": "Componente fracionário em nanos, i.e., centavos vezes 10 milhões. Ler mais em https://github.com/googleapis/googleapis/blob/master/google/type/money.proto",
+                     "format": "int32",
+                     "example": 350000000
+                    }
+                   },
+                   "example": "R$ 25,35 é representado como { currencyCode: \"BRL\", units: \"25\", nanos: 350000000 }"
+                  }
+                 }
+                },
+                "gris": {
+                 "type": "object",
+                 "properties": {
+                  "rate_tax": {
+                   "type": "string",
+                   "description": "Porcentagem aplicada no imposto.",
+                   "example": "5.4"
+                  },
+                  "amount": {
+                   "type": "object",
+                   "required": [
+                    "currencyCode",
+                    "units",
+                    "nanos"
+                   ],
+                   "properties": {
+                    "currencyCode": {
+                     "type": "string",
+                     "description": "Código de três letras para as modedas definido no ISO 4217.",
+                     "example": "BRL"
+                    },
+                    "units": {
+                     "type": "string",
+                     "description": "Todas as unidades do montante.",
+                     "format": "int64",
+                     "example": 25
+                    },
+                    "nanos": {
+                     "type": "integer",
+                     "description": "Componente fracionário em nanos, i.e., centavos vezes 10 milhões. Ler mais em https://github.com/googleapis/googleapis/blob/master/google/type/money.proto",
+                     "format": "int32",
+                     "example": 350000000
+                    }
+                   },
+                   "description": "Valor do imposto com a porcentagem do rate_tax.",
+                   "example": "R$ 25,35 é representado como { currencyCode: \"BRL\", units: \"25\", nanos: 350000000 }"
+                  }
+                 }
+                },
+                "advalorem": {
+                 "type": "object",
+                 "properties": {
+                  "rate_tax": {
+                   "type": "string",
+                   "description": "Porcentagem aplicada no imposto.",
+                   "example": "5.4"
+                  },
+                  "amount": {
+                   "type": "object",
+                   "required": [
+                    "currencyCode",
+                    "units",
+                    "nanos"
+                   ],
+                   "properties": {
+                    "currencyCode": {
+                     "type": "string",
+                     "description": "Código de três letras para as modedas definido no ISO 4217.",
+                     "example": "BRL"
+                    },
+                    "units": {
+                     "type": "string",
+                     "description": "Todas as unidades do montante.",
+                     "format": "int64",
+                     "example": 25
+                    },
+                    "nanos": {
+                     "type": "integer",
+                     "description": "Componente fracionário em nanos, i.e., centavos vezes 10 milhões. Ler mais em https://github.com/googleapis/googleapis/blob/master/google/type/money.proto",
+                     "format": "int32",
+                     "example": 350000000
+                    }
+                   },
+                   "description": "Valor do imposto com a porcentagem do rate_tax.",
+                   "example": "R$ 25,35 é representado como { currencyCode: \"BRL\", units: \"25\", nanos: 350000000 }"
+                  }
+                 }
+                },
+                "icms": {
+                 "type": "object",
+                 "properties": {
+                  "rate_tax": {
+                   "type": "string",
+                   "description": "Porcentagem aplicada no imposto.",
+                   "example": "5.4"
+                  },
+                  "amount": {
+                   "type": "object",
+                   "required": [
+                    "currencyCode",
+                    "units",
+                    "nanos"
+                   ],
+                   "properties": {
+                    "currencyCode": {
+                     "type": "string",
+                     "description": "Código de três letras para as modedas definido no ISO 4217.",
+                     "example": "BRL"
+                    },
+                    "units": {
+                     "type": "string",
+                     "description": "Todas as unidades do montante.",
+                     "format": "int64",
+                     "example": 25
+                    },
+                    "nanos": {
+                     "type": "integer",
+                     "description": "Componente fracionário em nanos, i.e., centavos vezes 10 milhões. Ler mais em https://github.com/googleapis/googleapis/blob/master/google/type/money.proto",
+                     "format": "int32",
+                     "example": 350000000
+                    }
+                   },
+                   "description": "Valor do imposto com a porcentagem do rate_tax. Obrigatório quando o frete é intermunicipal ou interestadual",
+                   "example": "R$ 25,35 é representado como { currencyCode: \"BRL\", units: \"25\", nanos: 350000000 }"
+                  }
+                 }
+                },
+                "iss": {
+                 "type": "object",
+                 "properties": {
+                  "rate_tax": {
+                   "type": "string",
+                   "description": "Porcentagem aplicada no imposto.",
+                   "example": "5.4"
+                  },
+                  "amount": {
+                   "type": "object",
+                   "required": [
+                    "currencyCode",
+                    "units",
+                    "nanos"
+                   ],
+                   "properties": {
+                    "currencyCode": {
+                     "type": "string",
+                     "description": "Código de três letras para as modedas definido no ISO 4217.",
+                     "example": "BRL"
+                    },
+                    "units": {
+                     "type": "string",
+                     "description": "Todas as unidades do montante.",
+                     "format": "int64",
+                     "example": 25
+                    },
+                    "nanos": {
+                     "type": "integer",
+                     "description": "Componente fracionário em nanos, i.e., centavos vezes 10 milhões. Ler mais em https://github.com/googleapis/googleapis/blob/master/google/type/money.proto",
+                     "format": "int32",
+                     "example": 350000000
+                    }
+                   },
+                   "description": "Valor do imposto com a porcentagem do rate_tax. Obrigatório quando o frete está dentro da mesma cidade.",
+                   "example": "R$ 25,35 é representado como { currencyCode: \"BRL\", units: \"25\", nanos: 350000000 }"
+                  }
+                 }
+                }
+               }
+              }
+             }
+            },
+            "sloInDays": {
+             "type": "integer",
+             "description": "Tempo de entrega dentro do prazo estipulado em dias.",
+             "format": "int32",
+             "example": 0
+            },
+            "freightType": {
+             "type": "string",
+             "description": "Tipos de entregas disponíveis.",
+             "enum": [
+              "FREIGHT_TYPE_EXPRESS",
+              "FREIGHT_TYPE_ECONOMIC"
+             ],
+             "example": "FREIGHT_TYPE_ECONOMIC"
+            },
+            "freightTypeLabel": {
+             "type": "string",
+             "description": "Label do tipo de entrega. Poderá ser usado como output na UI.",
+             "example": "Loggi Econômico"
+            },
+            "pickup_type": {
+             "type": "string",
+             "description": "Tipos de coletas disponíveis.",
+             "enum": [
+              "PICKUP_TYPE_SPOT",
+              "PICKUP_TYPE_DEDICATED",
+              "PICKUP_TYPE_MILK_RUN",
+              "PICKUP_TYPE_DROP_OFF"
+             ],
+             "example": "PICKUP_TYPE_SPOT"
+            },
+            "externalServiceIds": {
+             "type": "string",
+             "description": "Identificador externo do serviço.",
+             "example": "PDEL-DTED-LEXP-CDOR-0001"
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     },
+     "ErrorMessage": {
+      "type": "object",
+      "properties": {
+       "code": {
+        "type": "integer",
+        "format": "int32",
+        "description": "Código numérico referente à falha.\n\nCANCELLED = 1\n\nUNKNOWN = 2\n\nINVALID_ARGUMENT = 3\n\nDEADLINE_EXCEEDED = 4\n\nNOT_FOUND = 5\n\nALREADY_EXISTS = 6\n\nPERMISSION_DENIED = 7\n\nRESOURCE_EXHAUSTED = 8\n\nFAILED_PRECONDITION = 9\n\nABORTED = 10\n\nOUT_OF_RANGE = 11\n\nUNIMPLEMENTED = 12\n\nINTERNAL = 13\n\nUNAVAILABLE = 14\n\nDATA_LOSS = 15\n\nUNAUTHENTICATED = 16",
+        "example": 14
+       },
+       "message": {
+        "type": "string",
+        "description": "Texto pequeno informativo sobre a falha",
+        "example": "Requisição com credenciais inválidas"
+       },
+       "details": {
+        "type": "array",
+        "description": "Detalhes sobre à falha. Nesta versão da API ainda não está sendo retornado, mas deve ser considerado um array de objetos de tipos distintos.",
+        "items": {},
+        "example": []
+       }
+      }
+     }
+    }
+   },
+   "x-readme": {
+    "explorer-enabled": true,
+    "proxy-enabled": true
+   },
+   "_id": {
+    "buffer": {
+     "0": 106,
+     "1": 85,
+     "2": 76,
+     "3": 133,
+     "4": 81,
+     "5": 74,
+     "6": 83,
+     "7": 189,
+     "8": 15,
+     "9": 148,
+     "10": 170,
+     "11": 176
+    }
+   }
+  }
+ }
+]
