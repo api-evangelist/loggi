@@ -158,8 +158,10 @@ common:
 
 apis:
 - name: Loggi Platform API
-  description: Loggi's REST integration platform for freight quotation, shipment creation (sync/async), label generation, package update/cancel,
-    package details, real-time tracking, webhooks, integrator management and dropoff locations.
+  description: >-
+    Loggi's REST integration platform for freight quotation, shipment creation (sync/async), label generation,
+    package update/cancel, package details, real-time tracking, webhooks, integrator management and dropoff
+    locations.
   humanURL: https://docs.api.loggi.com/
   baseURL: https://api.loggi.com
   tags:
@@ -179,9 +181,11 @@ apis:
     url: asyncapi/loggi-webhooks.yml
   - type: X-MCPServerCandidate
     url: mcp/loggi-mcp.yml
-    note: 'Renamed from MCPServer 2026-09-03 (roadmap#247): the manifest self-describes as status: candidate — a tool list derived from the published
-      API contracts, not an existing server. The scorer already read the manifest and reported mcp_server correctly; the MCPServer type was crediting
-      the artifact-type surfaces with a server that does not exist.'
+    note: >-
+      Renamed from MCPServer 2026-09-03 (roadmap#247): the manifest self-describes as status: candidate
+      — a tool list derived from the published API contracts, not an existing server. The scorer already
+      read the manifest and reported mcp_server correctly; the MCPServer type was crediting the artifact-type
+      surfaces with a server that does not exist.
   - type: Conventions
     url: conventions/loggi-conventions.yml
   - type: Lifecycle
@@ -195,129 +199,426 @@ apis:
   - type: DataModel
     url: data-model/loggi-data-model.yml
   aid: loggi:loggi-platform-api
-- aid: loggi:loggi-authentication
-  name: Loggi Authentication Openapi.Yml API
-  description: The Authentication Openapi.Yml API from Loggi — 2 operation(s) for authentication openapi.yml.
+- aid: loggi:loggi-authapi-api
+  name: Loggi Auth API
+  description: The AuthAPI API from Loggi — 2 operation(s) for authapi.
   humanURL: https://docs.api.loggi.com/
   baseURL: https://api.loggi.com
   tags:
-  - Authentication Openapi.Yml
+  - AuthAPI
   properties:
   - type: OpenAPI
-    url: openapi/loggi-authentication-openapi.yml
+    url: openapi/loggi-authapi-api-openapi.yml
   - type: JSONSchema
     url: json-schema/loggi-service-account-token-request-schema.json
   - type: JSONSchema
     url: json-schema/loggi-service-account-token-response-schema.json
-- aid: loggi:loggi-freight-price-quotation
-  name: Loggi Freight Price Quotation Openapi.Yml API
-  description: The Freight Price Quotation Openapi.Yml API from Loggi — 1 operation(s) for freight price quotation openapi.yml.
-  humanURL: https://docs.api.loggi.com/
-  baseURL: https://api.loggi.com
-  tags:
-  - Freight Price Quotation Openapi.Yml
-  properties:
-  - type: OpenAPI
-    url: openapi/loggi-freight-price-quotation-openapi.yml
   - type: JSONSchema
     url: json-schema/loggi-quote-request-schema.json
   - type: JSONSchema
     url: json-schema/loggi-quote-response-schema.json
-- aid: loggi:loggi-integrator
-  name: Loggi Integrator Openapi.Yml API
-  description: The Integrator Openapi.Yml API from Loggi — 1 operation(s) for integrator openapi.yml.
-  humanURL: https://docs.api.loggi.com/
-  baseURL: https://api.loggi.com
-  tags:
-  - Integrator Openapi.Yml
-  properties:
-  - type: OpenAPI
-    url: openapi/loggi-integrator-openapi.yml
   - type: JSONSchema
     url: json-schema/loggi-v1-integrator-company-response-schema.json
-- aid: loggi:loggi-labels
-  name: Loggi Labels Openapi.Yml API
-  description: The Labels Openapi.Yml API from Loggi — 1 operation(s) for labels openapi.yml.
-  humanURL: https://docs.api.loggi.com/
-  baseURL: https://api.loggi.com
-  tags:
-  - Labels Openapi.Yml
-  properties:
-  - type: OpenAPI
-    url: openapi/loggi-labels-openapi.yml
   - type: JSONSchema
     url: json-schema/loggi-v1-create-label-response-schema.json
   - type: JSONSchema
     url: json-schema/loggi-v1-create-label-request-schema.json
-- aid: loggi:loggi-package-details
-  name: Loggi Package Details Openapi.Yml API
-  description: The Package Details Openapi.Yml API from Loggi — 1 operation(s) for package details openapi.yml.
-  humanURL: https://docs.api.loggi.com/
-  baseURL: https://api.loggi.com
-  tags:
-  - Package Details Openapi.Yml
-  properties:
-  - type: OpenAPI
-    url: openapi/loggi-package-details-openapi.yml
   - type: JSONSchema
     url: json-schema/loggi-v1-package-details-response-schema.json
-- aid: loggi:loggi-package
-  name: Loggi Package Openapi.Yml API
-  description: The Package Openapi.Yml API from Loggi — 2 operation(s) for package openapi.yml.
-  humanURL: https://docs.api.loggi.com/
-  baseURL: https://api.loggi.com
-  tags:
-  - Package Openapi.Yml
-  properties:
-  - type: OpenAPI
-    url: openapi/loggi-package-openapi.yml
   - type: JSONSchema
     url: json-schema/loggi-v1-package-update-request-schema.json
   - type: JSONSchema
     url: json-schema/loggi-v1-package-update-response-schema.json
   - type: JSONSchema
     url: json-schema/loggi-v1-package-cancel-response-schema.json
-- aid: loggi:loggi-pontos
-  name: Loggi Pontos Openapi.Yml API
-  description: The Pontos Openapi.Yml API from Loggi — 1 operation(s) for pontos openapi.yml.
-  humanURL: https://docs.api.loggi.com/
-  baseURL: https://api.loggi.com
-  tags:
-  - Pontos Openapi.Yml
-  properties:
-  - type: OpenAPI
-    url: openapi/loggi-pontos-openapi.yml
   - type: JSONSchema
     url: json-schema/loggi-list-dropoff-locations-request-schema.json
   - type: JSONSchema
     url: json-schema/loggi-list-dropoff-locations-response-schema.json
-- aid: loggi:loggi-shipments
-  name: Loggi Shipments Openapi.Yml API
-  description: The Shipments Openapi.Yml API from Loggi — 1 operation(s) for shipments openapi.yml.
-  humanURL: https://docs.api.loggi.com/
-  baseURL: https://api.loggi.com
-  tags:
-  - Shipments Openapi.Yml
-  properties:
-  - type: OpenAPI
-    url: openapi/loggi-shipments-openapi.yml
   - type: JSONSchema
     url: json-schema/loggi-v1-create-async-shipment-request-schema.json
   - type: JSONSchema
     url: json-schema/loggi-v1-create-async-shipment-response-schema.json
-- aid: loggi:loggi-tracking
-  name: Loggi Tracking Openapi.Yml API
-  description: The Tracking Openapi.Yml API from Loggi — 1 operation(s) for tracking openapi.yml.
+  - type: JSONSchema
+    url: json-schema/loggi-v1-track-package-tracking-code-response-schema.json
+- aid: loggi:loggi-detailsapi-api
+  name: Loggi Details API
+  description: The DetailsAPI API from Loggi — 1 operation(s) for detailsapi.
   humanURL: https://docs.api.loggi.com/
   baseURL: https://api.loggi.com
   tags:
-  - Tracking Openapi.Yml
+  - DetailsAPI
   properties:
   - type: OpenAPI
-    url: openapi/loggi-tracking-openapi.yml
+    url: openapi/loggi-detailsapi-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/loggi-service-account-token-request-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-service-account-token-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-quote-request-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-quote-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-integrator-company-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-create-label-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-create-label-request-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-package-details-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-package-update-request-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-package-update-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-package-cancel-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-list-dropoff-locations-request-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-list-dropoff-locations-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-create-async-shipment-request-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-create-async-shipment-response-schema.json
   - type: JSONSchema
     url: json-schema/loggi-v1-track-package-tracking-code-response-schema.json
-
+- aid: loggi:loggi-dropofflocationsapi-api
+  name: Loggi Dropoff Locations API
+  description: The DropoffLocationsAPI API from Loggi — 1 operation(s) for dropofflocationsapi.
+  humanURL: https://docs.api.loggi.com/
+  baseURL: https://api.loggi.com
+  tags:
+  - DropoffLocationsAPI
+  properties:
+  - type: OpenAPI
+    url: openapi/loggi-dropofflocationsapi-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/loggi-service-account-token-request-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-service-account-token-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-quote-request-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-quote-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-integrator-company-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-create-label-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-create-label-request-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-package-details-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-package-update-request-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-package-update-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-package-cancel-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-list-dropoff-locations-request-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-list-dropoff-locations-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-create-async-shipment-request-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-create-async-shipment-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-track-package-tracking-code-response-schema.json
+- aid: loggi:loggi-integratorcompanyapi-api
+  name: Loggi Integrator Company API
+  description: The IntegratorCompanyAPI API from Loggi — 1 operation(s) for integratorcompanyapi.
+  humanURL: https://docs.api.loggi.com/
+  baseURL: https://api.loggi.com
+  tags:
+  - IntegratorCompanyAPI
+  properties:
+  - type: OpenAPI
+    url: openapi/loggi-integratorcompanyapi-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/loggi-service-account-token-request-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-service-account-token-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-quote-request-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-quote-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-integrator-company-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-create-label-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-create-label-request-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-package-details-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-package-update-request-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-package-update-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-package-cancel-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-list-dropoff-locations-request-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-list-dropoff-locations-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-create-async-shipment-request-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-create-async-shipment-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-track-package-tracking-code-response-schema.json
+- aid: loggi:loggi-labelapi-api
+  name: Loggi Label API
+  description: The LabelAPI API from Loggi — 1 operation(s) for labelapi.
+  humanURL: https://docs.api.loggi.com/
+  baseURL: https://api.loggi.com
+  tags:
+  - LabelAPI
+  properties:
+  - type: OpenAPI
+    url: openapi/loggi-labelapi-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/loggi-service-account-token-request-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-service-account-token-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-quote-request-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-quote-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-integrator-company-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-create-label-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-create-label-request-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-package-details-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-package-update-request-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-package-update-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-package-cancel-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-list-dropoff-locations-request-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-list-dropoff-locations-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-create-async-shipment-request-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-create-async-shipment-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-track-package-tracking-code-response-schema.json
+- aid: loggi:loggi-packagecancelapi-api
+  name: Loggi Package Cancel API
+  description: The PackageCancelAPI API from Loggi — 1 operation(s) for packagecancelapi.
+  humanURL: https://docs.api.loggi.com/
+  baseURL: https://api.loggi.com
+  tags:
+  - PackageCancelAPI
+  properties:
+  - type: OpenAPI
+    url: openapi/loggi-packagecancelapi-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/loggi-service-account-token-request-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-service-account-token-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-quote-request-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-quote-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-integrator-company-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-create-label-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-create-label-request-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-package-details-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-package-update-request-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-package-update-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-package-cancel-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-list-dropoff-locations-request-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-list-dropoff-locations-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-create-async-shipment-request-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-create-async-shipment-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-track-package-tracking-code-response-schema.json
+- aid: loggi:loggi-packageupdateapi-api
+  name: Loggi Package Update API
+  description: The PackageUpdateAPI API from Loggi — 1 operation(s) for packageupdateapi.
+  humanURL: https://docs.api.loggi.com/
+  baseURL: https://api.loggi.com
+  tags:
+  - PackageUpdateAPI
+  properties:
+  - type: OpenAPI
+    url: openapi/loggi-packageupdateapi-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/loggi-service-account-token-request-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-service-account-token-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-quote-request-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-quote-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-integrator-company-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-create-label-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-create-label-request-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-package-details-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-package-update-request-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-package-update-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-package-cancel-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-list-dropoff-locations-request-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-list-dropoff-locations-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-create-async-shipment-request-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-create-async-shipment-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-track-package-tracking-code-response-schema.json
+- aid: loggi:loggi-quotationapi-api
+  name: Loggi Quotation API
+  description: The QuotationAPI API from Loggi — 1 operation(s) for quotationapi.
+  humanURL: https://docs.api.loggi.com/
+  baseURL: https://api.loggi.com
+  tags:
+  - QuotationAPI
+  properties:
+  - type: OpenAPI
+    url: openapi/loggi-quotationapi-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/loggi-service-account-token-request-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-service-account-token-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-quote-request-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-quote-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-integrator-company-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-create-label-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-create-label-request-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-package-details-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-package-update-request-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-package-update-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-package-cancel-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-list-dropoff-locations-request-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-list-dropoff-locations-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-create-async-shipment-request-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-create-async-shipment-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-track-package-tracking-code-response-schema.json
+- aid: loggi:loggi-shipmentapi-api
+  name: Loggi Shipment API
+  description: The ShipmentAPI API from Loggi — 1 operation(s) for shipmentapi.
+  humanURL: https://docs.api.loggi.com/
+  baseURL: https://api.loggi.com
+  tags:
+  - ShipmentAPI
+  properties:
+  - type: OpenAPI
+    url: openapi/loggi-shipmentapi-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/loggi-service-account-token-request-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-service-account-token-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-quote-request-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-quote-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-integrator-company-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-create-label-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-create-label-request-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-package-details-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-package-update-request-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-package-update-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-package-cancel-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-list-dropoff-locations-request-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-list-dropoff-locations-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-create-async-shipment-request-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-create-async-shipment-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-track-package-tracking-code-response-schema.json
+- aid: loggi:loggi-trackingapi-api
+  name: Loggi Tracking API
+  description: The TrackingAPI API from Loggi — 1 operation(s) for trackingapi.
+  humanURL: https://docs.api.loggi.com/
+  baseURL: https://api.loggi.com
+  tags:
+  - TrackingAPI
+  properties:
+  - type: OpenAPI
+    url: openapi/loggi-trackingapi-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/loggi-service-account-token-request-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-service-account-token-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-quote-request-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-quote-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-integrator-company-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-create-label-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-create-label-request-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-package-details-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-package-update-request-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-package-update-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-package-cancel-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-list-dropoff-locations-request-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-list-dropoff-locations-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-create-async-shipment-request-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-create-async-shipment-response-schema.json
+  - type: JSONSchema
+    url: json-schema/loggi-v1-track-package-tracking-code-response-schema.json
 x-readme-harvest:
   date: '2026-10-14'
   ops: 11

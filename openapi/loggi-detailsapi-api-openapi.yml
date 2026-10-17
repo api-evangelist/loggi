@@ -1,11 +1,13 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Package Details
+  title: Package Details Details API
   version: v1
   description: Disponibiliza os detalhes de um dado pacote dentro do sistema da Loggi.
 servers:
 - url: https://stg.api.loggi.com
 - url: https://api.loggi.com
+tags:
+- name: DetailsAPI
 paths:
   /v1/companies/{company_id}/packages/{tracking_code}:
     get:
@@ -107,15 +109,56 @@ paths:
       tags:
       - DetailsAPI
 components:
-  securitySchemes:
-    OAuth2:
-      type: oauth2
-      description: Autenticação OAuth 2.0 para clientes da API.
-      flows:
-        clientCredentials:
-          tokenUrl: https://api.loggi.com/oauth2/token
-          scopes: {}
   schemas:
+    ErrorMessage:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+          description: 'Código numérico referente à falha.
+
+            CANCELLED = 1
+
+            UNKNOWN = 2
+
+            INVALID_ARGUMENT = 3
+
+            DEADLINE_EXCEEDED = 4
+
+            NOT_FOUND = 5
+
+            ALREADY_EXISTS = 6
+
+            PERMISSION_DENIED = 7
+
+            RESOURCE_EXHAUSTED = 8
+
+            FAILED_PRECONDITION = 9
+
+            ABORTED = 10
+
+            OUT_OF_RANGE = 11
+
+            UNIMPLEMENTED = 12
+
+            INTERNAL = 13
+
+            UNAVAILABLE = 14
+
+            DATA_LOSS = 15
+
+            UNAUTHENTICATED = 16'
+          example: 14
+        message:
+          type: string
+          description: Texto pequeno informativo sobre a falha.
+          example: Requisição com credenciais inválidas.
+        details:
+          type: array
+          description: Detalhes sobre a falha. Nesta versão da API ainda não está sendo retornado, mas deve ser considerado um array de objetos de tipos distintos.
+          items: {}
+          example: []
     v1PackageDetailsResponse:
       type: object
       properties:
@@ -521,55 +564,14 @@ components:
                 description: Timestamp do momento da requisição.
             description: Objeto que representa os dados de rastreio de um pacote.
       description: Objeto que retorna todos os pacotes que são identificados pelo CompanyID e TrackingCode passados na requisição.
-    ErrorMessage:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-          description: 'Código numérico referente à falha.
-
-            CANCELLED = 1
-
-            UNKNOWN = 2
-
-            INVALID_ARGUMENT = 3
-
-            DEADLINE_EXCEEDED = 4
-
-            NOT_FOUND = 5
-
-            ALREADY_EXISTS = 6
-
-            PERMISSION_DENIED = 7
-
-            RESOURCE_EXHAUSTED = 8
-
-            FAILED_PRECONDITION = 9
-
-            ABORTED = 10
-
-            OUT_OF_RANGE = 11
-
-            UNIMPLEMENTED = 12
-
-            INTERNAL = 13
-
-            UNAVAILABLE = 14
-
-            DATA_LOSS = 15
-
-            UNAUTHENTICATED = 16'
-          example: 14
-        message:
-          type: string
-          description: Texto pequeno informativo sobre a falha.
-          example: Requisição com credenciais inválidas.
-        details:
-          type: array
-          description: Detalhes sobre a falha. Nesta versão da API ainda não está sendo retornado, mas deve ser considerado um array de objetos de tipos distintos.
-          items: {}
-          example: []
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      description: Autenticação OAuth 2.0 para clientes da API.
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.loggi.com/oauth2/token
+          scopes: {}
 x-provenance:
   method: searched
   source: https://docs.api.loggi.com/reference

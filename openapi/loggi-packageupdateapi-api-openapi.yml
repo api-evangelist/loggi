@@ -1,11 +1,13 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Package
+  title: Package Update API
   version: v1
   description: Disponibiliza serviços para atuar sobre um pacote.
 servers:
 - url: https://stg.api.loggi.com
 - url: https://api.loggi.com
+tags:
+- name: PackageUpdateAPI
 paths:
   /v1/companies/{company_id}/packages:
     patch:
@@ -217,133 +219,8 @@ paths:
           type: string
       tags:
       - PackageUpdateAPI
-  /v1/companies/{company_id}/packages/cancel:
-    post:
-      summary: Cancelar envio
-      description: ''
-      operationId: PackageCancel
-      security:
-      - OAuth2: []
-      responses:
-        '200':
-          description: Pacote cancelado com sucesso
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/v1PackageCancelResponse'
-        '400':
-          description: Mensagem do cliente não segue a especificação
-          content:
-            application/json:
-              example:
-                code: 3
-                message: Mensagem do cliente não segue a especificação
-                details: []
-              schema:
-                $ref: '#/components/schemas/ErrorMessage'
-        '401':
-          description: Falha de autenticação
-          content:
-            application/json:
-              example:
-                code: 16
-                message: Falha de autenticação
-                details: []
-              schema:
-                $ref: '#/components/schemas/ErrorMessage'
-        '403':
-          description: Sem autorização para acessar o serviço
-          content:
-            application/json:
-              example:
-                code: 7
-                message: Acesso não autorizado
-                details: []
-              schema:
-                $ref: '#/components/schemas/ErrorMessage'
-        '404':
-          description: Recurso não encontrado
-          content:
-            application/json:
-              example:
-                code: 5
-                message: Recurso não encontrado
-                details: []
-              schema:
-                $ref: '#/components/schemas/ErrorMessage'
-        '429':
-          description: Requisições massivas bloqueadas
-          content:
-            application/json:
-              example:
-                code: 8
-                message: Requisições massivas bloqueadas
-                details: []
-              schema:
-                $ref: '#/components/schemas/ErrorMessage'
-        '500':
-          description: Erro interno
-          content:
-            application/json:
-              example:
-                code: 13
-                message: Erro interno
-                details: []
-              schema:
-                $ref: '#/components/schemas/ErrorMessage'
-        '503':
-          description: Serviço temporariamente indisponível
-          content:
-            application/json:
-              example:
-                code: 14
-                message: Serviço temporariamente indisponível
-                details: []
-              schema:
-                $ref: '#/components/schemas/ErrorMessage'
-      parameters:
-      - name: company_id
-        in: path
-        required: true
-        description: Código numérico fornecido pela Loggi para identificação.
-        schema:
-          type: string
-      - name: loggi_key
-        in: query
-        required: false
-        description: Código único gerado pela Loggi, ou seja, cada pacote deve ter um loggi_key único.
-        schema:
-          type: string
-      - name: tracking_code
-        in: query
-        required: false
-        description: Código de rastreio do pacote, que é gerado pela Loggi ou pelo parceiro por meio da API de envio.
-        schema:
-          type: string
-      tags:
-      - PackageCancelAPI
 components:
-  securitySchemes:
-    OAuth2:
-      type: oauth2
-      description: Autenticação OAuth 2.0 para clientes da API.
-      flows:
-        clientCredentials:
-          tokenUrl: https://api.loggi.com/oauth2/token
-          scopes: {}
   schemas:
-    v1PackageUpdateResponse:
-      type: object
-      properties:
-        warning_type:
-          type: string
-          description: Mensagem com a constante que identifica casos em que a atualização dos dados do pacote não pode ser confirmada.
-          example: PACKAGE_DESTINATION_UPDATE_DRIVER_CUSTODY_WARNING_TYPE
-        warning_message:
-          type: string
-          description: Mensagem de alerta para casos em que a atualização dos dados do pacote não pode ser confirmada.
-          example: Package update while package is in drivers custody.
-      description: Objeto que configura a resposta da API de atualizar dados de um pacote.
     v1PackageUpdateRequest:
       type: object
       properties:
@@ -546,18 +423,26 @@ components:
           description: Detalhes sobre a falha. Nesta versão da API ainda não está sendo retornado, mas deve ser considerado um array de objetos de tipos distintos.
           items: {}
           example: []
-    v1PackageCancelResponse:
+    v1PackageUpdateResponse:
       type: object
       properties:
         warning_type:
           type: string
-          description: Mensagem com a constante que identifica casos em que o cancelamento não pode ser confirmado.
-          example: REDISPATCH_CANCELLATION
+          description: Mensagem com a constante que identifica casos em que a atualização dos dados do pacote não pode ser confirmada.
+          example: PACKAGE_DESTINATION_UPDATE_DRIVER_CUSTODY_WARNING_TYPE
         warning_message:
           type: string
-          description: Mensagem de alerta para casos em que o cancelamento não pode ser confirmado.
-          example: O pacote está com os correios. Vamos tentar cancelar e devolver pra você.
-      description: Objeto que configura a resposta da API de cancelamento de pacotes.
+          description: Mensagem de alerta para casos em que a atualização dos dados do pacote não pode ser confirmada.
+          example: Package update while package is in drivers custody.
+      description: Objeto que configura a resposta da API de atualizar dados de um pacote.
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      description: Autenticação OAuth 2.0 para clientes da API.
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.loggi.com/oauth2/token
+          scopes: {}
 x-provenance:
   method: searched
   source: https://docs.api.loggi.com/reference

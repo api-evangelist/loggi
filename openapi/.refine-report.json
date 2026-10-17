@@ -1,0 +1,63 @@
+{
+  "provider": "loggi",
+  "sources": [
+    "loggi-authentication-openapi.yml",
+    "loggi-freight-price-quotation-openapi.yml",
+    "loggi-integrator-openapi.yml",
+    "loggi-labels-openapi.yml",
+    "loggi-package-details-openapi.yml",
+    "loggi-package-openapi.yml",
+    "loggi-pontos-openapi.yml",
+    "loggi-shipments-openapi.yml",
+    "loggi-tracking-openapi.yml"
+  ],
+  "outputs": [
+    "loggi-authapi-api-openapi.yml",
+    "loggi-quotationapi-api-openapi.yml",
+    "loggi-integratorcompanyapi-api-openapi.yml",
+    "loggi-labelapi-api-openapi.yml",
+    "loggi-detailsapi-api-openapi.yml",
+    "loggi-packagecancelapi-api-openapi.yml",
+    "loggi-packageupdateapi-api-openapi.yml",
+    "loggi-dropofflocationsapi-api-openapi.yml",
+    "loggi-shipmentapi-api-openapi.yml",
+    "loggi-trackingapi-api-openapi.yml"
+  ],
+  "archived": [
+    "archived openapi/loggi-authentication-openapi.yml",
+    "archived openapi/loggi-freight-price-quotation-openapi.yml",
+    "archived openapi/loggi-integrator-openapi.yml",
+    "archived openapi/loggi-labels-openapi.yml",
+    "archived openapi/loggi-package-details-openapi.yml",
+    "archived openapi/loggi-package-openapi.yml",
+    "archived openapi/loggi-pontos-openapi.yml",
+    "archived openapi/loggi-shipments-openapi.yml",
+    "archived openapi/loggi-tracking-openapi.yml"
+  ],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "sourced from openapi/_original/ (0 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "loggi-authentication-openapi.yml: upgraded openapi 3.0.0 -> OpenAPI 3.2.0",
+    "loggi-authentication-openapi.yml: declared missing tag: AuthAPI",
+    "loggi-freight-price-quotation-openapi.yml: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
+    "loggi-freight-price-quotation-openapi.yml: declared missing tag: QuotationAPI",
+    "loggi-integrator-openapi.yml: upgraded openapi 3.0.0 -> OpenAPI 3.2.0",
+    "loggi-integrator-openapi.yml: declared missing tag: IntegratorCompanyAPI",
+    "loggi-labels-openapi.yml: upgraded openapi 3.0.0 -> OpenAPI 3.2.0",
+    "loggi-labels-openapi.yml: declared missing tag: LabelAPI",
+    "loggi-package-details-openapi.yml: upgraded openapi 3.0.0 -> OpenAPI 3.2.0",
+    "loggi-package-details-openapi.yml: declared missing tag: DetailsAPI",
+    "loggi-package-openapi.yml: upgraded openapi 3.0.0 -> OpenAPI 3.2.0",
+    "loggi-package-openapi.yml: declared missing tag: PackageCancelAPI",
+    "loggi-package-openapi.yml: declared missing tag: PackageUpdateAPI",
+    "loggi-pontos-openapi.yml: upgraded openapi 3.0.0 -> OpenAPI 3.2.0",
+    "loggi-pontos-openapi.yml: declared missing tag: DropoffLocationsAPI",
+    "loggi-shipments-openapi.yml: upgraded openapi 3.0.0 -> OpenAPI 3.2.0",
+    "loggi-shipments-openapi.yml: declared missing tag: ShipmentAPI",
+    "loggi-tracking-openapi.yml: upgraded openapi 3.0.0 -> OpenAPI 3.2.0",
+    "loggi-tracking-openapi.yml: declared missing tag: TrackingAPI",
+    "apis.yml register: written (+10 apis, 11 total)"
+  ],
+  "skipped": []
+}

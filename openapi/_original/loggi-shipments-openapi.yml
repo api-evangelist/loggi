@@ -1,0 +1,1614 @@
+# x-archived-from: loggi-shipments-openapi.yml
+# x-archived-on: 2026-10-17
+openapi: 3.0.0
+info:
+  title: Shipments
+  version: v1
+  description: O envio é o processo que inicia com uma retirada e termina com uma entrega de um pacote.
+servers:
+- url: https://stg.api.loggi.com
+- url: https://api.loggi.com
+paths:
+  /v1/companies/{company_id}/async-shipments:
+    post:
+      tags:
+      - ShipmentAPI
+      summary: Criar Shipment assíncrono.
+      description: "Cria um Shipment de forma assíncrona. Para iniciar um envio, você precisará de um endereço de origem, outro de destino e um pacote.\n### Teste abaixo o endpoint</h2> <div class=\"warning-docs\">\n  ⚠️ <em>Os campos abaixo precisam ser preenchidos para realização dos testes de endpoint.</em>\n</div>"
+      operationId: CreateAsyncShipment
+      security:
+      - OAuth2: []
+      parameters:
+      - name: company_id
+        in: path
+        required: true
+        description: Identificador do embarcador
+        schema:
+          type: string
+      responses:
+        '202':
+          description: Requisição do Shipment foi aceita. O processamento ocorrerá de forma assíncrona.
+          content:
+            application/json:
+              examples:
+                success:
+                  value:
+                    packages:
+                    - trackingCode: INVEWO32
+                      barcode: LG3TBNA3U8G2INVEWO32
+                      loggiKey: KIF511LG3TBNA3U8G2INVEWO32
+                      sequence: XPTO
+              schema:
+                $ref: '#/components/schemas/v1CreateAsyncShipmentResponse'
+        '400':
+          description: Mensagem do cliente não segue a especificação
+          content:
+            application/json:
+              example:
+                code: 9
+                message: Request with invalid data
+                details:
+                - '@type': type.googleapis.com/google.rpc.BadRequest
+                  fieldViolations:
+                  - field: shipTo.federalTaxId
+                    description: size is 18. Max size allowed is 14
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '401':
+          description: Falha de autenticação
+          content:
+            application/json:
+              example:
+                code: 16
+                message: Falha de autenticação
+                details: []
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '403':
+          description: Sem autorização para acessar o serviço
+          content:
+            application/json:
+              example:
+                code: 7
+                message: Falha de autorização
+                details: []
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Recurso não encontrado
+          content:
+            application/json:
+              example:
+                code: 5
+                message: Recurso não encontrado
+                details: []
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Requisições massivas bloqueadas
+          content:
+            application/json:
+              example:
+                code: 8
+                message: Requisições massivas bloqueadas
+                details: []
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '500':
+          description: Erro interno
+          content:
+            application/json:
+              example:
+                code: 13
+                message: Erro interno
+                details: []
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '503':
+          description: Serviço temporariamente indisponível
+          content:
+            application/json:
+              example:
+                code: 14
+                message: Serviço temporariamente indisponível
+                details: []
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      requestBody:
+        description: "Os objetos **correiosAddress** e **lineAddress** são **mutuamente exclusivos**.\nAo atribuir os valores de shipFrom.address e shipTo.address é necessário informar apenas um tipo de endereço, o padrão internacional ou Correios.\nExemplos:\n  - ```shipTo.address.addressLines = {...}``` ou ```shipTo.address.correiosAddress = {...} ```.\n  - ```shipFrom.address.addressLines = {...}``` ou ```shipFrom.address.correiosAddress = {...} ```."
+        content:
+          application/json:
+            examples:
+              correiosAddress:
+                value:
+                  externalServiceId: REVS-DROF-DOOR-STAN-01
+                  shipFrom:
+                    name: Jose dos Santos Alvarenga
+                    phoneNumber: '55119999888888'
+                    federalTaxId: '12345678909'
+                    address:
+                      instructions: Em frente ao posto de gasolina Liberdade
+                      correiosAddress:
+                        logradouro: Alameda Santos
+                        numero: '2400'
+                        complemento: 10 andar
+                        bairro: Jardim Paulista
+                        cep: 01419100
+                        cidade: São Paulo
+                        uf: SP
+                  shipTo:
+                    name: Joaquim do Anjos
+                    email: joaquim.dosajnosa@email.com
+                    phoneNumber: '55119999999998'
+                    federalTaxId: '22345678900'
+                    stateTaxId: '323233578'
+                    address:
+                      instructions: Loggi Tower
+                      correiosAddress:
+                        logradouro: Alameda Santos
+                        numero: '2400'
+                        complemento: 11 Andar
+                        bairro: Jardim Paulista
+                        cep: 01419100
+                        cidade: São Paulo
+                        uf: SP
+                  packages:
+                  - trackingCode: INVEWO32
+                    barcode: LG3TBNA3U8G2INVEWO32
+                    freightType: FREIGHT_TYPE_EXPRESS
+                    weightG: 12000
+                    lengthCm: 50
+                    widthCm: 50
+                    heightCm: 100
+                    documentTypes:
+                    - subPackageNumber: I00046456456521
+                      cte:
+                        key: '12340424217653010077570100001522931658092271'
+                      invoice:
+                        key: '35200920402853000167550100000013071406204048'
+                        series: '100'
+                        number: '5867306'
+                        totalValue: '844.82'
+                        authorizationProtocol: '100000000012345'
+                        icms: ICMS_TAXED
+                        items:
+                        - description: Caneta
+                        shipper:
+                          name: In Glow Brasil Intermediação de Negócios Ltda
+                          nifType:
+                            national:
+                              federalTaxId: '50617696000188'
+                              stateTaxId: '133091229115'
+                          address:
+                            instructions: Lojas S.A filial
+                            correiosAddress:
+                              logradouro: Av Rio Branco
+                              numero: '156'
+                              complemento: subloja 1b
+                              bairro: Centro
+                              cep: '59600145'
+                              cidade: Rio de Janeiro
+                              uf: RJ
+                    packaged: true
+                    labelled: true
+              lineAddress:
+                value:
+                  externalServiceId: REVS-DROF-DOOR-STAN-01
+                  shipFrom:
+                    name: Jose dos Santos Alvarenga
+                    phoneNumber: '55119999888888'
+                    federalTaxId: '23742246000134'
+                    address:
+                      instructions: Em frente ao posto de gasolina Liberdade
+                      lineAddress:
+                        addressLine1: Alameda Santos, 2400 - Jardim Paulista
+                        addressLine2: ''
+                        postalCode: 01418200
+                        city: São Paulo
+                        state: SP
+                        country: Brasil
+                  shipTo:
+                    name: Joaquim do Anjos
+                    email: joaquim.dosajnosa@email.com
+                    phoneNumber: '55119999999998'
+                    federalTaxId: '22345678900'
+                    stateTaxId: '323233578'
+                    address:
+                      instructions: Loggi Tower
+                      lineAddress:
+                        addressLine1: Alameda Santos, 2500 - Jardim Paulista
+                        addressLine2: ''
+                        postalCode: 01418200
+                        city: São Paulo
+                        state: SP
+                        country: Brasil
+                  returnTo:
+                    name: Jose dos Santos Alvarenga
+                    federalTaxId: '23742246000134'
+                    address:
+                      instructions: Em frente ao posto de gasolina Liberdade
+                      lineAddress:
+                        addressLine1: Alameda Santos, 2400 - Jardim Paulista
+                        addressLine2: ''
+                        postalCode: 01418200
+                        city: São Paulo
+                        state: SP
+                        country: Brasil
+                  packages:
+                  - trackingCode: INVEWO32
+                    barcode: LG3TBNA3U8G2INVEWO32
+                    freightType: FREIGHT_TYPE_EXPRESS
+                    weightG: 12000
+                    lengthCm: 50
+                    widthCm: 50
+                    heightCm: 100
+                    documentTypes:
+                    - subPackageNumber: K000423424221
+                      cte:
+                        key: '12340424217653010077570100001522931658092271'
+                      invoice:
+                        key: '35200920402853000167550100000013071406204048'
+                        series: '100'
+                        number: '5867306'
+                        totalValue: '844.82'
+                        icms: ICMS_TAXED
+                        items:
+                        - description: Caneta
+                    packaged: true
+                    labelled: true
+              invoice:
+                value:
+                  externalServiceId: REVS-DROF-DOOR-STAN-01
+                  shipFrom:
+                    name: Jose dos Santos Alvarenga
+                    phoneNumber: '55119999888888'
+                    federalTaxId: '23742246000134'
+                    address:
+                      instructions: Em frente ao posto de gasolina Liberdade
+                      lineAddress:
+                        addressLine1: Alameda Santos, 2400 - Jardim Paulista
+                        addressLine2: ''
+                        postalCode: 01418200
+                        city: São Paulo
+                        state: SP
+                        country: Brasil
+                  shipTo:
+                    name: Joaquim do Anjos
+                    email: joaquim.dosajnosa@email.com
+                    phoneNumber: '55119999999998'
+                    federalTaxId: '22345678900'
+                    stateTaxId: '323233578'
+                    address:
+                      instructions: Loggi Tower
+                      lineAddress:
+                        addressLine1: Alameda Santos, 2200 - Jardim Paulista
+                        addressLine2: ''
+                        postalCode: 01418200
+                        city: São Paulo
+                        state: SP
+                        country: Brasil
+                  packages:
+                  - trackingCode: INVEWO32
+                    barcode: LG3TBNA3U8G2INVEWO32
+                    freightType: FREIGHT_TYPE_EXPRESS
+                    weightG: 12000
+                    lengthCm: 50
+                    widthCm: 50
+                    heightCm: 100
+                    documentTypes:
+                    - subPackageNumber: N800898754243232
+                      cte:
+                        key: '12340424217653010077570100001522931658092271'
+                      invoice:
+                        key: '35200920402853000167550100000013071406204048'
+                        series: '100'
+                        number: '5867306'
+                        totalValue: '844.82'
+                        authorizationProtocol: '100000000012345'
+                        icms: ICMS_TAXED
+                        items:
+                        - description: Caneta
+                    packaged: true
+                    labelled: true
+              contentDeclaration:
+                value:
+                  externalServiceId: REVS-DROF-DOOR-STAN-01
+                  shipFrom:
+                    name: Jose dos Santos Alvarenga
+                    phoneNumber: '55119999888888'
+                    federalTaxId: '23742246000134'
+                    address:
+                      instructions: Em frente ao posto de gasolina Liberdade
+                      lineAddress:
+                        addressLine1: Alameda Santos, 2400 - Jardim Paulista
+                        addressLine2: ''
+                        postalCode: 01418200
+                        city: São Paulo
+                        state: SP
+                        country: Brasil
+                  shipTo:
+                    name: Joaquim do Anjos
+                    email: joaquim.dosajnosa@email.com
+                    phoneNumber: '55119999999998'
+                    federalTaxId: '22345678900'
+                    stateTaxId: '323233578'
+                    address:
+                      instructions: Loggi Tower
+                      lineAddress:
+                        addressLine1: Alameda Santos, 2500 - Jardim Paulista
+                        addressLine2: ''
+                        postalCode: 01418200
+                        city: São Paulo
+                        state: SP
+                        country: Brasil
+                  packages:
+                  - trackingCode: INVEWO32
+                    barcode: LG3TBNA3U8G2INVEWO32
+                    freightType: FREIGHT_TYPE_EXPRESS
+                    weightG: 12000
+                    lengthCm: 50
+                    widthCm: 50
+                    heightCm: 100
+                    documentTypes:
+                    - subPackageNumber: O000545354234324
+                      cte:
+                        key: '12340424217653010077570100001522931658092271'
+                      contentDeclaration:
+                        key: '35200920402853000167550100000013071406204048'
+                        series: '10'
+                        number: '1306'
+                        totalValue: '292'
+                        description: Uma camiseta da Loggi
+                        authorizationProtocol: '100000000012345'
+                        items:
+                        - description: Camisa Loggi GG
+                          quantity: 2
+                          unitaryValue: '100.00'
+                          unitaryWeightG: 92
+                    packaged: true
+                    labelled: true
+              packageSequence:
+                value:
+                  externalServiceId: REVS-DROF-DOOR-STAN-01
+                  shipFrom:
+                    name: Jose dos Santos Alvarenga
+                    phoneNumber: '55119999888888'
+                    federalTaxId: '12345678909'
+                    address:
+                      instructions: Em frente ao posto de gasolina Liberdade
+                      correiosAddress:
+                        logradouro: Alameda Santos
+                        numero: '2400'
+                        complemento: 10 andar
+                        bairro: Jardim Paulista
+                        cep: 01419100
+                        cidade: São Paulo
+                        uf: SP
+                  shipTo:
+                    name: Joaquim do Anjos
+                    email: joaquim.dosajnosa@email.com
+                    phoneNumber: '55119999999998'
+                    federalTaxId: '22345678900'
+                    stateTaxId: '323233578'
+                    address:
+                      instructions: Loggi Tower
+                      correiosAddress:
+                        logradouro: Alameda Santos
+                        numero: '2400'
+                        complemento: 11 Andar
+                        bairro: Jardim Paulista
+                        cep: 01419100
+                        cidade: São Paulo
+                        uf: SP
+                  packages:
+                  - trackingCode: INVEWO32
+                    barcode: LG3TBNA3U8G2INVEWO32
+                    sequence: XpTo
+                    freightType: FREIGHT_TYPE_EXPRESS
+                    weightG: 12000
+                    lengthCm: 50
+                    widthCm: 50
+                    heightCm: 100
+                    documentTypes:
+                    - subPackageNumber: P000646442342424234324321BR
+                      cte:
+                        key: '12340424217653010077570100001522931658092271'
+                      invoice:
+                        key: '35200920402853000167550100000013071406204048'
+                        series: '100'
+                        number: '5867306'
+                        totalValue: '844.82'
+                        icms: ICMS_TAXED
+                        items:
+                        - description: Caneta
+                    packaged: true
+                    labelled: true
+                  - trackingCode: INVEWO34
+                    barcode: LG3TLNC3U8G2INVEWO34
+                    sequence: Ab_1000
+                    freightType: FREIGHT_TYPE_EXPRESS
+                    weightG: 14000
+                    lengthCm: 49
+                    widthCm: 33
+                    heightCm: 85
+                    documentTypes:
+                    - subPackageNumber: Q0008645644321
+                      invoice:
+                        key: '46270920402853000167550100000013071406202563'
+                        series: '100'
+                        number: '7867308'
+                        totalValue: '500.23'
+                        icms: ICMS_TAXED
+                        items:
+                        - description: Lápis
+                    packaged: true
+                    labelled: true
+              multipleDocumentTypes:
+                value:
+                  externalServiceId: REVS-DROF-DOOR-STAN-01
+                  shipFrom:
+                    name: Jose dos Santos Alvarenga
+                    phoneNumber: '55119999888888'
+                    federalTaxId: '23742246000134'
+                    address:
+                      instructions: Em frente ao posto de gasolina Liberdade
+                      lineAddress:
+                        addressLine1: Alameda Santos, 2400 - Jardim Paulista
+                        addressLine2: ''
+                        postalCode: 01418200
+                        city: São Paulo
+                        state: SP
+                        country: Brasil
+                  shipTo:
+                    name: Joaquim do Anjos
+                    email: joaquim.dosajnosa@email.com
+                    phoneNumber: '55119999999998'
+                    federalTaxId: '22345678900'
+                    stateTaxId: '323233578'
+                    address:
+                      instructions: Loggi Tower
+                      lineAddress:
+                        addressLine1: Alameda Santos, 2500 - Jardim Paulista
+                        addressLine2: ''
+                        postalCode: 01418200
+                        city: São Paulo
+                        state: SP
+                        country: Brasil
+                  packages:
+                  - trackingCode: INVEWO32
+                    barcode: LG3TBNA3U8G2INVEWO32
+                    freightType: FREIGHT_TYPE_EXPRESS
+                    weightG: 12000
+                    lengthCm: 50
+                    widthCm: 50
+                    heightCm: 100
+                    documentTypes:
+                    - subPackageNumber: N800898754243232
+                      cte:
+                        key: '12340424217653010077570100001522931658092271'
+                      contentDeclaration:
+                        totalValue: '292'
+                        description: Uma camiseta da Loggi
+                        items:
+                        - description: Camisa Loggi GG
+                          quantity: 2
+                          unitaryValue: '100.00'
+                          unitaryWeightG: 92
+                    - subPackageNumber: H0064654646455645645646465454321
+                      cte:
+                        key: '12340424217653010077570100001522931658092271'
+                      invoice:
+                        key: '35200920402853000167550100000013071406204048'
+                        series: '100'
+                        number: '5867306'
+                        totalValue: '844.82'
+                        icms: ICMS_TAXED
+                        items:
+                        - description: Caneta
+                    - subPackageNumber: BR9218735647330721073I
+                      cte:
+                        key: '12340424217653010077570100001522931658092271'
+                      contentDeclaration:
+                        totalValue: '292'
+                        description: Uma camiseta da Loggi
+                        items:
+                        - description: Camisa Loggi GG
+                          quantity: 2
+                          unitaryValue: '100.00'
+                          unitaryWeightG: 92
+                    packaged: true
+                    labelled: true
+              shipper:
+                value:
+                  externalServiceId: REVS-DROF-DOOR-STAN-01
+                  shipFrom:
+                    name: In Glow Brasil Intermediação de Negócios Ltda
+                    phoneNumber: '55119999888888'
+                    federalTaxId: '12345678909'
+                    address:
+                      instructions: Em frente ao posto de gasolina Liberdade
+                      correiosAddress:
+                        logradouro: Alameda Santos
+                        numero: '2400'
+                        complemento: 10 andar
+                        bairro: Jardim Paulista
+                        cep: 01419100
+                        cidade: São Paulo
+                        uf: SP
+                  shipTo:
+                    name: Joaquim do Anjos
+                    email: joaquim.dosajnosa@email.com
+                    phoneNumber: '55119999999998'
+                    federalTaxId: '22345678900'
+                    stateTaxId: '323233578'
+                    address:
+                      instructions: Loggi Tower
+                      correiosAddress:
+                        logradouro: Alameda Santos
+                        numero: '2400'
+                        complemento: 11 Andar
+                        bairro: Jardim Paulista
+                        cep: 01419100
+                        cidade: São Paulo
+                        uf: SP
+                  packages:
+                  - trackingCode: INVEWO32
+                    barcode: LG3TBNA3U8G2INVEWO32
+                    freightType: FREIGHT_TYPE_EXPRESS
+                    weightG: 12000
+                    lengthCm: 50
+                    widthCm: 50
+                    heightCm: 100
+                    documentTypes:
+                    - subPackageNumber: I00046456456521
+                      cte:
+                        key: '12340424217653010077570100001522931658092271'
+                      invoice:
+                        key: '35200920402853000167550100000013071406204048'
+                        series: '100'
+                        number: '5867306'
+                        totalValue: '844.82'
+                        icms: ICMS_TAXED
+                        items:
+                        - description: Caneta
+                        shipper:
+                          name: In Glow Brasil Intermediação de Negócios Ltda
+                          nifType:
+                            national:
+                              federalTaxId: '50617696000188'
+                              stateTaxId: '133091229115'
+                          address:
+                            instructions: Lojas S.A filial
+                            correiosAddress:
+                              logradouro: Av Rio Branco
+                              numero: '156'
+                              complemento: subloja 1b
+                              bairro: Centro
+                              cep: '59600145'
+                              cidade: Rio de Janeiro
+                              uf: RJ
+                    packaged: true
+                    labelled: true
+              shippingCompany:
+                value:
+                  externalServiceId: REVS-DROF-DOOR-STAN-01
+                  shipFrom:
+                    name: Jose dos Santos Alvarenga
+                    phoneNumber: '55119999888888'
+                    federalTaxId: '12345678909'
+                    address:
+                      instructions: Em frente ao posto de gasolina Liberdade
+                      correiosAddress:
+                        logradouro: Alameda Santos
+                        numero: '2400'
+                        complemento: 10 andar
+                        bairro: Jardim Paulista
+                        cep: 01419100
+                        cidade: São Paulo
+                        uf: SP
+                  shipTo:
+                    name: Joaquim do Anjos
+                    email: joaquim.dosajnosa@email.com
+                    phoneNumber: '55119999999998'
+                    federalTaxId: '22345678900'
+                    stateTaxId: '323233578'
+                    address:
+                      instructions: Loggi Tower
+                      correiosAddress:
+                        logradouro: Alameda Santos
+                        numero: '2400'
+                        complemento: 11 Andar
+                        bairro: Jardim Paulista
+                        cep: 01419100
+                        cidade: São Paulo
+                        uf: SP
+                  shippingCompany:
+                    name: Correios
+                    federalTaxId: '50617696000188'
+                  packages:
+                  - trackingCode: INVEWO32
+                    barcode: LG3TBNA3U8G2INVEWO32
+                    freightType: FREIGHT_TYPE_EXPRESS
+                    weightG: 12000
+                    lengthCm: 50
+                    widthCm: 50
+                    heightCm: 100
+                    documentTypes:
+                    - subPackageNumber: I00046456456521
+                      cte:
+                        key: '12340424217653010077570100001522931658092271'
+                      invoice:
+                        key: '35200920402853000167550100000013071406204048'
+                        series: '100'
+                        number: '5867306'
+                        totalValue: '844.82'
+                        icms: ICMS_TAXED
+                        items:
+                        - description: Caneta
+                    packaged: true
+                    labelled: true
+              taker(National):
+                value:
+                  externalServiceId: REVS-DROF-DOOR-STAN-01
+                  shipFrom:
+                    name: In Glow Brasil Intermediação de Negócios Ltda
+                    phoneNumber: '55119999888888'
+                    federalTaxId: '12345678909'
+                    address:
+                      instructions: Em frente ao posto de gasolina Liberdade
+                      correiosAddress:
+                        logradouro: Alameda Santos
+                        numero: '2400'
+                        complemento: 10 andar
+                        bairro: Jardim Paulista
+                        cep: 01419100
+                        cidade: São Paulo
+                        uf: SP
+                  shipTo:
+                    name: Joaquim do Anjos
+                    email: joaquim.dosajnosa@email.com
+                    phoneNumber: '55119999999998'
+                    federalTaxId: '22345678900'
+                    stateTaxId: '323233578'
+                    address:
+                      instructions: Loggi Tower
+                      correiosAddress:
+                        logradouro: Alameda Santos
+                        numero: '2400'
+                        complemento: 11 Andar
+                        bairro: Jardim Paulista
+                        cep: 01419100
+                        cidade: São Paulo
+                        uf: SP
+                  packages:
+                  - trackingCode: INVEWO32
+                    barcode: LG3TBNA3U8G2INVEWO32
+                    freightType: FREIGHT_TYPE_EXPRESS
+                    weightG: 12000
+                    lengthCm: 50
+                    widthCm: 50
+                    heightCm: 100
+                    documentTypes:
+                    - subPackageNumber: I00046456456521
+                      cte:
+                        key: '12340424217653010077570100001522931658092271'
+                      invoice:
+                        key: '35200920402853000167550100000013071406204048'
+                        series: '100'
+                        number: '5867306'
+                        totalValue: '844.82'
+                        icms: ICMS_TAXED
+                        items:
+                        - description: Caneta
+                        shipper:
+                          name: In Glow Brasil Intermediação de Negócios Ltda
+                          nifType:
+                            national:
+                              federalTaxId: '50617696000188'
+                              stateTaxId: '133091229115'
+                        taker:
+                          name: In Glow Brasil Intermediação de Negócios Ltda
+                          nifType:
+                            national:
+                              federalTaxId: '50617696000188'
+                              stateTaxId: '133091229115'
+                          address:
+                            instructions: Lojas S.A filial
+                            correiosAddress:
+                              logradouro: Av Rio Branco
+                              numero: '156'
+                              complemento: subloja 1b
+                              bairro: Centro
+                              cep: '59600145'
+                              cidade: Rio de Janeiro
+                              uf: RJ
+                    packaged: true
+                    labelled: true
+              taker(International):
+                value:
+                  externalServiceId: REVS-DROF-DOOR-STAN-01
+                  shipFrom:
+                    name: In Glow Brasil Intermediação de Negócios Ltda
+                    phoneNumber: '55119999888888'
+                    federalTaxId: '12345678909'
+                    address:
+                      instructions: Em frente ao posto de gasolina Liberdade
+                      correiosAddress:
+                        logradouro: Alameda Santos
+                        numero: '2400'
+                        complemento: 10 andar
+                        bairro: Jardim Paulista
+                        cep: 01419100
+                        cidade: São Paulo
+                        uf: SP
+                  shipTo:
+                    name: Joaquim do Anjos
+                    email: joaquim.dosajnosa@email.com
+                    phoneNumber: '55119999999998'
+                    federalTaxId: '22345678900'
+                    stateTaxId: '323233578'
+                    address:
+                      instructions: Loggi Tower
+                      correiosAddress:
+                        logradouro: Alameda Santos
+                        numero: '2400'
+                        complemento: 11 Andar
+                        bairro: Jardim Paulista
+                        cep: 01419100
+                        cidade: São Paulo
+                        uf: SP
+                  packages:
+                  - trackingCode: INVEWO32
+                    barcode: LG3TBNA3U8G2INVEWO32
+                    freightType: FREIGHT_TYPE_EXPRESS
+                    weightG: 12000
+                    lengthCm: 50
+                    widthCm: 50
+                    heightCm: 100
+                    documentTypes:
+                    - subPackageNumber: I00046456456521
+                      cte:
+                        key: '12340424217653010077570100001522931658092271'
+                      invoice:
+                        key: '35200920402853000167550100000013071406204048'
+                        series: '100'
+                        number: '5867306'
+                        totalValue: '844.82'
+                        icms: ICMS_TAXED
+                        items:
+                        - description: Caneta
+                        shipper:
+                          name: In Glow Brasil Intermediação de Negócios Ltda
+                          nifType:
+                            national:
+                              federalTaxId: '50617696000188'
+                              stateTaxId: '133091229115'
+                        taker:
+                          name: In Glow Brasil Intermediação de Negócios Ltda
+                          nifType:
+                            international:
+                              number: '918742389438172400'
+                          address:
+                            instructions: Lojas S.A filial
+                            correiosAddress:
+                              logradouro: Av Rio Branco
+                              numero: '156'
+                              complemento: subloja 1b
+                              bairro: Centro
+                              cep: '59600145'
+                              cidade: Rio de Janeiro
+                              uf: RJ
+                    packaged: true
+                    labelled: true
+            schema:
+              $ref: '#/components/schemas/v1CreateAsyncShipmentRequest'
+        required: true
+components:
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      description: Autenticação OAuth 2.0 para clientes da API.
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.loggi.com/oauth2/token
+          scopes: {}
+  schemas:
+    v1CreateAsyncShipmentRequest:
+      type: object
+      description: Objeto que representa a criação de um shipment de forma assíncrona.
+      required:
+      - shipTo
+      - shipFrom
+      - packages
+      - externalServiceId
+      properties:
+        shipFrom:
+          $ref: '#/components/schemas/shipFrom'
+        shipTo:
+          $ref: '#/components/schemas/shipTo'
+        returnTo:
+          $ref: '#/components/schemas/returnTo'
+        shippingCompany:
+          $ref: '#/components/schemas/shippingCompany'
+        packages:
+          type: array
+          nullable: true
+          description: Pacote associado ao envio. A soma das medidas (altura, largura e comprimento) do pacote não podem passar de 200 cm.
+          items:
+            $ref: '#/components/schemas/asyncPackage'
+        externalServiceId:
+          type: string
+          nullable: true
+          description: Deverá ser informado pelo Sales Engineering responsável pela sua homologação.
+          example: DLVR-DROF-LPON-STAN-01
+    v1CreateAsyncShipmentResponse:
+      type: object
+      description: Objeto que representa um Shipment aceito.
+      required:
+      - packages
+      properties:
+        packages:
+          type: array
+          description: Lista de Packages de um Shipment que serão processados.
+          items:
+            $ref: '#/components/schemas/asyncPackageResponse'
+    ErrorMessage:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+          description: 'Código numérico referente à falha.
+
+
+            CANCELLED = 1
+
+
+            UNKNOWN = 2
+
+
+            INVALID_ARGUMENT = 3
+
+
+            DEADLINE_EXCEEDED = 4
+
+
+            NOT_FOUND = 5
+
+
+            ALREADY_EXISTS = 6
+
+
+            PERMISSION_DENIED = 7
+
+
+            RESOURCE_EXHAUSTED = 8
+
+
+            FAILED_PRECONDITION = 9
+
+
+            ABORTED = 10
+
+
+            OUT_OF_RANGE = 11
+
+
+            UNIMPLEMENTED = 12
+
+
+            INTERNAL = 13
+
+
+            UNAVAILABLE = 14
+
+
+            DATA_LOSS = 15
+
+
+            UNAUTHENTICATED = 16'
+          example: 14
+        message:
+          type: string
+          description: Texto pequeno informativo sobre a falha
+          example: Requisição com credenciais inválidas
+        details:
+          type: array
+          description: Detalhes sobre a falha. Nesta versão da API ainda não está sendo retornado, mas deve ser considerado um array de objetos de tipos distintos.
+          items: {}
+          example: []
+    shipFrom:
+      type: object
+      description: Objeto que representa os dados do embarcador.
+      required:
+      - name
+      - federalTaxId
+      - address
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 128
+          description: Nome do embarcador. Tamanho mínimo 1 caractere e tamanho máximo 128 caracteres.
+          example: Jose dos Santos Alvarenga
+        phoneNumber:
+          type: string
+          minLength: 0
+          maxLength: 16
+          description: Telefone do embarcador. Caso não informado o código do país, será considerado 55 (Brasil). Tamanho máximo 16 caracteres.
+          example:
+          - 55119999999999
+          - 351911169807
+        federalTaxId:
+          type: string
+          minLength: 11
+          maxLength: 14
+          description: CPF (com 11 dígitos) ou CNPJ (com 14 dígitos numéricos ou alfanuméricos) do embarcador.
+          example:
+          - 12345678909
+          - 23742246000134
+        address:
+          $ref: '#/components/schemas/address'
+    shipTo:
+      type: object
+      description: Objeto que representa os dados do recebedor.
+      required:
+      - name
+      - federalTaxId
+      - address
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 128
+          description: Nome do recebedor. Tamanho mínimo 1 caractere e tamanho máximo 128 caracteres.
+          example: Jose dos Santos Alvarenga
+        email:
+          type: string
+          minLength: 0
+          maxLength: 300
+          description: Email do recebedor. Tamanho máximo 300 caracteres.
+          example: jose.alvarenga@email.com
+        phoneNumber:
+          type: string
+          minLength: 0
+          maxLength: 16
+          description: Telefone do recebedor. Caso não informado o código do país, será considerado 55 (Brasil). Tamanho máximo 16 caracteres.
+          example:
+          - 55119999999999
+          - 351911169807
+        federalTaxId:
+          type: string
+          minLength: 11
+          maxLength: 14
+          description: CPF (com 11 dígitos) ou CNPJ (com 14 dígitos numéricos ou alfanuméricos) do embarcador.
+          example:
+          - 12345678909
+          - 23742246000134
+        stateTaxId:
+          type: string
+          minLength: 0
+          maxLength: 16
+          description: Inscrição Estadual do recebedor. Tamanho máximo 16 caracteres.
+          example: 123233578
+        address:
+          $ref: '#/components/schemas/address'
+    returnTo:
+      type: object
+      description: Objeto que representa os dados para a devolução do pacote.
+      required:
+      - address
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 128
+          description: Nome do embarcador. Tamanho mínimo 1 caractere e tamanho máximo 128 caracteres.
+          example: Jose dos Santos Alvarenga
+        phoneNumber:
+          type: string
+          minLength: 0
+          maxLength: 16
+          description: Telefone do embarcador. Caso não informado o código do país, será considerado 55 (Brasil). Tamanho máximo 16 caracteres.
+          example:
+          - 55119999999999
+          - 351911169807
+        federalTaxId:
+          type: string
+          minLength: 11
+          maxLength: 14
+          description: CPF (com 11 dígitos) ou CNPJ (com 14 dígitos numéricos ou alfanuméricos) do embarcador.
+          example:
+          - 12345678909
+          - 23742246000134
+        address:
+          $ref: '#/components/schemas/address'
+    shippingCompany:
+      type: object
+      description: Identifica a transportadora responsável pelo pacote no fluxo de operação universal.
+      required:
+      - name
+      - federalTaxId
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 128
+          description: Nome da empresa. Tamanho mínimo 1 caractere e tamanho máximo 128 caracteres.
+          example: Correios
+        federalTaxId:
+          type: string
+          minLength: 11
+          maxLength: 14
+          description: CPF (com 11 dígitos) ou CNPJ (com 14 dígitos numéricos ou alfanuméricos) do embarcador.
+          example:
+          - 12345678909
+          - 23742246000134
+    address:
+      oneOf:
+      - type: object
+        required:
+        - instructions
+        properties:
+          instructions:
+            type: string
+            minLength: 1
+            maxLength: 300
+            nullable: true
+            description: Mais detalhes sobre a localização do endereço. Tamanho mínimo 1 caractere e tamanho máximo 300 caracteres.
+            example:
+            - Prédio da Loggi.
+            - Próximo ao posto.
+            - Casa sem número, portão azul.
+          correiosAddress:
+            $ref: '#/components/schemas/correiosAddress'
+      - type: object
+        required:
+        - instructions
+        properties:
+          instructions:
+            type: string
+            minLength: 1
+            maxLength: 300
+            nullable: true
+            description: Mais detalhes sobre a localização do endereço. Tamanho mínimo 1 caractere e tamanho máximo 300 caracteres.
+            example:
+            - Prédio da Loggi.
+            - Próximo ao posto.
+            - Casa sem número, portão azul.
+          lineAddress:
+            $ref: '#/components/schemas/lineAddress'
+      description: Objeto que representa um endereço nacional em formato dos Correios ou um endereço internacional. Os objetos correiosAddress e lineAddress são mutuamente exclusivos.
+    correiosAddress:
+      type: object
+      required:
+      - logradouro
+      - cep
+      - cidade
+      - uf
+      properties:
+        logradouro:
+          type: string
+          minLength: 1
+          maxLength: 128
+          description: Nome da rua. Tamanho mínimo 1 caractere e Tamanho máximo 128 caracteres.
+          example: R. Liberdade
+        numero:
+          type: string
+          minLength: 0
+          maxLength: 8
+          description: Número do endereço. Tamanho máximo 8 caracteres. Caso não possua número, informar com os valores S/N ou s/n
+          example:
+          - 2400
+          - S/N
+          - s/n
+        complemento:
+          type: string
+          minLength: 0
+          maxLength: 128
+          description: Informações adicionais para facilitar a localização. Tamanho máximo 128 caracteres.
+          example: apto 42, em frente ao lava-jato
+        bairro:
+          type: string
+          minLength: 1
+          maxLength: 64
+          description: Para endereços de Brasília, procure mais informações nos Correios. Em casos que seja usado regiões adminstrativas e se existir bairro, informe entre parentêses. Tamanho mínimo 1 caractere e Tamanho máximo 64 caracteres.
+          example: Bonsucesso
+        cep:
+          type: string
+          minLength: 8
+          maxLength: 8
+          description: CEP do endereço com 8 dígitos.
+          example: 30622580
+        cidade:
+          type: string
+          minLength: 1
+          maxLength: 32
+          description: Cidade do endereço. Tamanho mínimo 1 caractere e Tamanho máximo 32 caracteres.
+          example: Belo Horizonte
+        uf:
+          type: string
+          minLength: 2
+          maxLength: 2
+          description: Unidade federativa com dois caracteres.
+          example: MG
+      description: Objeto que contém informações detalhadas do endereço compatível com o formato da API dos Correios.
+    lineAddress:
+      description: Objeto que representa um endereço com padrão internacional.
+      type: object
+      required:
+      - addressLine1
+      - postalCode
+      - city
+      - state
+      properties:
+        addressLine1:
+          type: string
+          minLength: 1
+          maxLength: 256
+          description: Primeira linha que contempla os dados do endereço. Tamanho mínimo 1 caractere e Tamanho máximo 256 caracteres.
+          example: Alameda Santos, 2400 - Jardim Paulista, São Paulo, Brasil
+        addressLine2:
+          type: string
+          minLength: 0
+          maxLength: 256
+          description: Segunda linha que complementa os dados de endereço. Tamanho máximo 256 caracteres. descritos em addressLine1
+          example: Alameda Santos, 2800 - Jardim Paulista, São Paulo, Brasil
+        postalCode:
+          type: string
+          minLength: 8
+          maxLength: 8
+          description: Código postal do endereço. Tamanho mínimo 8 caractere e Tamanho máximo 8 caracteres.
+          example: 1418200
+        city:
+          type: string
+          minLength: 1
+          maxLength: 32
+          description: Cidade do endereço. Tamanho mínimo 1 caractere e Tamanho máximo 32 caracteres.
+          example: São Paulo
+        state:
+          type: string
+          minLength: 1
+          maxLength: 32
+          description: Estado do Endereço. Tamanho mínimo 1 caractere e Tamanho máximo 32 caracteres.
+          example: São Paulo
+        country:
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: País do endereço.  Tamanho mínimo 1 caractere e Tamanho máximo 100 caracteres.
+          example: Brasil
+    shipper:
+      description: Objeto que representa um remetente nacional ou internacional.
+      type: object
+      required:
+      - name
+      - nifType
+      - address
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 128
+          description: Nome do remetente.
+          example: In Glow Brasil Intermediação de Negócios Ltda
+        nifType:
+          $ref: '#/components/schemas/nifType'
+        address:
+          $ref: '#/components/schemas/address'
+    asyncPackage:
+      type: object
+      required:
+      - weightG
+      - freightType
+      - lengthCm
+      - widthCm
+      - heightCm
+      - documentTypes
+      properties:
+        trackingCode:
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: Código de rastreio de um envio informado pelo cliente. Caso não seja informado, a Loggi irá gerar um valor para este campo. Tamanho mínimo 1 caractere e Tamanho máximo 100 caractere.
+          example: LG101609787206559413747
+        barcode:
+          type: string
+          minLength: 1
+          maxLength: 255
+          description: Conteúdo do código de barras informado pelo cliente. Caso não seja informado, a Loggi irá gerar um valor para este campo. Tamanho mínimo 1 caractere e Tamanho máximo 255 caracteres.
+          example: LG3TBNA3U8G2INVEWO12
+        freightType:
+          type: string
+          enum:
+          - FREIGHT_TYPE_ECONOMIC
+          - FREIGHT_TYPE_EXPRESS
+          default: FREIGHT_TYPE_ECONOMIC
+          description: Tipos de frete do pacote.
+          example: '- FREIGHT_TYPE_ECONOMIC tipo de frete econômico
+
+            - FREIGHT_TYPE_EXPRESS tipo de frete expresso'
+        weightG:
+          type: integer
+          maximum: 30000
+          format: int32
+          description: Peso do pacote em gramas. Valor máximo 30000.
+          example: 12000
+        lengthCm:
+          type: integer
+          maximum: 100
+          format: int32
+          description: Comprimento do pacote em centímetros. Valor máximo 100.
+          example: 55
+        widthCm:
+          type: integer
+          maximum: 100
+          format: int32
+          description: Largura do pacote em centrímetros. Valor máximo 100.
+          example: 55
+        heightCm:
+          type: integer
+          maximum: 100
+          format: int32
+          description: Altura do pacote em centímetros. Valor máximo 100.
+          example: 100
+        documentTypes:
+          type: array
+          items:
+            type: object
+            properties:
+              subPackageNumber:
+                type: string
+                maxLength: 50
+                description: Código do subpacote informado pelo cliente associado ao documento. Tamanho máximo de 50 caracteres.
+                example: G00089834321
+              cte:
+                type: object
+                required:
+                - key
+                properties:
+                  key:
+                    type: string
+                    minLength: 44
+                    maxLength: 44
+                    description: Chave de identificação do Cte. Tamanho de 44 caracteres.
+                    example: '12340424217653010077570100001522931658092271'
+            oneOf:
+            - type: object
+              properties:
+                invoice:
+                  type: object
+                  required:
+                  - key
+                  - series
+                  - number
+                  - totalValue
+                  - icms
+                  properties:
+                    key:
+                      type: string
+                      minLength: 44
+                      maxLength: 44
+                      description: Chave de identificação da Nota Fiscal. Tamanho de 44 caracteres.
+                      example: '35200920402853000167550100000013071406204048'
+                    series:
+                      type: string
+                      minLength: 1
+                      maxLength: 3
+                      description: Série da Nota Fiscal. Tamanho mínimo 1 caractere e Tamanho máximo 3 caracteres.
+                      example: 10
+                    number:
+                      type: string
+                      minLength: 1
+                      maxLength: 9
+                      description: Número da Nota Fiscal. Tamanho mínimo 1 caractere e Tamanho máximo 9 caracteres.
+                      example: 1306
+                    totalValue:
+                      type: string
+                      minLength: 1
+                      maxLength: 8
+                      description: Valor total da Nota Fiscal. Tamanho mínimo 1 caractere e Tamanho máximo 8 caracteres.
+                      example: 844.82
+                    authorizationProtocol:
+                      type: string
+                      minLength: 15
+                      maxLength: 17
+                      description: Número do protocolo de autorização EPEC. Tamanho mínimo 15 e tamanho máximo 17 caracteres numéricos.
+                      example: 100000000012345
+                    icms:
+                      type: string
+                      enum:
+                      - ICMS_TAXED
+                      - ICMS_NOT_TAXED
+                      - ICMS_FREE
+                      default: ICMS_TAXED
+                      description: Constante que representa se um pacote terá tributação de ICMS.
+                      example: '- ICMS_TAXED Envio com ICMS tributado
+
+                        - ICMS_NOT_TAXED Envio com ICMS não tributado
+
+                        - ICMS_FREE Envio isento de ICMS'
+                    items:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          description:
+                            type: string
+                            maxLength: 100
+                            description: Descrição de um dos itens na Nota fiscal
+                    shipper:
+                      $ref: '#/components/schemas/shipper'
+                    taker:
+                      $ref: '#/components/schemas/taker'
+                  description: Objeto que representa as características da Nota Fiscal de um pacote.
+            - type: object
+              properties:
+                contentDeclaration:
+                  type: object
+                  required:
+                  - totalValue
+                  properties:
+                    totalValue:
+                      type: string
+                      minLength: 1
+                      maxLength: 8
+                      description: Valor total da declaração de conteúdo. Tamanho mínimo 1 caractere e Tamanho máximo 8 caracteres.
+                      example: 292
+                    authorizationProtocol:
+                      type: string
+                      minLength: 15
+                      maxLength: 17
+                      description: Número do protocolo de autorização EPEC. Tamanho mínimo 15 e tamanho máximo 17 caracteres numéricos.
+                      example: 100000000012345
+                    description:
+                      minLength: 1
+                      maxLength: 100
+                      type: string
+                      description: Descrição dos itens da declaração de conteúdo. Obrigatório se a chave, a série e o número da Declaração de Conteúdo Eletrônica não forem informadas. Tamanho mínimo 1 caractere e Tamanho máximo 100 caracteres.
+                      example: Uma camiseta da Loggi.
+                    key:
+                      type: string
+                      minLength: 44
+                      maxLength: 44
+                      description: Chave de identificação da Declaração de Conteúdo Eletrônica. Tamanho de 44 caracteres.
+                      example: '35200920402853000167550100000013071406204048'
+                    series:
+                      type: string
+                      minLength: 1
+                      maxLength: 3
+                      description: Série da Declaração de Conteúdo Eletrônica. Tamanho mínimo 1 caractere e Tamanho máximo 3 caracteres.
+                      example: 10
+                    number:
+                      type: string
+                      minLength: 1
+                      maxLength: 9
+                      description: Número da Declaração de Conteúdo Eletrônica. Tamanho mínimo 1 caractere e Tamanho máximo 9 caracteres.
+                      example: 1306
+                    items:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          description:
+                            type: string
+                            maxLength: 100
+                            description: Descrição de um dos itens na Declaração de conteúdo
+                          quantity:
+                            type: integer
+                            description: Quantidade de ocorrência desse item na declaração de conteúdo
+                          unitaryValue:
+                            type: string
+                            maxLength: 8
+                            description: Valor unitário desse item na declaração de conteúdo
+                          unitaryWeightG:
+                            type: integer
+                            maximum: 30000
+                            minimum: 0
+                            description: Peso do item na declaração de conteúdo
+                    shipper:
+                      $ref: '#/components/schemas/shipper'
+                    taker:
+                      $ref: '#/components/schemas/taker'
+            - type: object
+              properties:
+                dir:
+                  type: object
+                  required:
+                  - awb
+                  - number
+                  - emissionDate
+                  - totalValue
+                  - currency
+                  properties:
+                    awb:
+                      type: string
+                      minLength: 11
+                      maxLength: 11
+                      description: Air Way Bill da declaração de importação de remessas. Tamanho de 11 caracteres.
+                      example: 123456789AB
+                    number:
+                      type: string
+                      minLength: 12
+                      maxLength: 12
+                      description: Número da declaração de importação de remessas. Tamanho de 12 caracteres.
+                      example: 123456789012
+                    emissionDate:
+                      type: string
+                      minLength: 12
+                      maxLength: 24
+                      description: Data de emissão da declaração de importação de remessas. Formato yyyy-MM-dd'T'HH:mm:ss
+                      example: '2024-02-01T12:55:17Z'
+                    totalValue:
+                      type: string
+                      minLength: 1
+                      maxLength: 8
+                      description: Valor total da declaração de conteúdo. Tamanho mínimo 1 caractere e Tamanho máximo 8 caracteres.
+                      example: 292
+                    currency:
+                      type: string
+                      minLength: 3
+                      maxLength: 3
+                      description: Moeda do valor total. Tamanho de 3 caracteres.
+                      example: BRL
+                    shippingMethod:
+                      type: string
+                      enum:
+                      - SHIPPING_METHOD_EXPRESS
+                      default: SHIPPING_METHOD_EXPRESS
+                      description: Modalidade da remessa da declaração de importação de remessas.
+                      example: SHIPPING_METHOD_EXPRESS
+                    importTaxValue:
+                      type: string
+                      minLength: 1
+                      maxLength: 8
+                      description: Valor da taxa de importação da declaração de conteúdo. Tamanho mínimo 1 caractere e Tamanho máximo 8 caracteres.
+                      example: '25.50'
+                    items:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          description:
+                            type: string
+                            maxLength: 100
+                            description: Descrição de um dos itens na Declaração de importação de remessas
+                    shipper:
+                      $ref: '#/components/schemas/shipper'
+                    taker:
+                      $ref: '#/components/schemas/taker'
+          description: Tipos de documentos associados ao pacote.
+        packaged:
+          type: boolean
+          description: Valor que identifica se o pacote está embalado. Por padrão, o pacote é considerado embalado (true).
+          format: boolean
+          example:
+          - true
+          - false
+        labelled:
+          type: boolean
+          description: Valor que identifica se o pacote está etiquetado. Por padrão, o pacote é considerado etiquetado (true).
+          format: boolean
+          example:
+          - true
+          - false
+        sequence:
+          type: string
+          maximum: 100
+          minimum: 0
+          description: 'Valor enviado pelo cliente para identificar um pacote dentro de um Shipment. Este valor será retornado
+
+            na resposta. Tamanho máximo 100.'
+          example:
+          - '100'
+          - XpTO
+          - L_oGG1_00
+    asyncPackageResponse:
+      type: object
+      required:
+      - trackingCode
+      - barcode
+      - sequence
+      - loggiKey
+      properties:
+        trackingCode:
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: Código de rastreio de um envio informado pelo cliente. Caso não seja informado, a Loggi irá gerar um valor para este campo. Tamanho mínimo 1 caractere e Tamanho máximo 100 caracteres.
+          example: LG101609787206559413747
+        barcode:
+          type: string
+          minLength: 1
+          maxLength: 255
+          description: Conteúdo do código de barras informado pelo cliente. Caso não seja informado, a Loggi irá gerar um valor para este campo. Tamanho mínimo 1 caractere e Tamanho máximo 255 caracteres.
+          example: LG3TBNA3U8G2INVEWO12
+        loggiKey:
+          type: string
+          description: Identificador único de um pacote gerado pela Loggi.
+          example: KIF511LG3TBNA3U8G2INVEWO32
+        sequence:
+          type: string
+          maximum: 100
+          minimum: 0
+          description: 'Valor enviado pelo cliente para identificar um pacote dentro de um Shipment. Este valor será retornado
+
+            na resposta. Tamanho máximo 100.'
+          example:
+          - '100'
+          - XpTO
+          - L_oGG1_00
+    nifType:
+      description: Objeto que representa os dados ficais de uma pessoa física ou jurídica podendo ser nacional ou internacional.
+      oneOf:
+      - type: object
+        properties:
+          national:
+            $ref: '#/components/schemas/nationalNif'
+      - type: object
+        properties:
+          international:
+            $ref: '#/components/schemas/internationalNif'
+    nationalNif:
+      type: object
+      required:
+      - federalTaxId
+      properties:
+        federalTaxId:
+          type: string
+          minLength: 11
+          maxLength: 14
+          description: CPF (com 11 dígitos) ou CNPJ (com 14 dígitos numéricos ou alfanuméricos) do embarcador.
+          example:
+          - 12345678909
+          - 23742246000134
+        stateTaxId:
+          type: string
+          minLength: 0
+          maxLength: 16
+          description: Inscrição Estadual.
+          example: 123233578
+      description: Contém os dados fiscais nacional.
+    internationalNif:
+      type: object
+      required:
+      - number
+      properties:
+        number:
+          type: string
+          minLength: 1
+          maxLength: 20
+          description: Número de identificação fiscal internacional.
+          example: 918742389438172400
+      description: Contém os dados fiscais internacional.
+    taker:
+      description: Objeto que representa o tomador de serviço.
+      type: object
+      required:
+      - name
+      - nifType
+      - address
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 128
+          description: Nome do tomando de serviço.
+          example: In Glow Brasil Intermediação de Negócios Ltda
+        nifType:
+          $ref: '#/components/schemas/nifType'
+        address:
+          $ref: '#/components/schemas/address'
+x-provenance:
+  method: searched
+  source: https://docs.api.loggi.com/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://docs.api.loggi.com/reference/createasyncshipment.md
+  - https://docs.api.loggi.com/reference/shipmentapi-1.md
+  merge:
+    pages: 2
+    deduped: 19
+    conflicts_kept_first: 0

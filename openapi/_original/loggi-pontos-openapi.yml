@@ -1,0 +1,524 @@
+# x-archived-from: loggi-pontos-openapi.yml
+# x-archived-on: 2026-10-17
+openapi: 3.0.0
+info:
+  title: Loggi Pontos
+  version: v1
+  description: API de Loggi Pontos.
+servers:
+- url: https://stg.api.loggi.com
+- url: https://api.loggi.com
+paths:
+  /dropoff/locations:
+    post:
+      tags:
+      - DropoffLocationsAPI
+      summary: Listar Loggi Pontos.
+      description: "Lista os Loggi Pontos disponíveis para dropoff.\n### Teste abaixo o endpoint</h2> <div class=\"warning-docs\">\n  ⚠️ <em>Os campos abaixo precisam ser preenchidos para realização dos testes de endpoint.</em>\n</div>"
+      operationId: ListDropoffLocations
+      security:
+      - OAuth2: []
+      responses:
+        '200':
+          description: Loggi Pontos retornados com sucesso.
+          content:
+            application/json:
+              examples:
+                locations_found:
+                  value:
+                    status: success
+                    message:
+                      limit: 1
+                      offset: 0
+                      current_page: 0
+                      total_pages: 3
+                      total_locations: 3
+                      pagination:
+                      - location_id: LPTESTE
+                        location_name: Loggi Ponto teste
+                        location_type: DROP_POINT
+                        categories:
+                        - Ponto Profissional
+                        - Ponto Comercial
+                        - LoggiPonto
+                        - DropOff Sem Etiqueta
+                        - DropOff
+                        - Reversa
+                        available_compartments: null
+                        longitude: -463913.79
+                        latitude: -233324.59
+                        country: ''
+                        city: ''
+                        district: ''
+                        postal_code: '50721200'
+                        address: Rua adelino frutuosoo 199
+                        neighborhood: ''
+                        state: ''
+                        complement: ''
+                        opening_hours: '星期一 - 星期二: 08:00 - 20:00, 星期三 - 星期日: 休息'
+                        opening_hours_detail: 'Mon - Tue: 08:00 - 20:00, Wed - Sun: Closed'
+                        navigation_link: ''
+                        special_holidays: null
+                        site_condition: null
+                        opening_hours_details:
+                        - day: Mon
+                          open: 0800
+                          close: '2000'
+                        - day: Tue
+                          open: 0800
+                          close: '2000'
+                        - day: Wed
+                          open: ''
+                          close: ''
+                        - day: Thu
+                          open: ''
+                          close: ''
+                        - day: Fri
+                          open: ''
+                          close: ''
+                        - day: Sat
+                          open: ''
+                          close: ''
+                        - day: Sun
+                          open: ''
+                          close: ''
+                locations_not_found:
+                  value:
+                    status: success
+                    message:
+                      limit: 10
+                      offset: 0
+                      current_page: 0
+                      total_pages: 0
+                      total_locations: 0
+                      pagination: []
+              schema:
+                $ref: '#/components/schemas/ListDropoffLocationsResponse'
+        '400':
+          description: Requisição não segue a especificação.
+          content:
+            application/json:
+              example:
+                status: erro
+                erros:
+                - mensagem: ('query', 'categories')Input should be a valid list
+                  codigo: 0
+              schema:
+                $ref: '#/components/schemas/TmsErrorMessage'
+        '401':
+          description: Falha de autenticação
+          content:
+            application/json:
+              example:
+                code: 16
+                message: Unauthorized
+                details: []
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Requisições massivas bloqueadas.
+          content:
+            application/json:
+              example:
+                code: 8
+                message: Throttled
+                details: []
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '500':
+          description: Erro interno
+          content:
+            application/json:
+              example:
+                code: 13
+                message: Internal server error
+                details: []
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '503':
+          description: Serviço temporariamente indisponível.
+          content:
+            application/json:
+              example:
+                code: 14
+                message: Integration failure
+                details: []
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      requestBody:
+        content:
+          application/json:
+            examples:
+              categories:
+                value:
+                  categories:
+                  - LoggiPonto
+            schema:
+              $ref: '#/components/schemas/ListDropoffLocationsRequest'
+        required: true
+components:
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      description: Autenticação OAuth 2.0 para clientes da API.
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.loggi.com/oauth2/token
+          scopes: {}
+  schemas:
+    ListDropoffLocationsRequest:
+      type: object
+      description: Filtros desejados para a listagem de Loggi Pontos.
+      required:
+      - categories
+      properties:
+        categories:
+          type: array
+          items:
+            type: string
+          description: 'As **categorias** representam o agrupamento que nossa equipe de negócios faz do tipo de serviço que o Loggi Ponto fornece, ou a categoria na qual queremos inserir esse Loggi Ponto.
+
+
+            Os pontos devem ser filtrados por **Perfil** (Profissional ou Comercial) e **Serviço**, sendo possível utilizar categorias de maneira simultânea para resultados com interseção.
+
+
+            **Categorias de Perfil:**
+
+
+            - **Ponto Profissional**: Inclui *Leves* e *Agências*.
+
+            - **Ponto Comercial**: Inclui *LoggiPonto Terceiro*.
+
+            - **LoggiPonto**: Inclui todos os pontos. *Esta é a categoria padrão*.
+
+
+            **Categorias de Serviço:**
+
+
+            - **DropOff Sem Etiqueta**
+
+            - **DropOff**
+
+            - **Reversa**
+
+
+            Utilize as categorias de perfil e serviço conforme necessário para refinar sua busca. Por exemplo, para obter pontos comerciais que oferecem o serviço de *DropOff*, inclua ambas as categorias no filtro.
+
+            '
+          default:
+          - LoggiPonto
+          example:
+          - Ponto Comercial
+          - DropOff
+        limit:
+          type: integer
+          nullable: true
+          description: Quantidade máxima de Loggi Pontos a serem retornados por página.
+          default: 100
+          example: 50
+        offset:
+          type: integer
+          nullable: true
+          description: Posição do primeiro Loggi Ponto a ser retornado.
+          default: 0
+          example: 10
+        location_id:
+          type: string
+          nullable: true
+          description: Filtro por identificador único para retornar um Loggi Ponto específico.
+          default: null
+          example: ALF001
+        postal_code:
+          type: string
+          nullable: true
+          description: Filtro por proximidade de CEP.
+          default: null
+          example: '05407002'
+        country:
+          type: string
+          nullable: true
+          description: Filtro por país.
+          default: Brasil
+          example: Brasil
+        city:
+          type: string
+          nullable: true
+          description: Filtro de cidade.
+          default: null
+          example: Rio de Janeiro
+        state:
+          type: string
+          nullable: true
+          description: Filtro por estado.
+          default: null
+          example: Minas Gerais
+        longitude:
+          type: number
+          nullable: true
+          description: Filtro por longitude.
+          default: null
+          example: -43.2096
+        latitude:
+          type: number
+          nullable: true
+          description: Filtro por latitude.
+          default: null
+          example: -43.2096
+        distance:
+          type: number
+          nullable: true
+          description: Filtro por distância (em metros).
+          default: null
+          example: 10000
+    ListDropoffLocationsResponse:
+      type: object
+      description: Resposta com os Loggi Pontos filtrados.
+      required:
+      - status
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+          description: Informa que houve sucesso na pesquisa.
+          example: success
+        message:
+          $ref: '#/components/schemas/ListDropoffLocationsMessage'
+    ListDropoffLocationsMessage:
+      type: object
+      required:
+      - limit
+      - offset
+      - current_page
+      - total_pages
+      - total_locations
+      - pagination
+      description: Paginação dos resultados.
+      properties:
+        limit:
+          type: integer
+          description: Quantidade máxima de Loggi Pontos por página.
+          example: 50
+        offset:
+          type: integer
+          description: Posição do primeiro Loggi Ponto na página atual.
+          example: 0
+        current_page:
+          type: integer
+          description: Página atual.
+          example: 2
+        total_pages:
+          type: integer
+          description: Quantidade total de páginas.
+          example: 3
+        total_locations:
+          type: integer
+          description: Quantidade total de Loggi Pontos encontrados.
+          example: 100
+        pagination:
+          $ref: '#/components/schemas/ListDropoffLocationsPagination'
+    ListDropoffLocationsPagination:
+      description: Lista dos Loggi Pontos presentes na página atual.
+      type: array
+      items:
+        $ref: '#/components/schemas/DropoffLocation'
+    DropoffLocation:
+      description: Representação de um Loggi Ponto.
+      type: object
+      properties:
+        location_id:
+          type: string
+          description: Identificador único do Loggi Ponto.
+          example: ALF001
+        location_name:
+          type: string
+          description: Nome do Loggi Ponto.
+          example: Loggi Ponto Faria Lima
+        location_type:
+          type: string
+          description: Tipo do Loggi Ponto.
+          example: DROP_POINT
+        categories:
+          type: array
+          description: Categorias do Loggi Ponto.
+          items:
+            type: string
+          example:
+          - Ponto Comercial
+          - DropOff
+        available_compartments:
+          nullable: true
+        longitude:
+          type: number
+          description: Longitude do Loggi Ponto.
+          example: -463913.79
+        latitude:
+          type: number
+          description: Latitude
+          example: -233324.59
+        country:
+          type: string
+          description: Páis do Loggi Ponto.
+          example: Brasil
+        city:
+          type: string
+          description: Cidade do Loggi Ponto.
+          example: Belo Horizonte
+        district:
+          type: string
+          description: Distrito do Loggi Ponto.
+          example: Barreiro
+        postal_code:
+          type: string
+          description: CEP do Loggi Ponto.
+          example: '50721200'
+        address:
+          type: string
+          description: Endereço do Loggi Ponto.
+          example: Avenida Brigadeiro Faria Lima, 200
+        neighborhood:
+          type: string
+          description: Bairro.
+          example: Centro
+        state:
+          type: string
+          description: Estado.
+          example: Bahia
+        complement:
+          type: string
+          description: Complemento.
+          example: Sala 201
+        opening_hours:
+          type: string
+          description: Horário de funcionamento.
+          example: 'Mon - Tue: 08:00 - 20:00, Wed - Sun: Closed'
+        opening_hours_detail:
+          type: string
+          description: Horário de funcionamento.
+          example: 'Mon - Tue: 08:00 - 20:00, Wed - Sun: Closed'
+        navigation_link:
+          nullable: true
+        special_holidays:
+          nullable: true
+        site_condition:
+          nullable: true
+        opening_hours_details:
+          type: array
+          description: Horário de funcionamento.
+          items:
+            $ref: '#/components/schemas/OpeningHoursDay'
+    OpeningHoursDay:
+      type: object
+      properties:
+        day:
+          type: string
+          description: Dia da semana.
+          example: Mon
+        open:
+          type: string
+          description: Hora de abertura.
+          example: 0800
+        close:
+          type: string
+          description: Hora de fechamento.
+          example: '2000'
+    ErrorMessage:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+          description: 'Código numérico referente à falha.
+
+
+            CANCELLED = 1
+
+
+            UNKNOWN = 2
+
+
+            INVALID_ARGUMENT = 3
+
+
+            DEADLINE_EXCEEDED = 4
+
+
+            NOT_FOUND = 5
+
+
+            ALREADY_EXISTS = 6
+
+
+            PERMISSION_DENIED = 7
+
+
+            RESOURCE_EXHAUSTED = 8
+
+
+            FAILED_PRECONDITION = 9
+
+
+            ABORTED = 10
+
+
+            OUT_OF_RANGE = 11
+
+
+            UNIMPLEMENTED = 12
+
+
+            INTERNAL = 13
+
+
+            UNAVAILABLE = 14
+
+
+            DATA_LOSS = 15
+
+
+            UNAUTHENTICATED = 16'
+          example: 14
+        message:
+          type: string
+          description: Texto pequeno informativo sobre a falha
+          example: Unauthorized
+        details:
+          type: array
+          description: Detalhes sobre a falha. Nesta versão da API ainda não está sendo retornado, mas deve ser considerado um array de objetos de tipos distintos.
+          items: {}
+          example: []
+    TmsErrorMessage:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Informa o status da requisição.
+          enum:
+          - erro
+          example: erro
+        erros:
+          description: Lista de erros que ocorreram.
+          type: array
+          items:
+            type: object
+            properties:
+              mensagem:
+                type: string
+                description: Texto pequeno informativo sobre a falha.
+                example: ('query', 'categories')Input should be a valid list
+              codigo:
+                type: integer
+                description: Código numérico referente à falha.
+                example: 0
+x-provenance:
+  method: searched
+  source: https://docs.api.loggi.com/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://docs.api.loggi.com/reference/listdropofflocations.md
+  merge:
+    pages: 1
+    deduped: 0
+    conflicts_kept_first: 0

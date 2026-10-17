@@ -1,18 +1,25 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Shipments
+  title: Shipments Shipment API
   version: v1
   description: O envio é o processo que inicia com uma retirada e termina com uma entrega de um pacote.
 servers:
 - url: https://stg.api.loggi.com
 - url: https://api.loggi.com
+tags:
+- name: ShipmentAPI
 paths:
   /v1/companies/{company_id}/async-shipments:
     post:
       tags:
       - ShipmentAPI
-      summary: Criar Shipment assíncrono.
-      description: "Cria um Shipment de forma assíncrona. Para iniciar um envio, você precisará de um endereço de origem, outro de destino e um pacote.\n### Teste abaixo o endpoint</h2> <div class=\"warning-docs\">\n  ⚠️ <em>Os campos abaixo precisam ser preenchidos para realização dos testes de endpoint.</em>\n</div>"
+      summary: Criar Shipment assíncrono
+      description: 'Cria um Shipment de forma assíncrona. Para iniciar um envio, você precisará de um endereço de origem, outro de destino e um pacote.
+
+        ### Teste abaixo o endpoint
+
+
+        ⚠️ Os campos abaixo precisam ser preenchidos para realização dos testes de endpoint.'
       operationId: CreateAsyncShipment
       security:
       - OAuth2: []
@@ -802,54 +809,7 @@ paths:
               $ref: '#/components/schemas/v1CreateAsyncShipmentRequest'
         required: true
 components:
-  securitySchemes:
-    OAuth2:
-      type: oauth2
-      description: Autenticação OAuth 2.0 para clientes da API.
-      flows:
-        clientCredentials:
-          tokenUrl: https://api.loggi.com/oauth2/token
-          scopes: {}
   schemas:
-    v1CreateAsyncShipmentRequest:
-      type: object
-      description: Objeto que representa a criação de um shipment de forma assíncrona.
-      required:
-      - shipTo
-      - shipFrom
-      - packages
-      - externalServiceId
-      properties:
-        shipFrom:
-          $ref: '#/components/schemas/shipFrom'
-        shipTo:
-          $ref: '#/components/schemas/shipTo'
-        returnTo:
-          $ref: '#/components/schemas/returnTo'
-        shippingCompany:
-          $ref: '#/components/schemas/shippingCompany'
-        packages:
-          type: array
-          nullable: true
-          description: Pacote associado ao envio. A soma das medidas (altura, largura e comprimento) do pacote não podem passar de 200 cm.
-          items:
-            $ref: '#/components/schemas/asyncPackage'
-        externalServiceId:
-          type: string
-          nullable: true
-          description: Deverá ser informado pelo Sales Engineering responsável pela sua homologação.
-          example: DLVR-DROF-LPON-STAN-01
-    v1CreateAsyncShipmentResponse:
-      type: object
-      description: Objeto que representa um Shipment aceito.
-      required:
-      - packages
-      properties:
-        packages:
-          type: array
-          description: Lista de Packages de um Shipment que serão processados.
-          items:
-            $ref: '#/components/schemas/asyncPackageResponse'
     ErrorMessage:
       type: object
       properties:
@@ -915,168 +875,6 @@ components:
           description: Detalhes sobre a falha. Nesta versão da API ainda não está sendo retornado, mas deve ser considerado um array de objetos de tipos distintos.
           items: {}
           example: []
-    shipFrom:
-      type: object
-      description: Objeto que representa os dados do embarcador.
-      required:
-      - name
-      - federalTaxId
-      - address
-      properties:
-        name:
-          type: string
-          minLength: 1
-          maxLength: 128
-          description: Nome do embarcador. Tamanho mínimo 1 caractere e tamanho máximo 128 caracteres.
-          example: Jose dos Santos Alvarenga
-        phoneNumber:
-          type: string
-          minLength: 0
-          maxLength: 16
-          description: Telefone do embarcador. Caso não informado o código do país, será considerado 55 (Brasil). Tamanho máximo 16 caracteres.
-          example:
-          - 55119999999999
-          - 351911169807
-        federalTaxId:
-          type: string
-          minLength: 11
-          maxLength: 14
-          description: CPF (com 11 dígitos) ou CNPJ (com 14 dígitos numéricos ou alfanuméricos) do embarcador.
-          example:
-          - 12345678909
-          - 23742246000134
-        address:
-          $ref: '#/components/schemas/address'
-    shipTo:
-      type: object
-      description: Objeto que representa os dados do recebedor.
-      required:
-      - name
-      - federalTaxId
-      - address
-      properties:
-        name:
-          type: string
-          minLength: 1
-          maxLength: 128
-          description: Nome do recebedor. Tamanho mínimo 1 caractere e tamanho máximo 128 caracteres.
-          example: Jose dos Santos Alvarenga
-        email:
-          type: string
-          minLength: 0
-          maxLength: 300
-          description: Email do recebedor. Tamanho máximo 300 caracteres.
-          example: jose.alvarenga@email.com
-        phoneNumber:
-          type: string
-          minLength: 0
-          maxLength: 16
-          description: Telefone do recebedor. Caso não informado o código do país, será considerado 55 (Brasil). Tamanho máximo 16 caracteres.
-          example:
-          - 55119999999999
-          - 351911169807
-        federalTaxId:
-          type: string
-          minLength: 11
-          maxLength: 14
-          description: CPF (com 11 dígitos) ou CNPJ (com 14 dígitos numéricos ou alfanuméricos) do embarcador.
-          example:
-          - 12345678909
-          - 23742246000134
-        stateTaxId:
-          type: string
-          minLength: 0
-          maxLength: 16
-          description: Inscrição Estadual do recebedor. Tamanho máximo 16 caracteres.
-          example: 123233578
-        address:
-          $ref: '#/components/schemas/address'
-    returnTo:
-      type: object
-      description: Objeto que representa os dados para a devolução do pacote.
-      required:
-      - address
-      properties:
-        name:
-          type: string
-          minLength: 1
-          maxLength: 128
-          description: Nome do embarcador. Tamanho mínimo 1 caractere e tamanho máximo 128 caracteres.
-          example: Jose dos Santos Alvarenga
-        phoneNumber:
-          type: string
-          minLength: 0
-          maxLength: 16
-          description: Telefone do embarcador. Caso não informado o código do país, será considerado 55 (Brasil). Tamanho máximo 16 caracteres.
-          example:
-          - 55119999999999
-          - 351911169807
-        federalTaxId:
-          type: string
-          minLength: 11
-          maxLength: 14
-          description: CPF (com 11 dígitos) ou CNPJ (com 14 dígitos numéricos ou alfanuméricos) do embarcador.
-          example:
-          - 12345678909
-          - 23742246000134
-        address:
-          $ref: '#/components/schemas/address'
-    shippingCompany:
-      type: object
-      description: Identifica a transportadora responsável pelo pacote no fluxo de operação universal.
-      required:
-      - name
-      - federalTaxId
-      properties:
-        name:
-          type: string
-          minLength: 1
-          maxLength: 128
-          description: Nome da empresa. Tamanho mínimo 1 caractere e tamanho máximo 128 caracteres.
-          example: Correios
-        federalTaxId:
-          type: string
-          minLength: 11
-          maxLength: 14
-          description: CPF (com 11 dígitos) ou CNPJ (com 14 dígitos numéricos ou alfanuméricos) do embarcador.
-          example:
-          - 12345678909
-          - 23742246000134
-    address:
-      oneOf:
-      - type: object
-        required:
-        - instructions
-        properties:
-          instructions:
-            type: string
-            minLength: 1
-            maxLength: 300
-            nullable: true
-            description: Mais detalhes sobre a localização do endereço. Tamanho mínimo 1 caractere e tamanho máximo 300 caracteres.
-            example:
-            - Prédio da Loggi.
-            - Próximo ao posto.
-            - Casa sem número, portão azul.
-          correiosAddress:
-            $ref: '#/components/schemas/correiosAddress'
-      - type: object
-        required:
-        - instructions
-        properties:
-          instructions:
-            type: string
-            minLength: 1
-            maxLength: 300
-            nullable: true
-            description: Mais detalhes sobre a localização do endereço. Tamanho mínimo 1 caractere e tamanho máximo 300 caracteres.
-            example:
-            - Prédio da Loggi.
-            - Próximo ao posto.
-            - Casa sem número, portão azul.
-          lineAddress:
-            $ref: '#/components/schemas/lineAddress'
-      description: Objeto que representa um endereço nacional em formato dos Correios ou um endereço internacional. Os objetos correiosAddress e lineAddress são mutuamente exclusivos.
     correiosAddress:
       type: object
       required:
@@ -1131,69 +929,6 @@ components:
           description: Unidade federativa com dois caracteres.
           example: MG
       description: Objeto que contém informações detalhadas do endereço compatível com o formato da API dos Correios.
-    lineAddress:
-      description: Objeto que representa um endereço com padrão internacional.
-      type: object
-      required:
-      - addressLine1
-      - postalCode
-      - city
-      - state
-      properties:
-        addressLine1:
-          type: string
-          minLength: 1
-          maxLength: 256
-          description: Primeira linha que contempla os dados do endereço. Tamanho mínimo 1 caractere e Tamanho máximo 256 caracteres.
-          example: Alameda Santos, 2400 - Jardim Paulista, São Paulo, Brasil
-        addressLine2:
-          type: string
-          minLength: 0
-          maxLength: 256
-          description: Segunda linha que complementa os dados de endereço. Tamanho máximo 256 caracteres. descritos em addressLine1
-          example: Alameda Santos, 2800 - Jardim Paulista, São Paulo, Brasil
-        postalCode:
-          type: string
-          minLength: 8
-          maxLength: 8
-          description: Código postal do endereço. Tamanho mínimo 8 caractere e Tamanho máximo 8 caracteres.
-          example: 1418200
-        city:
-          type: string
-          minLength: 1
-          maxLength: 32
-          description: Cidade do endereço. Tamanho mínimo 1 caractere e Tamanho máximo 32 caracteres.
-          example: São Paulo
-        state:
-          type: string
-          minLength: 1
-          maxLength: 32
-          description: Estado do Endereço. Tamanho mínimo 1 caractere e Tamanho máximo 32 caracteres.
-          example: São Paulo
-        country:
-          type: string
-          minLength: 1
-          maxLength: 100
-          description: País do endereço.  Tamanho mínimo 1 caractere e Tamanho máximo 100 caracteres.
-          example: Brasil
-    shipper:
-      description: Objeto que representa um remetente nacional ou internacional.
-      type: object
-      required:
-      - name
-      - nifType
-      - address
-      properties:
-        name:
-          type: string
-          minLength: 1
-          maxLength: 128
-          description: Nome do remetente.
-          example: In Glow Brasil Intermediação de Negócios Ltda
-        nifType:
-          $ref: '#/components/schemas/nifType'
-        address:
-          $ref: '#/components/schemas/address'
     asyncPackage:
       type: object
       required:
@@ -1501,6 +1236,235 @@ components:
           - '100'
           - XpTO
           - L_oGG1_00
+    v1CreateAsyncShipmentResponse:
+      type: object
+      description: Objeto que representa um Shipment aceito.
+      required:
+      - packages
+      properties:
+        packages:
+          type: array
+          description: Lista de Packages de um Shipment que serão processados.
+          items:
+            $ref: '#/components/schemas/asyncPackageResponse'
+    taker:
+      description: Objeto que representa o tomador de serviço.
+      type: object
+      required:
+      - name
+      - nifType
+      - address
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 128
+          description: Nome do tomando de serviço.
+          example: In Glow Brasil Intermediação de Negócios Ltda
+        nifType:
+          $ref: '#/components/schemas/nifType'
+        address:
+          $ref: '#/components/schemas/address'
+    shipFrom:
+      type: object
+      description: Objeto que representa os dados do embarcador.
+      required:
+      - name
+      - federalTaxId
+      - address
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 128
+          description: Nome do embarcador. Tamanho mínimo 1 caractere e tamanho máximo 128 caracteres.
+          example: Jose dos Santos Alvarenga
+        phoneNumber:
+          type: string
+          minLength: 0
+          maxLength: 16
+          description: Telefone do embarcador. Caso não informado o código do país, será considerado 55 (Brasil). Tamanho máximo 16 caracteres.
+          example:
+          - 55119999999999
+          - 351911169807
+        federalTaxId:
+          type: string
+          minLength: 11
+          maxLength: 14
+          description: CPF (com 11 dígitos) ou CNPJ (com 14 dígitos numéricos ou alfanuméricos) do embarcador.
+          example:
+          - 12345678909
+          - 23742246000134
+        address:
+          $ref: '#/components/schemas/address'
+    v1CreateAsyncShipmentRequest:
+      type: object
+      description: Objeto que representa a criação de um shipment de forma assíncrona.
+      required:
+      - shipTo
+      - shipFrom
+      - packages
+      - externalServiceId
+      properties:
+        shipFrom:
+          $ref: '#/components/schemas/shipFrom'
+        shipTo:
+          $ref: '#/components/schemas/shipTo'
+        returnTo:
+          $ref: '#/components/schemas/returnTo'
+        shippingCompany:
+          $ref: '#/components/schemas/shippingCompany'
+        packages:
+          type:
+          - array
+          - 'null'
+          description: Pacote associado ao envio. A soma das medidas (altura, largura e comprimento) do pacote não podem passar de 200 cm.
+          items:
+            $ref: '#/components/schemas/asyncPackage'
+        externalServiceId:
+          type:
+          - string
+          - 'null'
+          description: Deverá ser informado pelo Sales Engineering responsável pela sua homologação.
+          example: DLVR-DROF-LPON-STAN-01
+    shippingCompany:
+      type: object
+      description: Identifica a transportadora responsável pelo pacote no fluxo de operação universal.
+      required:
+      - name
+      - federalTaxId
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 128
+          description: Nome da empresa. Tamanho mínimo 1 caractere e tamanho máximo 128 caracteres.
+          example: Correios
+        federalTaxId:
+          type: string
+          minLength: 11
+          maxLength: 14
+          description: CPF (com 11 dígitos) ou CNPJ (com 14 dígitos numéricos ou alfanuméricos) do embarcador.
+          example:
+          - 12345678909
+          - 23742246000134
+    returnTo:
+      type: object
+      description: Objeto que representa os dados para a devolução do pacote.
+      required:
+      - address
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 128
+          description: Nome do embarcador. Tamanho mínimo 1 caractere e tamanho máximo 128 caracteres.
+          example: Jose dos Santos Alvarenga
+        phoneNumber:
+          type: string
+          minLength: 0
+          maxLength: 16
+          description: Telefone do embarcador. Caso não informado o código do país, será considerado 55 (Brasil). Tamanho máximo 16 caracteres.
+          example:
+          - 55119999999999
+          - 351911169807
+        federalTaxId:
+          type: string
+          minLength: 11
+          maxLength: 14
+          description: CPF (com 11 dígitos) ou CNPJ (com 14 dígitos numéricos ou alfanuméricos) do embarcador.
+          example:
+          - 12345678909
+          - 23742246000134
+        address:
+          $ref: '#/components/schemas/address'
+    shipTo:
+      type: object
+      description: Objeto que representa os dados do recebedor.
+      required:
+      - name
+      - federalTaxId
+      - address
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 128
+          description: Nome do recebedor. Tamanho mínimo 1 caractere e tamanho máximo 128 caracteres.
+          example: Jose dos Santos Alvarenga
+        email:
+          type: string
+          minLength: 0
+          maxLength: 300
+          description: Email do recebedor. Tamanho máximo 300 caracteres.
+          example: jose.alvarenga@email.com
+        phoneNumber:
+          type: string
+          minLength: 0
+          maxLength: 16
+          description: Telefone do recebedor. Caso não informado o código do país, será considerado 55 (Brasil). Tamanho máximo 16 caracteres.
+          example:
+          - 55119999999999
+          - 351911169807
+        federalTaxId:
+          type: string
+          minLength: 11
+          maxLength: 14
+          description: CPF (com 11 dígitos) ou CNPJ (com 14 dígitos numéricos ou alfanuméricos) do embarcador.
+          example:
+          - 12345678909
+          - 23742246000134
+        stateTaxId:
+          type: string
+          minLength: 0
+          maxLength: 16
+          description: Inscrição Estadual do recebedor. Tamanho máximo 16 caracteres.
+          example: 123233578
+        address:
+          $ref: '#/components/schemas/address'
+    internationalNif:
+      type: object
+      required:
+      - number
+      properties:
+        number:
+          type: string
+          minLength: 1
+          maxLength: 20
+          description: Número de identificação fiscal internacional.
+          example: 918742389438172400
+      description: Contém os dados fiscais internacional.
+    nifType:
+      description: Objeto que representa os dados ficais de uma pessoa física ou jurídica podendo ser nacional ou internacional.
+      oneOf:
+      - type: object
+        properties:
+          national:
+            $ref: '#/components/schemas/nationalNif'
+      - type: object
+        properties:
+          international:
+            $ref: '#/components/schemas/internationalNif'
+    nationalNif:
+      type: object
+      required:
+      - federalTaxId
+      properties:
+        federalTaxId:
+          type: string
+          minLength: 11
+          maxLength: 14
+          description: CPF (com 11 dígitos) ou CNPJ (com 14 dígitos numéricos ou alfanuméricos) do embarcador.
+          example:
+          - 12345678909
+          - 23742246000134
+        stateTaxId:
+          type: string
+          minLength: 0
+          maxLength: 16
+          description: Inscrição Estadual.
+          example: 123233578
+      description: Contém os dados fiscais nacional.
     asyncPackageResponse:
       type: object
       required:
@@ -1536,51 +1500,90 @@ components:
           - '100'
           - XpTO
           - L_oGG1_00
-    nifType:
-      description: Objeto que representa os dados ficais de uma pessoa física ou jurídica podendo ser nacional ou internacional.
-      oneOf:
-      - type: object
-        properties:
-          national:
-            $ref: '#/components/schemas/nationalNif'
-      - type: object
-        properties:
-          international:
-            $ref: '#/components/schemas/internationalNif'
-    nationalNif:
+    lineAddress:
+      description: Objeto que representa um endereço com padrão internacional.
       type: object
       required:
-      - federalTaxId
+      - addressLine1
+      - postalCode
+      - city
+      - state
       properties:
-        federalTaxId:
-          type: string
-          minLength: 11
-          maxLength: 14
-          description: CPF (com 11 dígitos) ou CNPJ (com 14 dígitos numéricos ou alfanuméricos) do embarcador.
-          example:
-          - 12345678909
-          - 23742246000134
-        stateTaxId:
-          type: string
-          minLength: 0
-          maxLength: 16
-          description: Inscrição Estadual.
-          example: 123233578
-      description: Contém os dados fiscais nacional.
-    internationalNif:
-      type: object
-      required:
-      - number
-      properties:
-        number:
+        addressLine1:
           type: string
           minLength: 1
-          maxLength: 20
-          description: Número de identificação fiscal internacional.
-          example: 918742389438172400
-      description: Contém os dados fiscais internacional.
-    taker:
-      description: Objeto que representa o tomador de serviço.
+          maxLength: 256
+          description: Primeira linha que contempla os dados do endereço. Tamanho mínimo 1 caractere e Tamanho máximo 256 caracteres.
+          example: Alameda Santos, 2400 - Jardim Paulista, São Paulo, Brasil
+        addressLine2:
+          type: string
+          minLength: 0
+          maxLength: 256
+          description: Segunda linha que complementa os dados de endereço. Tamanho máximo 256 caracteres. descritos em addressLine1
+          example: Alameda Santos, 2800 - Jardim Paulista, São Paulo, Brasil
+        postalCode:
+          type: string
+          minLength: 8
+          maxLength: 8
+          description: Código postal do endereço. Tamanho mínimo 8 caractere e Tamanho máximo 8 caracteres.
+          example: 1418200
+        city:
+          type: string
+          minLength: 1
+          maxLength: 32
+          description: Cidade do endereço. Tamanho mínimo 1 caractere e Tamanho máximo 32 caracteres.
+          example: São Paulo
+        state:
+          type: string
+          minLength: 1
+          maxLength: 32
+          description: Estado do Endereço. Tamanho mínimo 1 caractere e Tamanho máximo 32 caracteres.
+          example: São Paulo
+        country:
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: País do endereço.  Tamanho mínimo 1 caractere e Tamanho máximo 100 caracteres.
+          example: Brasil
+    address:
+      oneOf:
+      - type: object
+        required:
+        - instructions
+        properties:
+          instructions:
+            type:
+            - string
+            - 'null'
+            minLength: 1
+            maxLength: 300
+            description: Mais detalhes sobre a localização do endereço. Tamanho mínimo 1 caractere e tamanho máximo 300 caracteres.
+            example:
+            - Prédio da Loggi.
+            - Próximo ao posto.
+            - Casa sem número, portão azul.
+          correiosAddress:
+            $ref: '#/components/schemas/correiosAddress'
+      - type: object
+        required:
+        - instructions
+        properties:
+          instructions:
+            type:
+            - string
+            - 'null'
+            minLength: 1
+            maxLength: 300
+            description: Mais detalhes sobre a localização do endereço. Tamanho mínimo 1 caractere e tamanho máximo 300 caracteres.
+            example:
+            - Prédio da Loggi.
+            - Próximo ao posto.
+            - Casa sem número, portão azul.
+          lineAddress:
+            $ref: '#/components/schemas/lineAddress'
+      description: Objeto que representa um endereço nacional em formato dos Correios ou um endereço internacional. Os objetos correiosAddress e lineAddress são mutuamente exclusivos.
+    shipper:
+      description: Objeto que representa um remetente nacional ou internacional.
       type: object
       required:
       - name
@@ -1591,12 +1594,20 @@ components:
           type: string
           minLength: 1
           maxLength: 128
-          description: Nome do tomando de serviço.
+          description: Nome do remetente.
           example: In Glow Brasil Intermediação de Negócios Ltda
         nifType:
           $ref: '#/components/schemas/nifType'
         address:
           $ref: '#/components/schemas/address'
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      description: Autenticação OAuth 2.0 para clientes da API.
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.loggi.com/oauth2/token
+          scopes: {}
 x-provenance:
   method: searched
   source: https://docs.api.loggi.com/reference

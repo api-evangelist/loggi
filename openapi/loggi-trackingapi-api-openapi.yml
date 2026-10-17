@@ -1,11 +1,13 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Tracking
+  title: Tracking API
   version: v1
   description: O rastreio de pacotes é um processo que se inicia com o recebimento de informações que identificam um pacote e termina com a entrega dos dados referentes ao status do pacote recebido.
 servers:
 - url: https://stg.api.loggi.com
 - url: https://api.loggi.com
+tags:
+- name: TrackingAPI
 paths:
   /v1/companies/{company_id}/packages/{tracking_code}/tracking:
     get:
@@ -13,13 +15,10 @@ paths:
       description: 'Faz o rastreio de pacotes a partir das informações de CompanyID e TrackingCode.
 
 
-        ### Teste abaixo o endpoint</h2>
+        ### Teste abaixo o endpoint
 
-        <div class="warning-docs">
 
-        ⚠️ <em>Os campos abaixo precisam ser preenchidos para realização dos testes de endpoint.</em>
-
-        </div>'
+        ⚠️ Os campos abaixo precisam ser preenchidos para realização dos testes de endpoint.'
       operationId: TrackPackageTrackingCode
       security:
       - OAuth2: []
@@ -127,15 +126,56 @@ paths:
       tags:
       - TrackingAPI
 components:
-  securitySchemes:
-    OAuth2:
-      type: oauth2
-      description: Autenticação OAuth 2.0 para clientes da API.
-      flows:
-        clientCredentials:
-          tokenUrl: https://api.loggi.com/oauth2/token
-          scopes: {}
   schemas:
+    ErrorMessage:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+          description: 'Código numérico referente à falha.
+
+            CANCELLED = 1
+
+            UNKNOWN = 2
+
+            INVALID_ARGUMENT = 3
+
+            DEADLINE_EXCEEDED = 4
+
+            NOT_FOUND = 5
+
+            ALREADY_EXISTS = 6
+
+            PERMISSION_DENIED = 7
+
+            RESOURCE_EXHAUSTED = 8
+
+            FAILED_PRECONDITION = 9
+
+            ABORTED = 10
+
+            OUT_OF_RANGE = 11
+
+            UNIMPLEMENTED = 12
+
+            INTERNAL = 13
+
+            UNAVAILABLE = 14
+
+            DATA_LOSS = 15
+
+            UNAUTHENTICATED = 16'
+          example: 14
+        message:
+          type: string
+          description: Texto pequeno informativo sobre a falha.
+          example: Requisição com credenciais inválidas.
+        details:
+          type: array
+          description: Detalhes sobre à falha. Nesta versão da API ainda não está sendo retornado, mas deve ser considerado um array de objetos de tipos distintos.
+          items: {}
+          example: []
     v1TrackPackageTrackingCodeResponse:
       type: object
       properties:
@@ -350,55 +390,14 @@ components:
                 description: Timestamp do momento da requisição.
             description: Objeto que representa os dados de rastreio de um pacote.
       description: Objeto que retorna todos os pacotes que são identificados pelo CompanyID e TrackingCode passados na requisição.
-    ErrorMessage:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-          description: 'Código numérico referente à falha.
-
-            CANCELLED = 1
-
-            UNKNOWN = 2
-
-            INVALID_ARGUMENT = 3
-
-            DEADLINE_EXCEEDED = 4
-
-            NOT_FOUND = 5
-
-            ALREADY_EXISTS = 6
-
-            PERMISSION_DENIED = 7
-
-            RESOURCE_EXHAUSTED = 8
-
-            FAILED_PRECONDITION = 9
-
-            ABORTED = 10
-
-            OUT_OF_RANGE = 11
-
-            UNIMPLEMENTED = 12
-
-            INTERNAL = 13
-
-            UNAVAILABLE = 14
-
-            DATA_LOSS = 15
-
-            UNAUTHENTICATED = 16'
-          example: 14
-        message:
-          type: string
-          description: Texto pequeno informativo sobre a falha.
-          example: Requisição com credenciais inválidas.
-        details:
-          type: array
-          description: Detalhes sobre à falha. Nesta versão da API ainda não está sendo retornado, mas deve ser considerado um array de objetos de tipos distintos.
-          items: {}
-          example: []
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      description: Autenticação OAuth 2.0 para clientes da API.
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.loggi.com/oauth2/token
+          scopes: {}
 x-provenance:
   method: searched
   source: https://docs.api.loggi.com/reference

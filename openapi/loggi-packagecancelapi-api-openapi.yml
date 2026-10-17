@@ -1,26 +1,28 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Integrator
+  title: Package Cancel API
   version: v1
-  description: Disponibiliza a associação entre um Integrador e uma Company.
+  description: Disponibiliza serviços para atuar sobre um pacote.
 servers:
 - url: https://stg.api.loggi.com
 - url: https://api.loggi.com
+tags:
+- name: PackageCancelAPI
 paths:
-  /v1/integrator/activate:
+  /v1/companies/{company_id}/packages/cancel:
     post:
-      summary: Ativar/Desativar Integrador
+      summary: Cancelar envio
       description: ''
-      operationId: CreateIntegratorCompany
+      operationId: PackageCancel
       security:
       - OAuth2: []
       responses:
         '200':
-          description: Operação de associação feita com sucesso.
+          description: Pacote cancelado com sucesso
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/v1IntegratorCompanyResponse'
+                $ref: '#/components/schemas/v1PackageCancelResponse'
         '400':
           description: Mensagem do cliente não segue a especificação
           content:
@@ -47,7 +49,7 @@ paths:
             application/json:
               example:
                 code: 7
-                message: Falha de autenticação
+                message: Acesso não autorizado
                 details: []
               schema:
                 $ref: '#/components/schemas/ErrorMessage'
@@ -92,38 +94,28 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorMessage'
       parameters:
-      - name: integration_code
-        in: query
+      - name: company_id
+        in: path
         required: true
-        description: Código numérico fornecido pela Loggi para identificação do Integrador.
+        description: Código numérico fornecido pela Loggi para identificação.
         schema:
           type: string
-      - name: active
+      - name: loggi_key
         in: query
-        required: true
-        description: Valor booleano que define a ativação ou não do Integrador com a Company. _true_ para ativar ou _false_ para desativar.
+        required: false
+        description: Código único gerado pela Loggi, ou seja, cada pacote deve ter um loggi_key único.
         schema:
-          type: boolean
+          type: string
+      - name: tracking_code
+        in: query
+        required: false
+        description: Código de rastreio do pacote, que é gerado pela Loggi ou pelo parceiro por meio da API de envio.
+        schema:
+          type: string
       tags:
-      - IntegratorCompanyAPI
+      - PackageCancelAPI
 components:
-  securitySchemes:
-    OAuth2:
-      type: oauth2
-      description: Autenticação OAuth 2.0 para clientes da API.
-      flows:
-        clientCredentials:
-          tokenUrl: https://api.loggi.com/oauth2/token
-          scopes: {}
   schemas:
-    v1IntegratorCompanyResponse:
-      type: object
-      properties:
-        companyId:
-          type: integer
-          format: int64
-          description: Código numérico referente ao Id da Company.
-          example: 3214
     ErrorMessage:
       type: object
       properties:
@@ -132,17 +124,9 @@ components:
           format: int32
           description: 'Código numérico referente à falha.
 
-            CANCELLED = 1
-
-            UNKNOWN = 2
-
             INVALID_ARGUMENT = 3
 
-            DEADLINE_EXCEEDED = 4
-
             NOT_FOUND = 5
-
-            ALREADY_EXISTS = 6
 
             PERMISSION_DENIED = 7
 
@@ -150,17 +134,9 @@ components:
 
             FAILED_PRECONDITION = 9
 
-            ABORTED = 10
-
-            OUT_OF_RANGE = 11
-
-            UNIMPLEMENTED = 12
-
             INTERNAL = 13
 
             UNAVAILABLE = 14
-
-            DATA_LOSS = 15
 
             UNAUTHENTICATED = 16'
           example: 14
@@ -173,6 +149,26 @@ components:
           description: Detalhes sobre a falha. Nesta versão da API ainda não está sendo retornado, mas deve ser considerado um array de objetos de tipos distintos.
           items: {}
           example: []
+    v1PackageCancelResponse:
+      type: object
+      properties:
+        warning_type:
+          type: string
+          description: Mensagem com a constante que identifica casos em que o cancelamento não pode ser confirmado.
+          example: REDISPATCH_CANCELLATION
+        warning_message:
+          type: string
+          description: Mensagem de alerta para casos em que o cancelamento não pode ser confirmado.
+          example: O pacote está com os correios. Vamos tentar cancelar e devolver pra você.
+      description: Objeto que configura a resposta da API de cancelamento de pacotes.
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      description: Autenticação OAuth 2.0 para clientes da API.
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.loggi.com/oauth2/token
+          scopes: {}
 x-provenance:
   method: searched
   source: https://docs.api.loggi.com/reference
@@ -180,8 +176,11 @@ x-provenance:
   tool: harvest-readme-openapi.py
   note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
   assembled_from:
-  - https://docs.api.loggi.com/reference/createintegratorcompany.md
+  - https://docs.api.loggi.com/reference/packagecancel.md
+  - https://docs.api.loggi.com/reference/packagecancelapi.md
+  - https://docs.api.loggi.com/reference/packageupdate.md
+  - https://docs.api.loggi.com/reference/packageupdateapi.md
   merge:
-    pages: 1
-    deduped: 0
+    pages: 4
+    deduped: 11
     conflicts_kept_first: 0
