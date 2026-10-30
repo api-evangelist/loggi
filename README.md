@@ -64,6 +64,159 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Loggi is a company surfaced as a portfolio company of fifth-wall, ggv-capital, softbank-vision-fund and added to the API Evangelist network as a stub for enrichment. Sector: logistics. This profile is a lead awaiting the enrichment pipeline.
+Loggi is the largest private shipping and last-mile logistics company in Brazil, operating its own delivery network across more than 4,000 municipalities. Loggi publishes a REST developer platform (docs.api.loggi.com) that lets partner platforms and integrators estimate freight prices and delivery times, create single or multiple shipments (synchronously or asynchronously), generate Loggi shipping labels, update or cancel packages, retrieve package details, track packages in real time, and receive delivery status updates via webhooks. Authentication is OAuth2 client-credentials style (client_id/client_secret exchanged for a JWT). Backed by Fifth Wall, GGV Capital and SoftBank Vision Fund. Sector: logistics.
 
-Backed by: fifth-wall, ggv-capital, softbank-vision-fund — https://www.loggi.com/
+**Areas:** Company · Logistics · Shipping · Last Mile Delivery · Freight · Tracking · Brazil
+
+## Loggi on APIs.io
+
+Everything profiled for Loggi is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/loggi/](https://apis.io/providers/loggi/)** — or go straight to one of the APIs or properties below.
+
+### APIs (11)
+
+- [Loggi Platform API](https://apis.io/apis/loggi/loggi-platform-api/) — Loggi's REST integration platform for freight quotation, shipment creation (sync/async), label generation, package update/cancel, package details, real-time…
+- [Loggi Auth API](https://apis.io/apis/loggi/loggi-authapi-api/) — The AuthAPI API from Loggi — 2 operation(s) for authapi.
+- [Loggi Details API](https://apis.io/apis/loggi/loggi-detailsapi-api/) — The DetailsAPI API from Loggi — 1 operation(s) for detailsapi.
+- [Loggi Dropoff Locations API](https://apis.io/apis/loggi/loggi-dropofflocationsapi-api/) — The DropoffLocationsAPI API from Loggi — 1 operation(s) for dropofflocationsapi.
+- [Loggi Integrator Company API](https://apis.io/apis/loggi/loggi-integratorcompanyapi-api/) — The IntegratorCompanyAPI API from Loggi — 1 operation(s) for integratorcompanyapi.
+- [Loggi Label API](https://apis.io/apis/loggi/loggi-labelapi-api/) — The LabelAPI API from Loggi — 1 operation(s) for labelapi.
+- [Loggi Package Cancel API](https://apis.io/apis/loggi/loggi-packagecancelapi-api/) — The PackageCancelAPI API from Loggi — 1 operation(s) for packagecancelapi.
+- [Loggi Package Update API](https://apis.io/apis/loggi/loggi-packageupdateapi-api/) — The PackageUpdateAPI API from Loggi — 1 operation(s) for packageupdateapi.
+- [Loggi Quotation API](https://apis.io/apis/loggi/loggi-quotationapi-api/) — The QuotationAPI API from Loggi — 1 operation(s) for quotationapi.
+- [Loggi Shipment API](https://apis.io/apis/loggi/loggi-shipmentapi-api/) — The ShipmentAPI API from Loggi — 1 operation(s) for shipmentapi.
+- [Loggi Tracking API](https://apis.io/apis/loggi/loggi-trackingapi-api/) — The TrackingAPI API from Loggi — 1 operation(s) for trackingapi.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### AsyncAPI (1)
+
+Event-driven and webhook contracts.
+
+- [Loggi Webhooks](https://apis.io/asyncapis/loggi/loggi-webhooks/)
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [loggi](https://apis.io/servers/loggi/loggi/)
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Loggi Agentic Access](https://apis.io/agentic-access/loggi/loggi-agentic-access/)
+
+#### JSON Schema (16)
+
+The data models the API reads and writes.
+
+- [ListDropoffLocationsRequest](https://apis.io/schemas/loggi/loggi-list-dropoff-locations-request/)
+- [ListDropoffLocationsResponse](https://apis.io/schemas/loggi/loggi-list-dropoff-locations-response/)
+- [QuoteRequest](https://apis.io/schemas/loggi/loggi-quote-request/)
+- [QuoteResponse](https://apis.io/schemas/loggi/loggi-quote-response/)
+- [ServiceAccountTokenRequest](https://apis.io/schemas/loggi/loggi-service-account-token-request/)
+- [ServiceAccountTokenResponse](https://apis.io/schemas/loggi/loggi-service-account-token-response/)
+- [v1CreateAsyncShipmentRequest](https://apis.io/schemas/loggi/loggi-v1-create-async-shipment-request/)
+- [v1CreateAsyncShipmentResponse](https://apis.io/schemas/loggi/loggi-v1-create-async-shipment-response/)
+- [v1CreateLabelRequest](https://apis.io/schemas/loggi/loggi-v1-create-label-request/)
+- [v1CreateLabelResponse](https://apis.io/schemas/loggi/loggi-v1-create-label-response/)
+- [v1IntegratorCompanyResponse](https://apis.io/schemas/loggi/loggi-v1-integrator-company-response/)
+- [v1PackageCancelResponse](https://apis.io/schemas/loggi/loggi-v1-package-cancel-response/)
+- [v1PackageDetailsResponse](https://apis.io/schemas/loggi/loggi-v1-package-details-response/)
+- [v1PackageUpdateRequest](https://apis.io/schemas/loggi/loggi-v1-package-update-request/)
+- [v1PackageUpdateResponse](https://apis.io/schemas/loggi/loggi-v1-package-update-response/)
+- [v1TrackPackageTrackingCodeResponse](https://apis.io/schemas/loggi/loggi-v1-track-package-tracking-code-response/)
+
+#### JSON-LD (1)
+
+Linked-data contexts for the provider's vocabulary.
+
+- [Loggi Context](https://apis.io/jsonld/loggi/loggi-context/)
+
+#### Governance rules (1)
+
+Spectral rulesets for the provider's contracts.
+
+- [Loggi API Rules](https://apis.io/rules/loggi/loggi-rules/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Loggi Authentication](https://apis.io/security/loggi/loggi-authentication/)
+- [Loggi Domain Security](https://apis.io/security/loggi/loggi-domain-security/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Loggi Scopes](https://apis.io/scopes/loggi/loggi-scopes/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.loggi.com/)
+- [Documentation](https://docs.api.loggi.com/)
+- [Getting started](https://docs.api.loggi.com/docs/getting-started)
+- [API reference](https://docs.api.loggi.com/reference/nossa-documenta%C3%A7%C3%A3o)
+- [Sign up](https://www.loggi.com/contas/criar/)
+- [Support](https://ajuda.loggi.com/)
+- [Privacy policy](https://www.loggi.com/aviso-privacidade-clientes/)
+
+## API Evangelist rating
+
+**Kin Score 42.9** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 78.6 |
+| Contract quality | 67.7 |
+| Contract governance | 22.0 |
+| Operational transparency | 15.8 |
+| Developer ergonomics | 35.7 |
+| Access clarity | 23.7 |
+
+**Agent readiness 37.0** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | documented (partial credit) |
+| MCP Server | — |
+| Auth Clarity | negotiable (partial credit) |
+| Idempotency | — |
+| Error Semantics | verified |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | — |
+| Event Surface Described | yes |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | na |
+
+**Regulatory alignment 30.4** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/loggi/](https://apis.io/providers/loggi/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Loggi: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/loggi/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
